@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>流程图 on Rooting Disorder</title>
+    <link>http://localhost:1313/tags/%E6%B5%81%E7%A8%8B%E5%9B%BE/</link>
+    <description>Recent content in 流程图 on Rooting Disorder</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <managingEditor>minded.leucine-0u@icloud.com (Dracco_0n)</managingEditor>
+    <webMaster>minded.leucine-0u@icloud.com (Dracco_0n)</webMaster>
+    <copyright>Copy, _right?_ :thinking_face:</copyright>
+    <lastBuildDate>Wed, 06 Mar 2019 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/%E6%B5%81%E7%A8%8B%E5%9B%BE/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>流程图和思维导图</title>
+      <link>http://localhost:1313/posts/diagrams/</link>
+      <pubDate>Wed, 06 Mar 2019 00:00:00 +0000</pubDate>
+      <author>minded.leucine-0u@icloud.com (Dracco_0n)</author>
+      <guid>http://localhost:1313/posts/diagrams/</guid>
+      <description>使用 Mermaid 可以轻松地将图表和流程图添加到文章中。</description>
+      
+    </item>
+    
+  </channel>
+</rss>
