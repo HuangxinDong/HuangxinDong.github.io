@@ -12,7 +12,7 @@ title = "Rooting Disorder"
   logo = "img/blowfish_logo_transparent.png"
   secondaryLogo = "img/blowfish_logo.png"
   description = "This is my stop."
-  copyright = "Copy, _right?_ :thinking_face:"
+  copyright = '© { year } Dracco_0n.'
 
 [params.author]
   name = "Dracco_0n"
