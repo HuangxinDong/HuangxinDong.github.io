@@ -130,19 +130,35 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-  <script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
 
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
-      apiKey: "{{ $.Site.Params.firebase.apiKey }}",
-      authDomain: "{{ $.Site.Params.firebase.apiKey }}",
-      projectId: "{{ $.Site.Params.firebase.projectId }}",
-      storageBucket: "{{ $.Site.Params.firebase.storageBucket }}",
-      messagingSenderId: "{{ $.Site.Params.firebase.messagingSenderId }}",
-      appId: "{{ $.Site.Params.firebase.appId }}",
-      measurementId: "{{ $.Site.Params.firebase.measurementId }}"
+      apiKey: "AIzaSyDwTp-9P20eBZGNKZUWD7WqZv8uOJA42Lo",
+      authDomain: "mywebsite-56bf7.firebaseapp.com",
+      projectId: "mywebsite-56bf7",
+      storageBucket: "mywebsite-56bf7.firebasestorage.app",
+      messagingSenderId: "775510126733",
+      appId: "1:775510126733:web:da9da99859205664e232c4",
+      measurementId: "G-ZE3R30MCQ9"
     };
-
-    var app = firebase.initializeApp(firebaseConfig);
+    //const firebaseConfig = {
+        //apiKey: "{{ $.Site.Params.firebase.apiKey }}",
+        //authDomain: "{{ $.Site.Params.firebase.apiKey }}",
+        //projectId: "{{ $.Site.Params.firebase.projectId }}",
+        //storageBucket: "{{ $.Site.Params.firebase.storageBucket }}",
+        //messagingSenderId: "{{ $.Site.Params.firebase.messagingSenderId }}",
+        //appId: "{{ $.Site.Params.firebase.appId }}",
+        //measurementId: "{{ $.Site.Params.firebase.measurementId }}"
+      //};
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
     var db = firebase.firestore();
     var auth = firebase.auth();
 
