@@ -73,5 +73,5 @@ enableEmoji = true
 
 [params.twikoo]
   enable = true
-  env = "https://dracco0n.netlify.app"
+  env = "https://dracco0n.netlify.app/.netlify/functions/twikoo"
   region = ""
