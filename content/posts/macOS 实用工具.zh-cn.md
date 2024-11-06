@@ -7,6 +7,7 @@ categories: '先利其器'
 ---
 
 纠结了好久之后终于换了新电脑，老 Windows 用户刚开始用 macOS 感觉很多地方都很陌生，因此在这里整理记录一下。
+<!--more-->
 
 初步配置参考：
 - [OCD's Guide to Setting up Mac](https://github.com/macdao/ocds-guide-to-setting-up-mac)
