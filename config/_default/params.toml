@@ -44,12 +44,12 @@ forgejoDefaultServer = "https://v8.next.forgejo.org"
 
 [homepage]
   layout = "card" # valid options: page, profile, hero, card, background, custom
-  homepageImage = "img/homepage1.jpg" # used in: hero, and car 在assets文件夹
+  homepageImage = "img/homepage1.jpg" # used in: hero and card 在assets文件夹
   showRecent = true
   showRecentItems = 6
   showMoreLink = true
   showMoreLinkDest = "/posts/"
-  cardView = false
+  cardView = true
   cardViewScreenWidth = false
   layoutBackgroundBlur = false # only used when layout equals background
 
@@ -61,8 +61,8 @@ forgejoDefaultServer = "https://v8.next.forgejo.org"
   showDateUpdated = false
   showAuthor = true
   showAuthorBottom = true 
-  showHero = false
-  # heroStyle = "basic" # valid options: basic, big, background, thumbAndBackground
+  showHero = true
+  heroStyle = "basic" # valid options: basic, big, background, thumbAndBackground
   layoutBackgroundBlur = true # only used when heroStyle equals background or thumbAndBackground
   layoutBackgroundHeaderSpace = true # only used when heroStyle equals background
   showBreadcrumbs = false
@@ -85,16 +85,16 @@ forgejoDefaultServer = "https://v8.next.forgejo.org"
   showZenMode = true
 
 [list]
-  showHero = false
-  # heroStyle = "background" # valid options: basic, big, background, thumbAndBackground
+  showHero = true
+  heroStyle = "background" # valid options: basic, big, background, thumbAndBackground
   layoutBackgroundBlur = true # only used when heroStyle equals background or thumbAndBackground
   layoutBackgroundHeaderSpace = true # only used when heroStyle equals background
   showBreadcrumbs = false
   showSummary = true
-  showViews = false
+  showViews = true
   showLikes = false
   showTableOfContents = false
-  showCards = false
+  showCards = true
   orderByWeight = false
   groupByYear = true
   cardView = false
@@ -126,13 +126,13 @@ forgejoDefaultServer = "https://v8.next.forgejo.org"
   cardViewScreenWidth = false
 
 [firebase]
-  # apiKey = "XXXXXX"
-  # authDomain = "XXXXXX"
-  # projectId = "XXXXXX"
-  # storageBucket = "XXXXXX"
-  # messagingSenderId = "XXXXXX"
-  # appId = "XXXXXX"
-  # measurementId = "XXXXXX"
+  apiKey = "AIzaSyDwTp-9P20eBZGNKZUWD7WqZv8uOJA42Lo"
+  authDomain = "mywebsite-56bf7.firebaseapp.com"
+  projectId = "mywebsite-56bf7"
+  storageBucket = "mywebsite-56bf7.firebasestorage.app"
+  messagingSenderId = "775510126733"
+  appId = "1:775510126733:web:da9da99859205664e232c4"
+  measurementId = "G-ZE3R30MCQ9"
 
 [fathomAnalytics]
   # site = "ABC12345"
