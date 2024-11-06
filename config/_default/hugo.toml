@@ -22,6 +22,10 @@ enableEmoji = true
 [imaging]
   anchor = 'Center'
 
+[build]
+  timeout = 60
+  disableKinds = ["partial"]
+
 [taxonomies]
   tag = "tags"
   category = "categories"
