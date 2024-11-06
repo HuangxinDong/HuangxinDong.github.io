@@ -11,24 +11,31 @@
 # ordered by weight from lowest to highest.
 
 [[main]]
-  name = "Blog"
+  name = "Blogs"
   pageRef = "posts"
   weight = 10
 
 [[main]]
-  name = "Parent"
+  name = "Thoughts"
+  pageRef = "thoughts"
+  weight = 15
+
+
+[[main]]
+  name = "Categories"
+  pageRef = "categories"
   weight = 20
 
 [[main]]
-  name = "example sub-menu 1"
-  parent = "Parent"
-  pageRef = "posts"
-  weight = 20
+  name = "书影音游"
+  parent = "Categories"
+  pageRef = "entertainment"
+  weight = 10
 
 [[main]]
-  name = "example sub-menu 2"
-  parent = "Parent"
-  pageRef = "posts"
+  name = "先利其器"
+  parent = "Categories"
+  pageRef = "tools"
   weight = 20
 
 [[subnavigation]]
@@ -43,9 +50,9 @@
   weight = 20
 
 [[main]]
-  name = "Categories"
-  pageRef = "categories"
-  weight = 20
+  name = "关于我"
+  pageRef = "about_cn"
+  weight = 50
 
 [[main]]
   name = "Tags"

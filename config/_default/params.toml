@@ -10,7 +10,8 @@ defaultAppearance = "light" # valid options: light or dark
 autoSwitchAppearance = true
 
 enableSearch = true
-enableCodeCopy = false
+enableCodeCopy = true
+highlight.noClasses = false
 
 replyByEmail = false
 
