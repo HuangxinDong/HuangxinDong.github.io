@@ -70,6 +70,8 @@ enableEmoji = true
       type = 'fragments'
       weight = 10
 
-[services]
-  [services.disqus]
-    shortname = 'your-disqus-shortname'
+
+[params.twikoo]
+  enable = true
+  env = "https://dracco0n.netlify.app"
+  region = ""
