@@ -1,0 +1,59 @@
+<!-- 语法规则
+    1. 匿名模式
+        <bilibili BV1Wg411t7EE 233>
+    2. 具名模式
+        <bilibili 
+            src="https://www.bilibili.com/video/BV1RK41117eY/" 
+            page="332"
+        >
+-->
+
+<!-- 获取第一个参数 作为视频地址 -->
+{{- $dest := ( .Get 0) -}}
+
+<!-- 如果是具名模式， 获取 src -->
+{{ if .IsNamedParams }}
+    {{ $dest = (.Get "src") }}
+{{ end }}
+
+<!-- 判断是否为 全路径， 是则获取视频ID -->
+{{ if (hasPrefix $dest "http" )}}
+    <!-- https://www.bilibili.com/video/BV1RK41117eY/ -->
+    {{ $dest = (strings.TrimPrefix "http" $dest ) }}
+
+    <!-- 解析 URL -->
+    {{ $url := urls.Parse $dest }}
+
+    <!-- /video/BV1RK41117eY/ -->
+    {{ $dest = $url.Path }}
+
+    <!-- BV1RK41117eY -->
+    {{ $dest = (path.BaseName $dest) }}
+{{ end }}
+
+
+<!-- 获取专辑中的视频 ID -->
+{{- $page := (.Get 1) -}}
+
+{{ if .IsNamedParams }}
+    {{ $page = (.Get "page") }}
+{{ end }}
+
+<!-- 默认值为 1 -->
+{{ if (not $page) }}
+    {{ $page = 1 }}
+{{ end }}
+
+
+<!-- 嵌入 bilibili 播放框 -->
+<div style="margin: 10px 0 20px 0;">
+  <div style="position:relative; padding-bottom:75%; width:100%; height:0">
+    <iframe src="//player.bilibili.com/player.html?bvid={{ $dest }}&page={{ $page }}"       
+        scrolling="no" border="0"
+        frameborder="no" 
+        framespacing="0" 
+        allowfullscreen="true" 
+        style="position:absolute; height: 100%; width: 100%;">
+    </iframe>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<!--
+Parameters:
+    type - (Required) album / track / playlist / artist
+    id - (Required) Target ID
+    width - (Optional) width
+    height - (Optional) height
+
+-->
+
+<!-- 方法是双括号里面：< spotify type="album" id="3T5qThuaH5w6bDNCxZxv0X" width="100%" height="200" > -->
+
+{{ if .IsNamedParams }}
+<iframe src="https://open.spotify.com/embed/{{ .Get "type" }}/{{ .Get "id" }}"
+    width="{{ default "100%" (.Get "width") }}"
+    height="{{ default "380" (.Get "height") }}"
+    frameborder="0"
+    allowtransparency="true"
+    allow="encrypted-media"></iframe>
+{{ else }}
+<iframe src="https://open.spotify.com/embed/{{ .Get 0 }}/{{ .Get 1 }}"
+    width="{{ default "100%" (.Get 2) }}"
+    height="{{ default "380" (.Get 3) }}"
+    frameborder="0"
+    allowtransparency="true"
+    allow="encrypted-media"></iframe>
+{{ end }}
