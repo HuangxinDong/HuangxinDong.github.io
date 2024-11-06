@@ -3,7 +3,7 @@ title: "Blogs"
 description: "来看看通过 Blowfish 能做到什么"
 
 cascade:
-  showEdit: true
+  showEdit: false
   showSummary: true
   hideFeatureImage: true
 ---
