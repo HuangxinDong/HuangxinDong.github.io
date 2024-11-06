@@ -150,6 +150,7 @@ sudo bclm persist
 
 ### 美化
 平时在Finder很常用图标视图，所以从[macosicons.com](https://macosicons.com/#/)下载了很多实用的文件夹图标，复制之后点击相应的文件夹右键“显示简介”，选中左上角文件夹图标粘贴即可。
+此外我也在不开启台前调度的时候用[HazeOver](https://hazeover.com/)，可以更方便地专注当前窗口，而且可以在[GitHub Student Developer Pack](https://education.github.com/pack#namecheap)里免费领取。
 
 ## 效率与管理
 ### 窗口管理
@@ -207,4 +208,4 @@ Whisky 并不能让 macOS 运行所有 Win 游戏，相关内容在其官方文�
 #### CrossOver
 [Run Microsoft Windows software on Mac and Linux | CodeWeavers](https://www.codeweavers.com/crossover)
 
-折腾完一通后————算了还是玩ns吧！
+折腾完一通后的心情——算了还是玩ns吧！
