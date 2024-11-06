@@ -9,6 +9,36 @@
     <managingEditor>minded.leucine-0u@icloud.com (Dracco_0n)</managingEditor>
     <webMaster>minded.leucine-0u@icloud.com (Dracco_0n)</webMaster>
     <copyright>© 2024 Dracco_0n.</copyright>
-    <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 27 May 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>先利其器</title>
+      <link>http://localhost:1313/categories/%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/</link>
+      <pubDate>Mon, 27 May 2024 00:00:00 +0000</pubDate>
+      <author>minded.leucine-0u@icloud.com (Dracco_0n)</author>
+      <guid>http://localhost:1313/categories/%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>Blowfish</title>
+      <link>http://localhost:1313/categories/blowfish/</link>
+      <pubDate>Wed, 04 Oct 2023 00:00:00 +0000</pubDate>
+      <author>minded.leucine-0u@icloud.com (Dracco_0n)</author>
+      <guid>http://localhost:1313/categories/blowfish/</guid>
+      <description></description>
+      
+    </item>
+    
+    <item>
+      <title>开源</title>
+      <link>http://localhost:1313/categories/%E5%BC%80%E6%BA%90/</link>
+      <pubDate>Wed, 04 Oct 2023 00:00:00 +0000</pubDate>
+      <author>minded.leucine-0u@icloud.com (Dracco_0n)</author>
+      <guid>http://localhost:1313/categories/%E5%BC%80%E6%BA%90/</guid>
+      <description></description>
+      
+    </item>
+    
   </channel>
 </rss>
