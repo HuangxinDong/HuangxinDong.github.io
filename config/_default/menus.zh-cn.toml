@@ -39,25 +39,28 @@
   weight = 20
 
 [[subnavigation]]
-  name = "An interesting topic"
-  pageRef = "tags/interesting-topic"
+  name = "漫游笔记（待实现）🚧"
+  pre = "wand-magic-sparkles"
+  pageRef = "tags"
   weight = 10
 
 [[subnavigation]]
-  name = "My Awesome Category"
-  pre = "github"
+  name = "Subscribe（待实现）🚧"
+  pre = "rss-square"
   pageRef = "categories/awesome"
   weight = 20
+
+[[main]]
+  name = "Tags"
+  pageRef = "tags"
+  weight = 30
+
 
 [[main]]
   name = "关于我"
   pageRef = "about_cn"
   weight = 50
 
-[[main]]
-  name = "Tags"
-  pageRef = "tags"
-  weight = 30
 
 
 # -- Footer Menu --
