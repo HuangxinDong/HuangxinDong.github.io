@@ -1,0 +1,19 @@
+# Hugo output folder
+public/
+resources/
+hugo_stats.json
+
+# macOS
+.DS_Store
+
+# Editor-specific folders and files
+.vscode/
+*.swp
+*.swo
+*~
+
+# Hugo modules
+_vendor/
+
+# Logs from .github or other CI/CD systems
+.github/*.log
