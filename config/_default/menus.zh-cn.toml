@@ -29,13 +29,13 @@
 [[main]]
   name = "书影音游"
   parent = "Categories"
-  pageRef = "entertainment"
+  pageRef = "书影音游"
   weight = 10
 
 [[main]]
   name = "先利其器"
   parent = "Categories"
-  pageRef = "tools"
+  pageRef = "先利其器"
   weight = 20
 
 [[subnavigation]]
