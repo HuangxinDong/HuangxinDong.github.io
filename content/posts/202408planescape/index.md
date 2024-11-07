@@ -10,6 +10,9 @@ categories: '书影音游'
 
 ---
 
+![Alt text](01.jpg "测试")
+
+
 解谜者，Ravel Puzzlewell，她为了The Nameless One的不死而夺走了他的凡人性，但发现这会让他失去记忆。
 
 > 因为生命将你吞噬，又将你吐出来！
