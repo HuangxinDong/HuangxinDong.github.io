@@ -15,7 +15,7 @@ highlight.noClasses = false
 
 replyByEmail = false
 
-mainSections = ["posts", "section2"]
+mainSections = ["post", "thought"]
 # robots = ""
 
 disableImageOptimization = false
@@ -23,7 +23,7 @@ disableTextInHeader = false
 # backgroundImageWidth = 1200
 
 defaultBackgroundImage = "/img/background.svg" # used as default for background images 
-# defaultFeaturedImage = "/img/featured.svg" # used as default for featured images in all articles
+# defaultFeaturedImage = "/img/lavalamp.svg" # used as default for featured images in all articles
 
 highlightCurrentMenuArea = true
 smartTOC = true
@@ -64,7 +64,7 @@ forgejoDefaultServer = "https://v8.next.forgejo.org"
   showHero = true
   heroStyle = "thumbAndBackground" # valid options: basic, big, background, thumbAndBackground
   layoutBackgroundBlur = true # only used when heroStyle equals background or thumbAndBackground
-  layoutBackgroundHeaderSpace = true # only used when heroStyle equals background
+  layoutBackgroundHeaderSpace = false # only used when heroStyle equals background
   showBreadcrumbs = true
   showDraftLabel = true
   showEdit = false 
