@@ -58,7 +58,7 @@
 
 [[main]]
   name = "关于我"
-  pageRef = "about_cn"
+  pageRef = "about"
   weight = 50
 
 

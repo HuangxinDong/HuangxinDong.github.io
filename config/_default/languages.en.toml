@@ -9,18 +9,18 @@ title = "Rooting Disorder"
   isoCode = "en"
   rtl = false
   dateFormat = "2 January 2006"
-  logo = "img/blowfish_logo_transparent.png"
+  logo = "img/portrait.png"
   secondaryLogo = "img/blowfish_logo.png"
-  description = "This is my stop."
+  description = "description"
   copyright = '© { year } Dracco_0n.'
 
 [params.author]
   name = "Dracco_0n"
   email = "minded.leucine-0u@icloud.com"
-  image = "img/blowfish_logo.png"
-  imageQuality = 96
+  image = "img/portrait.png"
+  imageQuality = 256
   headline = "test headline"
-  bio = "test bio"
+  bio = "This is my stop."
   links = [
     { email = "mailto:minded.leucine-0u@icloud.com" },
 #     { link = "https://link-to-some-website.com/" },
