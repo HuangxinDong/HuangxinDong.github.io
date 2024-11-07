@@ -3,6 +3,8 @@ title: "Markdown测试"
 date: 2019-03-11
 description: "Sample article showcasing basic Markdown syntax and formatting for HTML elements."
 type: 'sample'
+cascade:
+  heroStyle: "background"
 ---
 
 This article offers a sample of basic Markdown formatting that can be used in Blowfish, also it shows how some basic HTML elements are decorated.
