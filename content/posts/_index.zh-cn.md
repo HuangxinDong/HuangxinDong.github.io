@@ -13,5 +13,4 @@ cascade:
 {{< /lead >}}
 
 🚧 施工中 🚧
-<a onclick="goToRandomPost()" style="cursor: pointer;">漫游笔记</a>
 ---

@@ -39,9 +39,8 @@
   weight = 20
 
 [[subnavigation]]
-  name = "漫游笔记（待实现）🚧"
+  name = "漫游笔记"
   pre = "wand-magic-sparkles"
-  pageRef = "tags"
   weight = 10
 
 [[subnavigation]]

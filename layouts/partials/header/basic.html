@@ -154,8 +154,13 @@
     }} style="margin-top:-15px" {{ end }}>
     <div class="hidden md:flex items-center space-x-5">
         {{ range .Site.Menus.subnavigation }}
-        <a href="{{ .URL }}" {{ if or (strings.HasPrefix .URL "http:" ) (strings.HasPrefix .URL "https:" ) }}
+        {{ if or (eq .Name "漫游笔记") (eq .Name "Random note") }}
+            <!-- 如果是 "漫游笔记"，使用 onclick="goToRandomPost()" -->
+            <a href="javascript:void(0);" onclick="goToRandomPost()" class="flex items-center">
+        {{ else }}
+            <a href="{{ .URL }}" {{ if or (strings.HasPrefix .URL "http:" ) (strings.HasPrefix .URL "https:" ) }}
             target="_blank" {{ end }} class="flex items-center">
+        {{ end }}
             {{ if .Pre }}
             <span {{ if and .Pre .Name}} class="mr-1" {{ end }}>
                 {{ partial "icon.html" .Pre }}

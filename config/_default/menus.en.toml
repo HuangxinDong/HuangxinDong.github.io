@@ -39,9 +39,8 @@
   weight = 20
 
 [[subnavigation]]
-  name = "Roam（to do）🚧"
+  name = "Random note"
   pre = "wand-magic-sparkles"
-  pageRef = "tags"
   weight = 10
 
 [[subnavigation]]
