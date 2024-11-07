@@ -8,6 +8,7 @@ cascade:
   speed=150
   breakLines=false
   loop=true
+  lifeLike=true
 >}}
 🚧 这是一个刚刚建好的站点，正在尝试各种功能中 🚧
 {{< /typeit >}}
