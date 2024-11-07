@@ -5,7 +5,7 @@ description: "Blogs"
 cascade:
   showEdit: false
   showSummary: true
-  hideFeatureImage: true
+  hideFeatureImage: false
 ---
 
 {{< lead >}}

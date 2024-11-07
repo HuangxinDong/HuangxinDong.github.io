@@ -1,6 +1,6 @@
 ---
 title: "Thoughts"
-description: "来看看通过 Blowfish 能做到什么"
+description: "该部分用于归档一些随想、感受和日常观察。"
 
 cascade:
   showEdit: false

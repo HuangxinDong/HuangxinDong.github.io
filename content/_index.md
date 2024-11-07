@@ -1,6 +1,8 @@
 ---
 title: "欢迎光临 <br> Rooting Disorder! :tada:"
 description: "欢迎"
+cascade:
+  hideFeatureImage: false
 ---
 {{< typeit 
   speed=150
