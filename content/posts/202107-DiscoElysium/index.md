@@ -85,5 +85,11 @@ _“这个大都会经历了不同阶段的洗礼，从王室倒台，到革命�
 ---
 
 
-
-*But I got you, you got me. Got a chance, I believe. <br>Love will come and break the spell tonight.*
+{{< typeit 
+  speed=120
+  breakLines=false
+  loop=true
+  lifeLike=true
+>}}
+<i>But I got you, you got me. Got a chance, I believe. <br>Love will come and break the spell tonight.</i>
+{{< /typeit >}}
