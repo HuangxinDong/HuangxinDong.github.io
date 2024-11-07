@@ -4,6 +4,7 @@ date: 2024-09-09
 description: "test"
 tags: ["Gaming"]
 categories: '书影音游'
+type: 'post'
 ---
 
 玩完本想很认真地写一篇测评，但又觉得无从下笔，干脆把自己在玩游戏的时候随手写的随记整理起来搬运过来，作为玩家版的《想法》日记。

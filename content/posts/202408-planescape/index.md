@@ -4,6 +4,7 @@ date: 2024-08-27
 description: "test"
 tags: ["Gaming","unfinished"]
 categories: '书影音游'
+type: 'post'
 ---
 
 好荒谬，韩姆睿居然不知道他朋友是僵尸……

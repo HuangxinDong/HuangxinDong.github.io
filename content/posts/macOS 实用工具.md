@@ -4,6 +4,7 @@ date: 2024-05-27
 description: "换电脑后的一些记录！"
 tags: ["工具","unfinished"]
 categories: '先利其器'
+type: 'post'
 ---
 
 纠结了好久之后终于换了新电脑，老 Windows 用户刚开始用 macOS 感觉很多地方都很陌生，因此在这里整理记录一下。

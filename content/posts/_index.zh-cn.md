@@ -1,6 +1,6 @@
 ---
 title: "Blogs"
-description: "来看看通过 Blowfish 能做到什么"
+description: "Blogs"
 
 cascade:
   showEdit: false
@@ -13,5 +13,5 @@ cascade:
 {{< /lead >}}
 
 🚧 施工中 🚧
-
+<a onclick="goToRandomPost()" style="cursor: pointer;">漫游笔记</a>
 ---

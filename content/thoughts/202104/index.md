@@ -2,7 +2,7 @@
 title: "时间就停在他将读未读的时候了"
 date: 2021-04-11
 tags: ["Reading"]
-categories: 'Thoughts'
+type: 'thought'
 ---
 
 > 我看着它，我的朋友葬身大海，想着它多大呀，无穷无尽的大。

@@ -2,7 +2,7 @@
 title: "而凤尾鱼都会化为尘土"
 date: 2022-03-13
 tags: ["Reading"]
-categories: 'Thoughts'
+type: 'thought'
 ---
 
 
