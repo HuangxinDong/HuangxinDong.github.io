@@ -1,0 +1,17 @@
+{{ if .IsNamedParams }}
+<a target="_blank" href={{ .Get "url" }} title={{ .Get "name" }} class="friendurl">
+  <div class="frienddiv"> <div class="frienddivleft">
+      <img class="myfriend" src={{ .Get "logo" }} />
+    </div>
+    <div class="frienddivright">
+      <div class="friendname">{{ .Get "name" }}</div>
+      <div class="friendinfo">{{ .Get "word" }}</div>
+    </div>
+  </div>
+</a>
+{{ end }}
+
+<!-- 使用方法：双括号里面写
+ < friend name="<朋友名字>" url="<地址>" logo="<logo 地址>" word="<简介内容>" >
+ 对应的css是assets/css/custom.css
+ -->
