@@ -1,5 +1,5 @@
 ---
-title: "先利其器 | 一些 macOS 实用工具记录📝"
+title: "先利其器 | 一些 macOS 实用工具记录🧑‍💻"
 date: 2024-05-27
 description: "换电脑后的一些记录！"
 tags: ["工具","unfinished"]
