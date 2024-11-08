@@ -9,9 +9,8 @@ cascade:
 ---
 
 {{< lead >}}
-该部分是相对正式一点或者篇幅较长的博客文章的归档。
+This section serves as an archive for relatively formal or longer blog posts.
 {{< /lead >}}
 
 🚧 施工中 🚧
-
 ---

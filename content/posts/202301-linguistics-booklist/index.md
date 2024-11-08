@@ -1,8 +1,8 @@
 ---
-title: "语音学书籍阅读清单"
+title: "学习笔记 | 语音学书籍阅读清单"
 date: 2023-01-15T12:52:44+08:00
 tags: ["linguistics","phonetics","unfinished"]
-categories: '书影音游'
+categories: '学习笔记'
 type: 'post'
 cascade:
   heroStyle: "background"

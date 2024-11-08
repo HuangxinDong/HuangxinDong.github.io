@@ -1,12 +1,15 @@
 ---
-title: "《普通语言学教程》阅读笔记"
+title: "学习笔记 | 《普通语言学教程》阅读笔记"
 date: 2023-01-15T12:52:44+08:00
 tags: ["linguistics","unfinished"]
-categories: '书影音游'
+description: "Course in General Linguistics."
+categories: '学习笔记'
 type: 'post'
 cascade:
   heroStyle: "background"
 ---
+
+未完成的读书笔记。
 
 <!--more-->
 - 阅读日期：2023-01-11~2023-01-15
