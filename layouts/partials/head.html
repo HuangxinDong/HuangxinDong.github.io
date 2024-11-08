@@ -149,6 +149,8 @@
   </script>
   {{ end }}
   {{ end }}
-
+  {{ if .Param "math" }}
+    {{ partialCached "math.html" . }}
+  {{ end }}
   {{ partial "random.html" . }}
 </head>
