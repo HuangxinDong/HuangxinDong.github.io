@@ -18,8 +18,7 @@ cascade:
 
 在 [Hugo Themes](https://themes.gohugo.io/) 里大致逛了一下，之前最开始尝试搭建博客的时候想选一个比较学术风格的，于是选了 [Flat](https://themes.gohugo.io/themes/hugo-theme-flat/)，后来感觉看起来还是有点单调，所以重新捡起来之后重新选了 [Blowfish](https://themes.gohugo.io/themes/blowfish/)，因为示例网站看起来很好看，而且教程也写得特别详细。
 
-具体安装和部署过程就不赘述了，因为看到已经有使用同样主题的博主详细写过，而且官方中英文教程都很详细。
-
+具体安装和部署过程就不赘述了，因为看到已经有使用同样主题的博主详细写过，而且官方中英文教程都很详细。不过需要注意 GitHub Actions 那里不要用默认提供的 pages-build-deployment，因为默认是用的 Jekyll 来生成，在 <kbd>New workflow</kbd> 里新增一个 Deploy Hugo site to Pages，并且在 Settings - Pages 里面设置一下就可以了。
   
 
 ## 装修记录
@@ -183,3 +182,18 @@ Blowfish 也提供了很多有用的shortcodes，详见[简码](https://blowfish
 ---
 
 暂时就是这些！以后如果有修改再慢慢更新。
+
+
+## TO DO
+
+- [x] 修改缩略图设置
+- [x] 增加评论功能
+- [x] 增加浏览量和点赞功能
+- [x] 增加随机笔记功能
+- [ ] 增加友链——已经添加了shortcode和css！等待愿意和我添加的友邻中，可以在评论区或者通过邮件联系我 ;）
+- [ ] 修改网站图标和背景
+- [ ] 增加热力图
+- [ ] 增加网页下载备份功能
+- [ ] 修改部分文章的字体
+- [ ] 很喜欢 [Books | Christian B. B. Houmann](https://bagerbach.com/books) 和 [我的阅读 - Elizen](https://elizen.me/books/) 这种界面，看看能不能弄一个类似的
+- [ ] 增加订阅功能（暂时不准备）
