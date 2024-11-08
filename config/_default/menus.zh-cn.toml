@@ -38,6 +38,13 @@
   pageRef = "先利其器"
   weight = 20
 
+[[main]]
+  name = "学习笔记"
+  parent = "Categories"
+  pageRef = "学习笔记"
+  weight = 30
+
+
 [[subnavigation]]
   name = "漫游笔记"
   pre = "wand-magic-sparkles"
