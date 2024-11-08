@@ -35,8 +35,10 @@ cascade:
 	- 分成 main、subnavigation 和 footer 三类，分别填进去想要的网站分类名称就可以，（发现 Tag 和 Categories 不需要额外手动分类，很赞）；
 	- 如果是多语言的网站，需要额外给英文或其他文版用 `menus.en.toml` 也设置一遍，复制粘贴修改的时候注意要把 `pageRef` 改到英文的文件夹里。
 - `markup.toml`：
-  - 有需要的话可以改一下目录的 `startLevel` 或者 `endLevel`。
-  - 要在 Markdown 中使用 LaTeX 或 TeX 语法，可以参照 [Mathematics in Markdown](https://gohugo.io/content-management/mathematics/) ，启用Hugo Goldmark Extensions之后在 `markup.toml` 和 layout 文件夹中添加相应内容。
+  - 有需要的话可以改一下目录的 `startLevel` 或者 `endLevel`;
+  - 可以参照 [Goldmark](https://gohugo.io/getting-started/configuration-markup/#goldmark) 修改各种 `[goldmark]` 参数；
+    - 要在 Markdown 中使用 LaTeX 或 TeX 语法，可以参照 [Mathematics in Markdown](https://gohugo.io/content-management/mathematics/) ，启用Hugo Goldmark Extensions之后在配置文件中添加相应内容；
+      - 注意：如果你的主题设置有单独的 `markup.toml` 、`params.toml` 文件，需要分别添加到这两个文件中并去掉 `[markup]` 和 `[params]` 开头，因为官网提供的代码是用于添加在 `config.toml` 或者 `hugo.toml` 中的；
     - If you add the `$...$` delimiter pair to your configuration and JavaScript, you must double-escape the `$` when outside of math contexts, regardless of whether mathematical rendering is enabled on the page.
 - `hugo.toml`：
 	- 需要手动增添一行 `hasCJKLanguage = true`，否则在记录字数的时候会默认只记录英文字符；
