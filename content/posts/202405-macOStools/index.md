@@ -1,6 +1,7 @@
 ---
-title: "先利其器 | 一些 macOS 实用工具记录🧑‍💻"
+title: "先利其器｜一些 macOS 实用工具记录🧑‍💻"
 date: 2024-05-27
+lastmod: 2024-11-08
 description: "换电脑后的一些记录！"
 tags: ["工具","unfinished"]
 categories: '先利其器'
@@ -193,7 +194,7 @@ tree -L 1
 ```
 
 ### 文件传输
-苹果设备之间直接隔空投送就可以，和非苹果设备为一般用 [Resilio Sync](https://www.resilio.com/sync/) 来共享文件，好用且安全。由于我的鼠标还支持 [ogitech Flow](https://support.logi.com/hc/zh-cn/articles/1500005634742-%E4%BB%80%E4%B9%88%E6%98%AF-Logitech-Flow-%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%92%8C%E6%8E%92%E9%99%A4%E6%95%85%E9%9A%9C) 功能，所以也可以直接在两台都配对了同一个鼠标的电脑直接复制粘贴。
+苹果设备之间直接隔空投送就可以，和非苹果设备为一般用 [Resilio Sync](https://www.resilio.com/sync/) 来共享文件，好用且安全。由于我的鼠标还支持 [Logitech Flow](https://support.logi.com/hc/zh-cn/articles/1500005634742-%E4%BB%80%E4%B9%88%E6%98%AF-Logitech-Flow-%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%92%8C%E6%8E%92%E9%99%A4%E6%95%85%E9%9A%9C) 功能，所以也可以直接在两台都配对了同一个鼠标的电脑直接复制粘贴。
 
 如果是要给其他人发送文件，总觉得让人额外下载一个软件太过麻烦，而且也不是所有人都有每个网盘的账号/网盘仍然有剩余空间，而且网盘的审查和限速也很恶心，所以我平时用 [Transfer.zip](https://transfer.zip/) 来分享文件。如果是临时传输，可以在不关闭网页的情况下传任意大小的文件；也可以选择注册账号传输，会有 11 GB的免费空间，传后即删的情况下这个空间绰绰有余，接受者无需注册账号直接点击链接下载即可，而且国内好像没有墙。总之很好用**强烈安利**！同类型的网站搜一下还有很多，例如 [FilePizza](https://file.pizza/)，不过大多只支持临时传输。
 
@@ -215,7 +216,8 @@ tree -L 1
 发现在 FaceTime 通话的时候如果打开别的播放声音的软件，Mac 会自动降低那些软件的声音，而且我没有找到可以调节的选项。之前用 Windows 系统电脑的时候我一般会用 [EarTrumpet](https://eartrumpet.app/) 来调整不同应用的音量，在 Mac 目前没有找到特别合适的开源软件，暂时用 SoundSource 来控制音量。不过发现 SoundSource 虽然可以调节，但是在开启 FaceTime 通话之后对方的声音会有重（chÓng）音，感觉可能是声道设置的问题，暂时没找到解决方案。
 
 ### 修复 steam 游戏图标
-https://all2h.com/post/blog/ruan-ying-jian-zhe-teng/macosxia-geng-xin-steamyou-xi-tu-biao
+[macOS下修复Steam游戏图标](https://all2h.com/post/blog/ruan-ying-jian-zhe-teng/macosxia-geng-xin-steamyou-xi-tu-biao)
+
 不同游戏修复方法可能不一样，能改的都改一遍就行。不过最好的办法其实是下载游戏的时候不要创建快捷方式，因为不然卸载的时候还要手动删……
 
 

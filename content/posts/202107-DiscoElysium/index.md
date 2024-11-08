@@ -1,5 +1,5 @@
 ---
-title: "游戏日志 | 写给 Disco Elysium"
+title: "游戏日志｜写给 Disco Elysium"
 date: 2021-07-12
 description: "苏联寄出的最后一封信笺。"
 summary:  "一款生于磨难与失落的黑暗冒险。"

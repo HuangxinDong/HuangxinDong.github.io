@@ -1,5 +1,5 @@
 ---
-title: "学习笔记 | 《普通语言学教程》阅读笔记"
+title: "学习笔记｜《普通语言学教程》阅读笔记"
 date: 2023-01-15T12:52:44+08:00
 tags: ["linguistics","unfinished"]
 description: "Course in General Linguistics."

@@ -1,5 +1,5 @@
 ---
-title: "先利其器 | Hugo 博客搭建小记📝"
+title: "先利其器｜Hugo 博客搭建小记📝"
 date: 2024-11-07
 lastmod: 2024-11-08
 description: "换电脑后的一些记录！"
@@ -193,7 +193,6 @@ Blowfish 也提供了很多有用的shortcodes，详见[简码](https://blowfish
 - [ ] 增加友链——已经添加了shortcode和css！等待愿意和我添加的友邻中，可以在评论区或者通过邮件联系我 ;）
 - [ ] 修改网站图标和背景
 - [ ] 增加热力图
-- [ ] 增加网页下载备份功能
 - [ ] 修改部分文章的字体
 - [ ] 很喜欢 [Books | Christian B. B. Houmann](https://bagerbach.com/books) 和 [我的阅读 - Elizen](https://elizen.me/books/) 这种界面，看看能不能弄一个类似的
 - [ ] 增加订阅功能（暂时不准备）

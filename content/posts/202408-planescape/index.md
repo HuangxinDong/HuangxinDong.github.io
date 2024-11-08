@@ -1,5 +1,5 @@
 ---
-title: "游戏日志 | 异域镇魂曲"
+title: "游戏日志｜异域镇魂曲"
 date: 2024-08-27
 description: "test"
 tags: ["Gaming","unfinished"]

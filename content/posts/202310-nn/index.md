@@ -1,5 +1,5 @@
 ---
-title: "学习笔记 | 3b1b Neural Networks Series"
+title: "学习笔记｜3b1b Neural Networks Series"
 date: 2023-10-26T02:01:00
 description: "3b1b Neural Networks Series 笔记"
 tags: ["Machine Learning","unfinished"]

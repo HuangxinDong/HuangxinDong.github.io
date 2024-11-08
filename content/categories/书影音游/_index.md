@@ -4,7 +4,7 @@ title: 书影音游
 {{< timeline >}}
 
 {{< timelineItem icon="steam" header="最近在玩" badge="Gaming" >}}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non magna ex. Donec sollicitudin ut lorem quis lobortis. Nam ac ipsum libero. Sed a ex eget ipsum tincidunt venenatis quis sed nisl. Pellentesque sed urna vel odio consequat tincidunt id ut purus. Nam sollicitudin est sed dui interdum rhoncus. 
+[我的 2023 STEAM 年度回顾](https://store.steampowered.com/yearinreview/76561199088626340/2023)
 {{< /timelineItem >}}
 
 
@@ -12,8 +12,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non magna ex. D
 {{< douban src="https://movie.douban.com/subject/1292064/" >}}
 {{< /timelineItem >}}
 
-{{< timelineItem icon="star" header="最近在读" badge="Reading" >}}
-{{< douban src="https://book.douban.com/subject/26912767/" >}}
+{{< timelineItem header="最近在读" icon="star">}}
+{{< list title=" " cardView=true limit=3 where="Type" value="note" >}}
 {{< /timelineItem >}}
 
 {{< timelineItem icon="music" header="最近在听">}}

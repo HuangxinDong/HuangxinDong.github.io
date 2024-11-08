@@ -1,5 +1,5 @@
 ---
-title: "游戏日志 | 漫长等待"
+title: "游戏日志｜漫长等待"
 date: 2024-09-09
 description: "test"
 tags: ["Gaming"]
