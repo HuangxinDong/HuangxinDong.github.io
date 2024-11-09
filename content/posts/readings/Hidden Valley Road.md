@@ -7,6 +7,7 @@ type: 'note'
 cascade:
   heroStyle: "background"
   showLikes: false
+  showAuthor: false
 ---
 
 - 作者: 罗伯特 · 科尔克

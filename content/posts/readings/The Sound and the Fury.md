@@ -7,6 +7,7 @@ type: 'note'
 cascade:
   heroStyle: "background"
   showLikes: false
+  showAuthor: false
 ---
 
 - 作者: 威廉·福克纳
