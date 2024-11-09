@@ -4,7 +4,7 @@ title: 书影音游
 {{< timeline >}}
 
 {{< timelineItem icon="steam" header="最近在玩" badge="Gaming" >}}
-[我的 2023 STEAM 年度回顾](https://store.steampowered.com/yearinreview/76561199088626340/2023)
+{{< external_link "https://store.steampowered.com/yearinreview/76561199088626340/2023" "120%" "350px">}}
 {{< /timelineItem >}}
 
 

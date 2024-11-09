@@ -1,11 +1,11 @@
 ---
 title: 读书摘记
 tags: ["Readings"]
+pageRef: /categories/读书摘记/
 cascade:
   showSummary: false
   showCards: true
   cardView: true
-  groupByYear: true
 ---
 
 {{< lead >}}
