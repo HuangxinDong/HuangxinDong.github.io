@@ -166,8 +166,6 @@ service cloud.firestore {
 
 {{< spotify type="album" id="1aCpHSQE5ghxibsQ5gkBe0" width="100%" height="200" >}}
 
-#### 其他
-
 {{< typeit 
   speed=150
   breakLines=false
@@ -176,6 +174,88 @@ service cloud.firestore {
 >}}
 来都来了听会儿再走吧 |´・ω・)ノ
 {{< /typeit >}}
+
+#### 增加外链预览块功能
+使用 [LinkPreview API](https://www.linkpreview.net/) 来提供预览功能。
+
+在 `/layouts/shortcodes/external_link.html` 中添加（注意需要替换为自己的API Key）：
+
+```html
+<!--
+Parameters:
+  external_link - (Required) The URL of the external link, e.g. "https://example.com"
+  width - (Optional) width, default "100%"
+  height - (Optional) height, default "auto"
+-->
+<div class="external-link-preview" 
+     data-url="{{ .Get 0 }}" 
+     data-width="{{ .Get "width" | default "100%" }}" 
+     data-height="{{ .Get "height" | default "auto" }}">
+  <div class="loading">Loading preview...</div>
+</div>
+
+<style>
+/* 修改预览图片的大小和位置 */
+.post-preview{
+  margin: 1em auto;
+  position: relative;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .25), 0 0 2px rgba(0, 0, 0, .25);
+}
+.post-preview img {
+  width: 100%; /* 设置图片宽度为100% */
+  height: auto; /* 自动调整高度 */
+  object-fit: cover; /* 保持图片的比例并裁剪以适应容器 */
+  border-radius: 15px 15px 15px 15px !important; /* 设置图片的圆角 */
+}
+/* 修改预览块的样式 */
+.post-preview--meta {
+  display: flex;
+  flex-direction: column;
+  height: auto; /* 设置高度自适应 */
+  overflow: hidden;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const previewElements = document.querySelectorAll('.external-link-preview');
+
+  previewElements.forEach(element => {
+    const url = element.getAttribute('data-url');
+    const width = element.getAttribute('data-width');
+    const height = element.getAttribute('data-height');
+
+    fetch(`https://api.linkpreview.net/?key=YOUR_API_KEY&q=${encodeURIComponent(url)}`)
+      .then(response => response.json())
+      .then(data => {
+        element.innerHTML = `
+          <div class="post-preview" style="width: ${width}; height: ${height};">
+            <div class="post-preview--meta">
+              <div class="post-preview--middle">
+                <h4 class="post-preview--title">
+                  <a target="_blank" href="${data.url}">${data.title}</a>
+                </h4>
+                <p>${data.description}</p>
+                <img src="${data.image}" alt="${data.title}" style="max-width:100%; width: ${width}; height: ${height};">
+              </div>
+            </div>
+          </div>
+        `;
+      })
+      .catch(error => {
+        element.innerHTML = `<p>Failed to load preview.</p>`;
+        console.error('Error fetching link preview:', error);
+      });
+  });
+});
+</script>
+```
+
+效果：
+{{< external_link="http://www.aaronsw.com/weblog/">}}
+
+#### 其他
 
 Blowfish 也提供了很多有用的shortcodes，详见[简码](https://blowfish.page/zh-cn/docs/shortcodes/)。
 

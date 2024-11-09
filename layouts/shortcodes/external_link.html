@@ -1,0 +1,69 @@
+<!--
+Parameters:
+  external link - (Required) The URL of the external link, e.g. "https://example.com"
+  width - (Optional) width, default "50%"
+  height - (Optional) height, default "auto"
+-->
+<div class="external-link-preview" 
+     data-url="{{ .Get 0 }}" 
+     data-width="{{ .Get "width" | default "50%" }}" 
+     data-height="{{ .Get "height" | default "auto" }}">
+  <div class="loading">Loading preview...</div>
+</div>
+
+<style>
+/* 修改预览图片的大小和位置 */
+.post-preview{
+  margin: 1em auto;
+  position: relative;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .25), 0 0 2px rgba(0, 0, 0, .25);
+}
+.post-preview img {
+  width: 100%; /* 设置图片宽度为100% */
+  height: auto; /* 自动调整高度 */
+  object-fit: cover; /* 保持图片的比例并裁剪以适应容器 */
+  border-radius: 15px 15px 15px 15px !important; /* 设置图片的圆角 */
+}
+/* 修改预览块的样式 */
+.post-preview--meta {
+  display: flex;
+  flex-direction: column;
+  height: auto; /* 设置高度自适应 */
+  overflow: hidden;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const previewElements = document.querySelectorAll('.external-link-preview');
+
+  previewElements.forEach(element => {
+    const url = element.getAttribute('data-url');
+    const width = element.getAttribute('data-width');
+    const height = element.getAttribute('data-height');
+
+    fetch(`https://api.linkpreview.net/?key=e9e4fa6fcba8cb84b630fbd216068bf3&q=${encodeURIComponent(url)}`)
+      .then(response => response.json())
+      .then(data => {
+        element.innerHTML = `
+          <div class="post-preview" style="width: ${width}; height: ${height};">
+            <div class="post-preview--meta">
+              <div class="post-preview--middle">
+                <h4 class="post-preview--title">
+                  <a target="_blank" href="${data.url}">${data.title}</a>
+                </h4>
+                <p>${data.description}</p>
+                <img src="${data.image}" alt="${data.title}" style="max-width:100%; width: ${width}; height: ${height};">
+              </div>
+            </div>
+          </div>
+        `;
+      })
+      .catch(error => {
+        element.innerHTML = `<p>Failed to load preview.</p>`;
+        console.error('Error fetching link preview:', error);
+      });
+  });
+});
+</script>
