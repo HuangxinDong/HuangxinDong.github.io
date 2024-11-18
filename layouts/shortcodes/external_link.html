@@ -1,12 +1,12 @@
 <!--
 Parameters:
   external link - (Required) The URL of the external link, e.g. "https://example.com"
-  width - (Optional) width, default "50%"
+  width - (Optional) width, default "100%"
   height - (Optional) height, default "auto"
 -->
 <div class="external-link-preview" 
      data-url="{{ .Get 0 }}" 
-     data-width="{{ .Get "width" | default "50%" }}" 
+     data-width="{{ .Get "width" | default "100%" }}" 
      data-height="{{ .Get "height" | default "auto" }}">
   <div class="loading">Loading preview...</div>
 </div>

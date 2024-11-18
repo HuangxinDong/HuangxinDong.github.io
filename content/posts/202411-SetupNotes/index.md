@@ -36,7 +36,7 @@ cascade:
 - `markup.toml`：
   - 有需要的话可以改一下目录的 `startLevel` 或者 `endLevel`;
   - 可以参照 [Goldmark](https://gohugo.io/getting-started/configuration-markup/#goldmark) 修改各种 `[goldmark]` 参数；
-    - 要在 Markdown 中使用 LaTeX 或 TeX 语法，可以参照 [Mathematics in Markdown](https://gohugo.io/content-management/mathematics/) ，启用Hugo Goldmark Extensions之后在配置文件中添加相应内容；
+    - 要在网页的 Markdown 文件中使用 $\LaTeX$ 或 $\TeX$ 语法，可以参照 [Mathematics in Markdown](https://gohugo.io/content-management/mathematics/) ，启用Hugo Goldmark Extensions之后在配置文件中添加相应内容；
       - 注意：如果你的主题设置有单独的 `markup.toml` 、`params.toml` 文件，需要分别添加到这两个文件中并去掉 `[markup]` 和 `[params]` 开头，因为官网提供的代码是用于添加在 `config.toml` 或者 `hugo.toml` 中的；
     - If you add the `$...$` delimiter pair to your configuration and JavaScript, you must double-escape the `$` when outside of math contexts, regardless of whether mathematical rendering is enabled on the page.
 - `hugo.toml`：
@@ -251,9 +251,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 ```
-
-效果：
-{{< external_link="http://www.aaronsw.com/weblog/">}}
 
 #### 其他
 

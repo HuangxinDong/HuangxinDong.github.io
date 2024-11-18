@@ -6,7 +6,7 @@
 # https://blowfish.page/docs/configuration/#theme-parameters
 
 colorScheme = "blowfish"
-defaultAppearance = "dark" # valid options: light or dark
+defaultAppearance = "light" # valid options: light or dark
 autoSwitchAppearance = true
 
 math = true
@@ -24,7 +24,7 @@ disableImageOptimization = false
 disableTextInHeader = false
 # backgroundImageWidth = 1200
 
-defaultBackgroundImage = "/img/background.svg" # used as default for background images 
+# defaultBackgroundImage = "/img/background.svg" # used as default for background images 
 # defaultFeaturedImage = "/img/lavalamp.svg" # used as default for featured images in all articles
 
 highlightCurrentMenuArea = true
@@ -35,7 +35,7 @@ giteaDefaultServer = "https://git.fsfe.org"
 forgejoDefaultServer = "https://v8.next.forgejo.org"
 
 [header]
-  layout = "fixed-gradient" # valid options: basic, fixed, fixed-fill, fixed-gradient, fixed-fill-blur
+  layout = "basic" # valid options: basic, fixed, fixed-fill, fixed-gradient, fixed-fill-blur
 
 [footer]
   showMenu = true
@@ -64,7 +64,7 @@ forgejoDefaultServer = "https://v8.next.forgejo.org"
   showAuthor = true
   showAuthorBottom = true 
   showHero = true
-  heroStyle = "thumbAndBackground" # valid options: basic, big, background, thumbAndBackground
+  heroStyle = "basic" # valid options: basic, big, background, thumbAndBackground
   layoutBackgroundBlur = true # only used when heroStyle equals background or thumbAndBackground
   layoutBackgroundHeaderSpace = false # only used when heroStyle equals background
   showBreadcrumbs = true
