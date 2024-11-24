@@ -9,8 +9,8 @@ title = "Rooting Disorder"
   isoCode = "en"
   rtl = false
   dateFormat = "2 January 2006"
-  logo = "img/blowfish_logo_transparent.png"
-  secondaryLogo = "img/blowfish_logo.png"
+  logo = "img/raccoon.png"
+  secondaryLogo = "img/raccoon.png"
   description = "description"
   copyright = '© { year } Dracco_0n.'
 
