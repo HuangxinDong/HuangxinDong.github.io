@@ -1328,7 +1328,7 @@ select {
 
 .prose :where(mark):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
   color:rgba(var(--color-neutral-800), 1);
-  background-color:rgba(var(--color-primary-600), 1);
+  background-color:rgba(var(--color-primary-650), 1);
   padding:0.1rem 0.2rem;
   border-radius:0.25rem
 }
@@ -2971,11 +2971,11 @@ select {
   box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
 }
 
-.shadow-2xl {
+/*.shadow-2xl {
   --tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);
   --tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);
   box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
-}
+}*/
 
 .shadow-lg {
   --tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -4760,7 +4760,7 @@ pre {
 }
 
 .dark\:prose-invert:is(.dark *) :where(mark):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
-  background-color:rgba(var(--color-primary-400), 1)
+  background-color:rgba(var(--color-primary-650), 1)
 }
 
 .dark\:prose-invert:is(.dark *) :where(code):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
