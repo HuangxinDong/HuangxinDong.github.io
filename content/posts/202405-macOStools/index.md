@@ -10,7 +10,7 @@ cascade:
   heroStyle: "background"
 ---
 
-纠结了好久之后终于换了新电脑，老 Windows 用户刚开始用 macOS 感觉很多地方都很陌生，因此在这里整理记录一下。
+纠结了好久之后终于换了新电脑，老 Windows 用户刚开始用 macOS 感觉很多地方都很陌生，因此在这里整理、记录、备忘一下。本文中的多数软件/功能仅适用于 macOS，也有部分软件适用于其他操作系统。
 <!--more-->
 
 初步配置参考：
@@ -125,14 +125,32 @@ LaTeX 编辑器：暂时在用[Texifier](https://www.texifier.com/)和[Overleaf]
 - [Infuse 7](https://firecore.com/infuse)
 - [nPlayer](https://nplayer.com/)
 - [Fig Player (Renamed from PotPlayer X to Fig Player since version 1.1.0) - Oka Apps](https://okaapps.com/product/1612400976)
-我目前选 IINA 播放本地视频，Infuse 用来连 emby。
+
+我目前选 IINA 播放本地视频，Infuse 用来连 emby（不常用）。
+
+#### 音乐
+Apple Music + Spotify + YouTube Music，后两个只是偶尔会用。
+
+🤔发现 Apple Music 可以在播放歌曲时按下 Option 键，然后点按播放控制中的妙选随机播放按钮。
 
 ### 笔记
-平时用 obsidian，看论文用 zotero+插件，偶尔用备忘录和 Goodnotes 胡乱写。
+平时几乎所有笔记、日记都会用 obsidian，看论文用 zotero +各种插件，偶尔也用备忘录和 Goodnotes 胡乱写。
+浏览网页时用[Hypothesis](https://web.hypothes.is/)插件进行注释：支持 Markdown 和跳转，同时可以导入 obsidian，很好用！
 
 有点想学：
 - [How I draw figures for my mathematical lecture notes using Inkscape | Gilles Castel](https://castel.dev/post/lecture-notes-2/)
 - neovim
+
+### 阅读
+
+- 图书 app：多设备同步，highlight和记笔记方便，阅读时间有记录+可以每日打卡；
+- 微信读书：epub支持良好，记笔记和导出笔记都很方便，阅读时间有记录，缺点是书架有上线，而且很多之前能读的书籍已经被下架；
+- Zotero：文献，引用方便，支持 Markdown 和跳转，缺点是占用内存太大，但笔记可以通过插件导出到 obsidian；
+- 格式转换：Calibre（各种电子书格式）、简悦（网页转 Markdown）、[Pandoc](https://pandoc.org/)
+- 稍后阅读：Omnivore（支持各种设备同步、导出到obsidian，还支持highlight、笔记和RSS）
+  - 不过说起来我发现自己并没有养成稍后阅读的习惯……如果不立刻解决以后肯定会忘记！
+- RSS：最近很少用
+
 
 ### 卸载和清理
 - 可以用 [OnyX](https://www.titanium-software.fr/en/onyx.html)
@@ -147,9 +165,11 @@ LaTeX 编辑器：暂时在用[Texifier](https://www.texifier.com/)和[Overleaf]
 - 很好用的开源免费划词翻译[Easydict](https://github.com/tisfeng/Easydict)
 - 很好用的开源免费剪贴板管理：[Maccy](https://maccy.app/)
 
+
 ## 系统设置与自带软件
 ### 电源管理
 一开始尝试了[AlDente](https://apphousekitchen.com/)，但是它功能太花里胡哨而且收费，遂卸载之。之后安装了 BCLM
+
 ```
 brew tap zackelia/formulae
 brew install bclm
@@ -167,8 +187,6 @@ bclm read
 sudo bclm persist
 ```
 
-### 音乐
-发现可以在播放歌曲时按下 Option 键，然后点按播放控制中的妙选随机播放按钮。
 
 ### 输入法
 由于日常会输入ipa，所以额外下载了rime的鼠须管。需要在“设置”-“键盘”-“文字输入”-“输入法”的左下角通过➕号添加。
@@ -235,6 +253,11 @@ fn，点右上角放大之后在自定符号里面增加“技术符号”即可
 
 ### 游戏
 感觉 steam、GOG、itch 和 Epic 的 macOS 版本都依托答辩……所以现在用[Heroic Games Launcher](https://heroicgameslauncher.com/)来替代 GOG 和 Epic。
+
+#### Good Old Games
+提供 Good Old Games 的不仅有 GOG，[My Abandonware](https://www.myabandonware.com/)等网站也提供不少老游戏的下载资源。除此以外，也有少数经典游戏已经有了开源重制版，例如 [OpenRA](https://www.openra.net/)、[OpenRCT2](https://openrct2.io/)、[OpenTTD](https://www.openttd.org/) 等。
+
+DOS 游戏可以用 [DOSBox-X](https://dosbox-x.com/) 或者 [Boxer](http://boxerapp.com/) 模拟器运行，一些多年以前的主机端游戏的 ROMs 可以用 [OpenEmu](http://openemu.org/) 模拟器运行。
 
 #### Wine and Whisky
 Whisky is a modern Wine wrapper for macOS built with SwiftUI
