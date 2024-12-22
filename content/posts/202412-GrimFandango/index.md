@@ -1,6 +1,6 @@
 ---
 title: "《冥界狂想曲》: 目击众神死亡的草原上野花一片"
-date: 2024-12-23
+date: 2024-12-22
 tags: ["Gaming"]
 categories: '书影音游'
 description: "But now we dance this grim fandango"
@@ -32,11 +32,9 @@ cascade:
 
 从第一幕cutscene开始，Grim Fandango就已经通过电影般的镜头语言向人展现出自身超越一般AVG的、作为互动电影的巨大魅力——利用连续几个瞄准死神走近着的影子的分镜，即将被玩家操控的主角Manuel Calavera（一般被叫做“Manny”，而[Calavera](https://en.wikipedia.org/wiki/Calavera)在西班牙语中其实正是头骨，常见于墨西哥亡灵节）身穿斗篷举着镰刀在阴影中露出脸，却用公事公办的销售语气对茫然的新来到Land of Dead的新鲜客户推销起将要进行的四年灵魂旅行的旅行套餐。简单几句话，不仅让不熟悉亡灵节文化背景的玩家大略了解了游戏背景，也奠定了整体的冷幽默与黑色基调。很快，玩家也将发现Manny看似高端的这份死神职业只不过类似于community service的还债工作，不仅会因为业绩被老板斥责，他的斗篷下脚底还偷偷踩了高跷以增加身高，手拿的镰刀竟然也是相当现代化的便携折叠款。至此，传统意义上的恐怖死神印象彻底被消解，正如（在我这个中国玩家看来）亡灵节也以其轻松和团聚的气息、鲜明的装饰、食物和鲜花一定程度上消解了人对于死亡的恐惧。
 
-![Transportation](Transportation.jpg "Grim Fandango中的部分交通工具")
 
-很快，借由不明原因的销售业绩严重下滑，Manny逐渐发现了上司Hector LeMans与同事Domino Hurley似乎有所密谋，并开始以个人的力量与之对抗，而第一步只是简单的——抢客户。玩弄小花招提前搞到客户信息、带着大块头的天真小弟一路飞车、接到品行无瑕理应得到高端Number Nine列车旅行资格的美女优质客户、发现随之而来的重大阴谋并决心寻求某种公正，Grim Fandango在开始就迅速集齐了黑色电影的绝大多数必备元素（由于在题材上也涉及了资本主义、腐败、工会与革命，因此也有点红色），在叙事的内容与表现方式上都显得更加具有“电影感”。不仅如此，[LucasArts](https://www.lucasfilm.com/what-we-do/games/)也为Grim Fandango配备了高水平的[Soundtrack](https://www.youtube.com/watch?v=km6bLtiSSq4)和细节丰富的高质量配音，给玩家提供了良好的沉浸感。
+很快，借由不明原因的销售业绩严重下滑，Manny逐渐发现了上司Hector LeMans与同事Domino Hurley似乎有所密谋，并开始以个人的力量与之对抗，而第一步只是简单的——抢客户。玩弄小花招提前搞到客户信息、带着大块头的天真小弟一路飞车、接到品行无瑕理应得到高端Number Nine列车旅行资格的美女优质客户、发现随之而来的重大阴谋并决心寻求某种公正，Grim Fandango在开始就迅速集齐了黑色电影的绝大多数必备元素（由于在题材上也涉及了资本主义、腐败、工会与革命，因此也有点红色），在叙事的内容与表现方式上都显得更加具有“电影感”。不仅如此，[LucasArts](https://www.lucasfilm.com/what-we-do/games)也为Grim Fandango配备了高水平的[Soundtrack](https://www.youtube.com/watch?v=km6bLtiSSq4)和细节丰富的高质量配音，给玩家提供了良好的沉浸感。
 
-![Official Grim Fandango poster](grim-fandango-poster.jpg "Official Grim Fandango poster. 就连这个海报也很电影！")
 
 虽然在形式和题材上Grim Fandango都相当“电影化”，它仍然逃不开作为冒险游戏的本质，而它在冒险和谜题设计上多少有些争议，原因相当简单：有些解谜方式设置得有点太离谱，不少情况如果不看指南玩家很难猜到正确的方式（具体还是不剧透了）。不过本来就是架空世界观的有点幽默风格的游戏，其实想想解谜比较离谱倒也可以理解。操作上也有点抽象，甚至专门有个成就名叫“The Right Way -- Play the whole game with tank controls. Tim demanded this achievement.” 虽然实际上可以在设置里开启tank controls然后之后正常使用鼠标点击游玩游戏，但总之就是这些时刻（外加一些少量的bug）让你意识到它已经真的是一款超级老的游戏（比我还大几岁）了，对它的这些时代原因导致的缺点要宽容一点点，对它整体的跨越年代的震撼体验要额外赞扬。
 
