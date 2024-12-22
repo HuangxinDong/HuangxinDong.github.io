@@ -14,13 +14,13 @@ cascade:
 注意：以下文本可能包含剧透内容。
 {{< /alert  >}}
 
->With bony hands I hold my partner
->On soulless feet we cross the floor
->The music stops as if to answer
->An empty knocking at the door
->It seems his skin was sweet as mango
->When last I held him to my breast
->But now we dance this grim fandango
+>With bony hands I hold my partner /
+>On soulless feet we cross the floor /
+>The music stops as if to answer /
+>An empty knocking at the door /
+>It seems his skin was sweet as mango /
+>When last I held him to my breast /
+>But now we dance this grim fandango /
 >And will four years before we rest.
 
 
