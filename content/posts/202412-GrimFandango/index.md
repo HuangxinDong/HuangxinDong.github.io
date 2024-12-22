@@ -1,6 +1,6 @@
 ---
 title: "《冥界狂想曲》: 目击众神死亡的草原上野花一片"
-date: 2024-12-23
+date: 2024-12-22
 tags: ["Gaming"]
 categories: '书影音游'
 description: "But now we dance this grim fandango"
