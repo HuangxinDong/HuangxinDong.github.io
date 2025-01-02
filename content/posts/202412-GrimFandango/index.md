@@ -86,7 +86,7 @@ cascade:
 ![we push up flowers](flowers.jpg "But sooner or later, we push up flowers.")
 
 
-而Grim Fandango用另一种方式讨论死亡与第二次的死亡。如前所述，游戏第一幕Manny就已经告诉顾客，他之所以做这份工作是要“还债”，但用更好听的方式也可以说成是“自我救赎”。在遇见Meche并无意见揭开一场巨大的骗局之后，他不再仅限于自我救赎，而开始试图挽救其他无辜的普通人，要帮这些人最终可以抵达终点。这里的终点到底是什么，终点之后又会是什么？Manny也没有答案。在结尾Meche困惑地问他“Are we going to be together?” 他对Meche说：“You know, sweetheart, if there's one thing I've learned, it's this: nobody knows what's gonna happen at the end of the line, so you might as well enjoy the trip.” 然后他们很烂俗而夸张地、却又实在是释然而快乐地拉上列车窗帘接吻，然后随着列车一起驶入未知。
+而Grim Fandango用另一种方式讨论死亡与第二次的死亡。如前所述，游戏第一幕Manny就已经告诉顾客，他之所以做这份工作是要“还债”，但用更好听的方式也可以说成是“自我救赎”。在遇见Meche并无意间揭开一场巨大的骗局之后，他不再仅限于自我救赎，而开始试图挽救其他无辜的普通人，要帮这些人最终可以抵达终点。这里的终点到底是什么，终点之后又会是什么？Manny也没有答案。在结尾Meche困惑地问他“Are we going to be together?” 他对Meche说：“You know, sweetheart, if there's one thing I've learned, it's this: nobody knows what's gonna happen at the end of the line, so you might as well enjoy the trip.” 然后他们很烂俗而夸张地、却又实在是释然而快乐地拉上列车窗帘接吻，然后随着列车一起驶入未知。
 
 ![Glottis](Glottis.jpg "而另一种可能是有的“人”无需被拯救")
 
