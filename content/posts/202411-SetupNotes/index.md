@@ -3,7 +3,7 @@ title: "先利其器｜Hugo 博客搭建小记📝"
 date: 2024-11-07
 lastmod: 2024-11-08
 description: "换电脑后的一些记录！"
-tags: ["工具","unfinished"]
+tags: ["Tools","unfinished"]
 categories: '先利其器'
 type: 'post'
 cascade:

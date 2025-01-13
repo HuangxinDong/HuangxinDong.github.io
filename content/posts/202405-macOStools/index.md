@@ -1,16 +1,16 @@
 ---
 title: "先利其器｜一些 macOS 实用工具记录🧑‍💻"
 date: 2024-05-27
-lastmod: 2024-11-08
+lastmod: 2024-01-13
 description: "换电脑后的一些记录！"
-tags: ["工具","unfinished"]
+tags: ["Tools","unfinished"]
 categories: '先利其器'
 type: 'post'
 cascade:
   heroStyle: "background"
 ---
 
-纠结了好久之后终于换了新电脑，老 Windows 用户刚开始用 macOS 感觉很多地方都很陌生，因此在这里整理、记录、备忘一下。本文中的多数软件/功能仅适用于 macOS，也有部分软件适用于其他操作系统。
+纠结了好久之后终于换了新电脑，多年 Windows 用户刚开始用 macOS 感觉很多地方都很陌生，因此在这里整理、记录、备忘一下。本文中的多数软件/功能仅适用于 macOS，也有部分软件适用于其他操作系统。
 <!--more-->
 
 初步配置参考：
@@ -25,42 +25,46 @@ cascade:
 
 可以用 cheatsheet 软件来快速了解每个软件的快捷键，但是有些软件的似乎不太全……
 
-- 最小化窗口：`command+m`
+- 最小化窗口：<kbd>command</kbd>+<kbd>m</kbd>
 - 最大化窗口：双击应用顶部（再次双击可以恢复之前的大小）
-	- 按住`option ⌥`将鼠标移动到绿色按钮处即可看到最大化`+`标识，可以将窗口调整到适应屏幕最大，双击应用顶部也可达到同样效果。
-- 全屏化窗口：`control+command+f`
-- 关闭窗口：`command+w`
-- 关闭当前软件：`command+q`
+	- 按住<kbd>option ⌥</kbd>将鼠标移动到绿色按钮处即可看到最大化`+`标识，可以将窗口调整到适应屏幕最大，双击应用顶部也可达到同样效果。
+- 全屏化窗口：<kbd>control</kbd>+<kbd>command</kbd>+<kbd>f</kbd>
+- 关闭窗口：<kbd>command</kbd>+<kbd>w</kbd>
+- 关闭当前软件：<kbd>command</kbd>+<kbd>q</kbd>
 - 强制退出软件：
-- 隐藏窗口：`command+h`（很少用）
+- 隐藏窗口：<kbd>command</kbd>+<kbd>h</kbd>（很少用）
 - 切换应用:
-	- `command+tab`，但是特别难用，只能点开已经打开的软件，最小化了的都打不开
-- 锁屏：`Control-Command-Q`
-- 在当前 App 的多个窗口间切换：``Command-重音符 (`)``
+	- <kbd>command</kbd>+<kbd>tab</kbd>，但是特别难用，只能点开已经打开的软件，最小化了的都打不开
+- 锁屏：<kbd>Control</kbd>+<kbd>Command</kbd>+<kbd>Q</kbd>
+- 在当前 App 的多个窗口间切换：<kbd>Command</kbd>+<kbd>重音符 (`)</kbd>
 - 强制退出应用程序
-  - 普通直接关闭窗口和退出程序是`command+Q`
-  - `command+option+esc`
+  - 普通直接关闭窗口和退出程序是<kbd>command</kbd>+<kbd>Q</kbd>
+  - <kbd>command</kbd>+<kbd>option</kbd>+<kbd>esc</kbd>
   - 如果这个也没有用可以直接长按电源键关机重启
 
 ### 我的自定义快捷键
-新建txt文件：`control+option+n`
+新建txt文件：<kbd>control</kbd>+<kbd>option</kbd>+<kbd>n</kbd>
 
 #### 快捷键分屏
-在 Windows 上直接通过将窗口拖动到屏幕边缘，或使用 Win 键 + 方向键就可以快速实现分屏操作。在macOS可以进行一些简单的系统设置来弥补这个缺陷：
+在 Windows 上直接通过将窗口拖动到屏幕边缘，或使用 <kbd>Win 键</kbd> + <kbd>←→↑↓</kbd>就可以快速实现分屏操作。在 macOS 可以进行一些简单的系统设置来弥补这个缺陷：
 在“设置”中检索“快捷键”，选择“键盘”下面的“键盘快捷键”，点开选择“APP 快捷键”，分别添加“缩放”、“将窗口移到屏幕左侧”、“将窗口移到屏幕右侧”，并选择相应快捷键。
-我目前用的分别是：option+⬆️、option+⬅️、option+➡️。和少量 app 会有快捷键冲突（特别是缩放那个按键），多数好像都可以。和 obsidian 会有冲突。
-rectangle app 的是 `control+option+箭头键`，以及`control+option+-`和`control+option+=`来缩放，优点是有上下分屏缺点是没有动画，不如原生的好看。
+
+我目前用的快捷键组合分别是：<kbd>option</kbd>+<kbd>↑</kbd>、<kbd>option</kbd>+<kbd>←</kbd>、<kbd>option</kbd>+<kbd>→</kbd>。这个设置和少量 app 会有快捷键冲突（特别是缩放那个按键），多数好像都可以。
+
+rectangle app 的快捷键组合是 <kbd>control</kbd>+<kbd>option</kbd>+<kbd>←→↑↓</kbd>，以及<kbd>control</kbd>+<kbd>option</kbd>+<kbd>-</kbd>和<kbd>control</kbd>+<kbd>option</kbd>+<kbd>=</kbd>来缩放，优点是有上下分屏缺点是没有动画，不如原生的好看。
+
 *更新: macOS15 之后已经内置了类似的分屏操作。*
 
 #### 触发角快捷键
 在系统检索即可调整，目前左下角是调度中心右下角是桌面。
 
+---
 
 ## 实用工具
 ### 软件下载安装管理
-主要用[Homebrew](https://formulae.brew.sh/analytics/)或者从官网下载，偶尔用 App Store
+主要用 [Homebrew](https://formulae.brew.sh/analytics/) 或者从官网下载，偶尔用 App Store。
 
-为了安装 Game Porting Toolkit，也安装了 x86_64 version of Homebrew（`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`）
+为了安装 Game Porting Toolkit，也安装了 x86_64 version of Homebrew（`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`）。
 
 #### 切换 Homebrew 环境变量
 
@@ -84,37 +88,37 @@ source ~/.zshrc
 后续只需要在终端先执行`arch -x86_64 zsh`，就能自动切换到`x86`，不执行这段命令就会默认用`arm`版本。
 
 ### Office和LaTeX
-在学校的正版化平台下载了 Microsoft Office，同时也下载了[LibreOffice](https://www.libreoffice.org/)和 Only Office 备用。后者几乎和微软的一模一样，但是似乎打开其他人的 docx 还是可能会出错，所以卸载了。
+Office：在学校的正版化平台下载了 Microsoft Office，同时也看推荐下载了 [LibreOffice](https://www.libreoffice.org/) 和 Only Office 备用。尝试使用发现后者虽然界面和微软的几件套很像，但是似乎打开其他人的 docx 文件还是可能会出错，所以卸载了。
 
-LaTeX 编辑器：暂时在用[Texifier](https://www.texifier.com/)和[Overleaf](https://www.overleaf.com/)。前者详见[Texifier · Docs · Article](https://www.texifier.com/docs/)。
+$\LaTeX$ 编辑器：在线用 [Overleaf](https://www.overleaf.com/)，本地使用 MacTex，编辑器先尝试了 [Texifier](https://www.texifier.com/)，之后改用 VSCode + [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)，不过一般来说 Latex Workshop 最好额外修改一些设置，可以检索搜到不少相关教程。
 
 ### 浏览器
 平时一般用 Safari+Google Chrome，偶尔用 tor 和 Safari 内置的 DuckDuckGo。之前看到很多人在推荐 [Arc](https://arc.net/)，感觉虽然很好看但有点没有 get 到好用之处在哪里，所以试了一下就卸载了。
 
 #### Safari 插件
-- AdBlocker: 屏蔽广告，不必多说
+- AdBlocker: 屏蔽广告，免费版已经够用
 - [Hush](https://oblador.github.io/hush/): 屏蔽 cookie 弹窗
-- URL Linker: 方便地复制 markdown 格式的网页链接
+- URL Linker: 方便地在右键菜单复制 markdown 格式的当前网页链接
 
 #### Chrome 插件
-- 油猴：不必多说
-- Zotero: 不必多说
+- 油猴（[Tampermonkey](https://www.tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/)）：不必多说
+- Zotero: 看文献必备
 - Copy Markdown Link: 方便地复制 markdown 格式的网页链接
 - Hypothesis: 可以用来标注一些网页内容，支持添加注释和跳转，**很好用强烈安利**（Safari 其实也支持用但不是以插件形式）
 - Obsidian Web Clipper: obsidian 新出的抓取网页内容的插件
 - SteamDB: 查看游戏历史价格，偶尔可以用来临时工入库
 - Webrecorder ArchiveWeb.page: 可以把网页内容下载保存下来
-- 豆伴：豆瓣账号备份工具
-- Bionic Reading: 通过加粗单词前一两个字母的方式帮助我实现量子速读（误）
+- 豆伴：豆瓣账号备份工具，已经很久没有更新，目前（2024-01-13）书影音都无法爬取，只能备份游戏、豆列等
+- Bionic Reading: 通过加粗单词前一两个字母的方式帮助实现量子速读（误）
 - 尝试过一些 Chrome 插件商店里的番茄钟软件，感觉都一般
 
 
 ### 时间追踪与任务管理
-目前正在尝试使用[ActivityWatch](https://activitywatch.net/)，一款开源免费的时间追踪软件，同时也使用 Toggl（用来做任务、日程管理和设备同步）。
+目前正在尝试使用 [ActivityWatch](https://activitywatch.net/)，一款开源免费的时间追踪软件。<strike>同时也使用 Toggl（用来做任务、日程管理和设备同步）。</strike>
 
-*更新：不再用 toggl，改用[Session](https://www.stayinsession.com/)当番茄钟专注软件*
+*更新：不再用 toggl，改用 [Session](https://www.stayinsession.com/) 当番茄钟专注软件*
 
-每日的任务管理主要在 obsidian，同时用 reminder 搭配[reminders-menubar](https://github.com/DamascenoRafael/reminders-menubar)来记录即时任务，**特别好用强烈推荐**！因为我脑子里总是会突然各种灵光一闪，可以先都紧急记在这里以后再做。
+每日的任务管理主要在 [Obsidian](https://obsidian.md/)，同时用 reminder 搭配[reminders-menubar](https://github.com/DamascenoRafael/reminders-menubar)来记录即时任务，**特别好用强烈推荐**！因为我脑子里总是会突然各种灵光一闪，可以先都紧急记在这里以后再做。
 
 ### 媒体播放器
 搜了一下主流选择有：
@@ -134,8 +138,9 @@ Apple Music + Spotify + YouTube Music，后两个只是偶尔会用。
 🤔发现 Apple Music 可以在播放歌曲时按下 Option 键，然后点按播放控制中的妙选随机播放按钮。
 
 ### 笔记
-平时几乎所有笔记、日记都会用 obsidian，看论文用 zotero +各种插件，偶尔也用备忘录和 Goodnotes 胡乱写。
-浏览网页时用[Hypothesis](https://web.hypothes.is/)插件进行注释：支持 Markdown 和跳转，同时可以导入 obsidian，很好用！
+平时几乎所有笔记、日记都会用 [Obsidian](https://obsidian.md/)，看论文用 zotero +各种插件，偶尔也用备忘录和 Goodnotes 胡乱写。
+
+浏览网页时用 [Hypothesis](https://web.hypothes.is/) 插件进行注释：支持 Markdown 和跳转，同时可以导入 Obsidian，很好用！
 
 有点想学：
 - [How I draw figures for my mathematical lecture notes using Inkscape | Gilles Castel](https://castel.dev/post/lecture-notes-2/)
@@ -145,19 +150,19 @@ Apple Music + Spotify + YouTube Music，后两个只是偶尔会用。
 
 - 图书 app：多设备同步，highlight和记笔记方便，阅读时间有记录+可以每日打卡；
 - 微信读书：epub支持良好，记笔记和导出笔记都很方便，阅读时间有记录，缺点是书架有上线，而且很多之前能读的书籍已经被下架；
-- Zotero：文献，引用方便，支持 Markdown 和跳转，缺点是占用内存太大，但笔记可以通过插件导出到 obsidian；
+- Zotero：文献，引用方便，支持 Markdown 和跳转，缺点是占用内存太大，但笔记可以通过插件导出到 Obsidian；
 - 格式转换：Calibre（各种电子书格式）、简悦（网页转 Markdown）、[Pandoc](https://pandoc.org/)
-- 稍后阅读：Omnivore（支持各种设备同步、导出到obsidian，还支持highlight、笔记和RSS）
+- 稍后阅读：Omnivore（支持各种设备同步、导出到 Obsidian，还支持高亮、笔记和RSS）
   - 不过说起来我发现自己并没有养成稍后阅读的习惯……如果不立刻解决以后肯定会忘记！
 - RSS：最近很少用
 
 
 ### 卸载和清理
-- 可以用 [OnyX](https://www.titanium-software.fr/en/onyx.html)
+- [OnyX](https://www.titanium-software.fr/en/onyx.html)
 - 如果是 App Store 下载的软件，可以长按后点击左上角❎卸载软件
 - 如果是 homebrew 安装的软件，可以用 `brew uninstall` 卸载
 - 其他可以用 [AppCleaner](https://freemacsoft.net/appcleaner/) 或者 [PrettyClean](https://www.prettyclean.cc/en)，后者也可以用于系统清理
-- 如果想清理近似的或重复的图片，可以用[PhotoSweeper](https://overmacs.com/)
+- 如果想清理近似的或重复的图片，可以用 [PhotoSweeper](https://overmacs.com/)
 
 
 ### 其他
@@ -165,6 +170,7 @@ Apple Music + Spotify + YouTube Music，后两个只是偶尔会用。
 - 很好用的开源免费划词翻译[Easydict](https://github.com/tisfeng/Easydict)
 - 很好用的开源免费剪贴板管理：[Maccy](https://maccy.app/)
 
+---
 
 ## 系统设置与自带软件
 ### 电源管理
@@ -196,6 +202,8 @@ sudo bclm persist
 - 在不开启台前调度的时候用[HazeOver](https://hazeover.com/)，可以更方便地专注当前窗口，而且如果通过了 GitHub 的学生认证可以在[GitHub Student Developer Pack](https://education.github.com/pack#namecheap)里免费领取；
 - 我的 MacBook 是屏幕上方有 notch 的机型，虽然并不觉得很碍眼但有时候会挡住 menu bar 的一些图标，所以用开源免费的[Ice](https://icemenubar.app/) 来管理
 
+---
+
 ## 效率与文件管理
 ### 窗口管理
 [一篇文章让你透彻认识 Mac 应用切换和窗口切换的逻辑](https://www.abxm2.com/mac-switch-app-or-windows)
@@ -221,6 +229,8 @@ tree -L 1
 ### 硬盘空间管理
 
 除了设置里自带的硬盘空间管理之外，也可以用 [DaisyDisk](https://daisydiskapp.com/) 或者开源免费的 [GrandPerspective](https://grandperspectiv.sourceforge.net/) 来更详细地可视化和管理（之前在 Windows 我会用个人使用免费的 [WizTree](https://diskanalyzer.com/)，优点是速度特别快）。
+
+---
 
 ## Bug、水土不服与解决
 ### 程序坞与托盘

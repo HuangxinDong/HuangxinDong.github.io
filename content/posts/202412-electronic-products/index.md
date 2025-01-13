@@ -2,7 +2,7 @@
 title: "先利其器｜常用电子产品记录"
 date: 2024-12-20
 description: "总结了一下近期在用的电子设备、使用的理由及其优缺点。"
-tags: ["工具"]
+tags: ["Tools"]
 categories: '先利其器'
 type: 'post'
 cascade:

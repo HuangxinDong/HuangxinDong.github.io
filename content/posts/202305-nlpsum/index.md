@@ -1,7 +1,7 @@
 ---
 title: "先利其器｜部分中文自然语言处理工具功能汇总"
 date: 2023-05-29T12:52:44+08:00
-tags: ["工具"]
+tags: ["Tools"]
 categories: '先利其器'
 type: 'post'
 cascade:
