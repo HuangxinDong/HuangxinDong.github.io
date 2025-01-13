@@ -1,0 +1,7 @@
+<!-- e.g. 
+ {< align left "文字居左" >}
+{< align center "文字居中" >}
+{< align right "文字居右" >}
+ -->
+
+<p style="text-align:{{ index .Params 0 }}">{{ index .Params 1 | markdownify }}</p>
