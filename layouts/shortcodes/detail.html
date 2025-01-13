@@ -1,0 +1,12 @@
+<!-- e.g. 
+{< detail "叠叠乐" >}
+<p>这是第一个段落的内容。</p>
+
+<p>这是第二个段落的内容，位于折叠部分，实际使用别忘了双括号！</p>
+{< /detail >}
+ -->
+
+<details>
+    <summary>{{ (.Get 0) | markdownify }}</summary>
+    {{ .Inner | markdownify }}
+</details>

@@ -1,0 +1,13 @@
+<!-- e.g. {< mastodon status="嘟文ID（链接中的数字串）" >} -->
+
+{{ .Page.Scratch.Set "include_mastodon" true }}
+{{ $server := .Get "server" | default "站点名称" }}
+{{ $user := .Get "user" | default "站点用户名" }}
+{{ $width := .Get "width" | default "100%" }}
+{{ $height := .Get "height" | default "auto"}}
+{{ $status := .Get "status" | default "false" }}
+
+{{ if eq ($status) "false" }}
+{{ else }}
+<iframe src= "https://{{ $server }}/@{{ $user }}/{{ $status }}/embed" class="mastodon-embed" style="max-width: 100%; border: 0" width="{{ $width }}" height="{{ $height }}" allowfullscreen="allowfullscreen"></iframe><script src="https://{{ $server }}/embed.js" async="async"></script>
+{{ end }}

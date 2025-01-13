@@ -1,0 +1,16 @@
+<!-- e.g. 
+{< card >}
+可以在这里插入链接假装是卡片式链接。
+<br>
+好像不能插入图片？
+<br>
+换行需要空标签。实际使用需要双括号。
+{< /card >}
+ -->
+
+{{- $raw := (markdownify .Inner | chomp) -}} {{- $block := findRE
+    "(?is)^<(?:address|article|aside|blockquote|canvas|dd|div|dl|dt|fieldset|figcaption|figure|footer|form|h(?:1|2|3|4|5|6)|header|hgroup|hr|li|main|nav|noscript|ol|output|p|pre|section|table|tfoot|ul|video)\\b"
+    $raw 1 -}}
+    <div class="mycard">
+      <div class="content">{{- if or $block (not $raw) }}{{ $raw }}{{ else }} {{ $raw }} {{ end -}}</div>
+    </div>
