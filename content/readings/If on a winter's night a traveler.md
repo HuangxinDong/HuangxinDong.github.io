@@ -10,6 +10,7 @@ cascade:
   showAuthor: false
 ---
 
+{{< neodb "https://neodb.social/book/6DgIRgDZQ6lVaMInRMY3bR" >}}
 - 作者：伊塔洛·卡尔维诺
 - 出版社：译林出版社
 

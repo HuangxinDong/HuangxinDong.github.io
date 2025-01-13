@@ -10,6 +10,8 @@ cascade:
   showAuthor: false
 ---
 
+{{< neodb "https://neodb.social/book/6XdyqrpoTa0dtK67G5iQzR" >}}
+
 - 作者: 威廉·福克纳
 - 阅读日期: 2024-07-20
 - 出版社: 人民文学出版社

@@ -10,6 +10,7 @@ cascade:
   showAuthor: false
 ---
 
+{{< neodb "https://neodb.social/book/1cn1VdIBSnSe240KSWv3Eh" >}}
 - 作者：J.D.塞林格
 
 ---

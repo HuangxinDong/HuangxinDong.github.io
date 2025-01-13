@@ -10,6 +10,7 @@ cascade:
   showAuthor: false
 ---
 
+{{< neodb "https://neodb.social/book/2TthCCivPGFlWTn6nFvssv" >}}
 - 作者: 艾丽丝·门罗
 - 出版社: 北京十月文艺出版社
 - 阅读日期: 2024-02-06

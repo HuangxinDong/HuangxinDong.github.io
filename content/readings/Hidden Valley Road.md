@@ -10,6 +10,8 @@ cascade:
   showAuthor: false
 ---
 
+{{< neodb "https://neodb.social/book/5AAxVNsCcLYHP7AlM8JkAv" >}}
+
 - 作者: 罗伯特 · 科尔克
 - 出版社: 中信出版社
 - 阅读日期: 2024-09-12

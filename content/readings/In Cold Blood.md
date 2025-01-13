@@ -10,6 +10,9 @@ cascade:
   showAuthor: false
 ---
 
+{{< neodb "https://neodb.social/book/2Iwd8LVMh0xVWyK2kVYK7T" >}}
+
+---
 ###  **第一章 死神来临前夕**
 
   
