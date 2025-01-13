@@ -21,14 +21,68 @@
     {{ else }}
         {{ $data = . | transform.Unmarshal }}
         {{ if $data }}
+            {{ $coverImage := $data.cover_image_url }}
             {{ $itemRating := 0 }}{{ with $data.rating }}{{ $itemRating = . }}{{ end }}
-            <div class="db-card">
+            <div class="db-card" style="--card-cover-image: url('{{ $coverImage }}')">
                 <div class="db-card-subject">
                     <div class="db-card-post"><img loading="lazy" decoding="async" referrerpolicy="no-referrer" src="{{ $data.cover_image_url }}"></div>
                     <div class="db-card-content">
                         <div class="db-card-title"><a href="{{ $dbUrl }}" class="cute" target="_blank" rel="noreferrer">{{ $data.title }}</a></div>
+                        <div class="db-card-info">{{ $data.subtitle }}</div>
+                        <div class="db-card-info">{{ $data.orig_title }}</div>
                         <div class="rating"><span class="allstardark"><span class="allstarlight" style="width: {{ mul 10 $itemRating }}%"></span></span><span class="rating_nums">{{ $itemRating }}</span></div>
-                        <div class="db-card-abstract">{{ $data.brief }}</div>
+                        <div class="db-card-info">
+                            <br>
+                            {{ with $data.author }}
+                                <span class="author"><strong>作者：</strong>{{ delimit . ", " }}</span><br>
+                            {{ end }}
+                            {{ with $data.director }}
+                                <span class="author"><strong>导演：</strong>{{ delimit . ", " }}</span><br>
+                            {{ end }}
+                            {{ with $data.playwright }}
+                                <span class="author"><strong>编剧：</strong>{{ delimit . ", " }}</span><br>
+                            {{ end }}
+                            {{ with $data.artist }}
+                                <span class="author"><strong>艺术家：</strong>{{ delimit . ", " }}</span><br>
+                            {{ end }}
+                            {{ with $data.developer }}
+                                <span class="developer"><strong>开发商：</strong>{{ delimit . ", " }}</span><br>
+                            {{ end }}
+                            {{ with $data.translator }}
+                                <span class="translator"><strong>译者：</strong>{{ delimit . ", " }}</span><br>
+                            {{ end }}
+                            {{ with $data.pub_house }}
+                                <span class="publisher"><strong>出版社：</strong>{{ $data.pub_house }}</span><br>
+                            {{ end }}
+                            {{ with $data.publisher }}
+                                <span class="publisher"><strong>出版商：</strong>{{ delimit . ", " }}</span><br>
+                            {{ end }}
+                            {{ with $data.company }}
+                                <span class="publisher"><strong>出版发行：</strong>{{ delimit . ", " }}</span><br>
+                            {{ end }}
+                            {{ with $data.genre }}
+                                <span class="genre"><strong>类型：</strong>{{ delimit . " / " }}</span><br>
+                            {{ end }}
+                            {{ if and $data.pub_year $data.pub_month }}
+                                <span class="pub-date"><strong>出版年月：</strong>{{ $data.pub_year }}-{{ $data.pub_month }}</span><br>
+                            {{ end }}
+                            {{ with $data.release_date }}
+                                <span class="pub-date"><strong>发行日期：</strong>{{ $data.release_date }}</span><br>
+                            {{ end }}
+                            {{ with $data.area }}
+                                <span class="area"><strong>地区：</strong>{{ delimit . ", " }}</span><br>
+                            {{ end }}
+                            {{ with $data.isbn }}
+                                <span class="ISBN"><strong>ISBN: </strong>{{ $data.isbn }}</span><br>
+                            {{ end }}
+                            {{ with $data.imdb }}
+                                <span class="IMDB"><strong>IMDB: </strong>{{ $data.imdb }}</span><br>
+                            {{ end }}
+                            {{ with $data.barcode }}
+                                <span class="IMDB"><strong>条形码：</strong>{{ $data.barcode }}</span><br>
+                            {{ end }}
+                        </div>
+                        <!--<div class="db-card-abstract">{{ $data.brief }}</div>-->
                     </div>
                     <div class="db-card-cate">{{ $data.category }}</div>
                 </div>

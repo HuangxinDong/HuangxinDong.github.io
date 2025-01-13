@@ -13,9 +13,11 @@ html {
 /* db-card -------- start*/
 .db-card{
     margin:2.5rem 3rem;
-    background:var(--card-background);
     border-radius: 7px;
     box-shadow: 0 6px 10px 0 #00000053;
+    overflow: hidden;
+    position: relative;
+    background:var(--card-background);
 }
 .db-card-subject{
     display: flex;
@@ -36,11 +38,21 @@ html {
 }
 .db-card-title {
     margin-bottom: 3px;
-    font-size: 14px;
+    font-size: 20px;
     color: var(--card-text-color-main);
 }
 .db-card-title a{
     text-decoration: none!important
+}
+.db-card-info{
+    margin: 0 0 3px;
+    font-size:13px;
+    overflow: auto;
+    max-height:10rem;
+    color: var(--card-text-color-main);;
+}
+.db-card-info span {
+    margin-right: 15px;
 }
 .db-card-abstract,.db-card-comment{
     font-size:13px;
@@ -96,6 +108,31 @@ html {
 @media (max-width:550px) {
 	.db-card{margin:0.8rem 1rem;}
 	.db-card-comment{display: none;}
+}
+/* 创建模糊背景层 */
+
+.db-card::before {
+    content: '';
+    position: absolute;
+    top: -10px;      /* 稍微扩展一下范围 */
+    left: -20px;
+    right: -20px;
+    bottom: -30px;
+    background-image: var(--card-cover-image);
+    background-size: cover;
+    background-position: center;
+    filter: blur(20px);
+    opacity: 0.7;
+    z-index: 0;
+}
+
+.db-card-subject {
+    position: relative;
+    z-index: 1;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    /* 其他现有样式保持不变 */
 }
 /* db-card -------- end */
 
