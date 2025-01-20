@@ -32,23 +32,12 @@
   pageRef = "书影音游"
   weight = 10
 
-[[main]]
-  name = "读书摘记"
-  parent = "Blogs"
-  pageRef = "读书摘记"
-  weight = 10
 
 [[main]]
   name = "先利其器"
   parent = "Blogs"
   pageRef = "先利其器"
   weight = 20
-
-[[main]]
-  name = "学习笔记"
-  parent = "Blogs"
-  pageRef = "学习笔记"
-  weight = 30
 
 
 [[subnavigation]]
