@@ -1,0 +1,21 @@
+# Hakyll build artifacts
+/_cache/
+/_site/
+
+# Haskell build artifacts (Cabal)
+/dist-newstyle/
+
+# Haskell build artifacts (Stack)
+.stack-work/
+
+# Compiled site executable (if it appears in root)
+/site
+
+# macOS system files
+.DS_Store
+
+# Editor-specific files
+.idea/
+.vscode/
+*.swp
+*.swo
