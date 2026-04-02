@@ -1,0 +1,10 @@
+<!-- Series listing — placeholder for future use, not linked in nav yet -->
+<ul>
+    $for(posts)$
+        <li>
+            <a href="$url$">$title$</a>
+            $if(date)$ - $date$$endif$
+            $if(created)$ - $created$$endif$
+        </li>
+    $endfor$
+</ul>

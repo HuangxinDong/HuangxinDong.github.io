@@ -1,0 +1,8 @@
+<ul>
+    $for(posts)$
+        <li>
+            <a href="$url$">$title$</a>
+            $if(date)$ <span class="date">— $date$</span>$endif$
+        </li>
+    $endfor$
+</ul>

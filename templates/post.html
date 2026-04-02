@@ -1,0 +1,19 @@
+<article>
+    <section class="header">
+        $if(date)$
+            <span class="date">$date$</span>
+        $endif$
+        $if(author)$
+            &nbsp;· $author$
+        $endif$
+        $if(modified)$
+            <span class="modified">Updated $modified$</span>
+        $endif$
+        $if(tags)$
+            <span class="tags">$tags$</span>
+        $endif$
+    </section>
+    <section>
+        $body$
+    </section>
+</article>
