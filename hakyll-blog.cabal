@@ -14,3 +14,13 @@ executable site
                   , mtl
   ghc-options:      -threaded -rtsopts -with-rtsopts=-N
   default-language: Haskell2010
+
+executable formatter
+  main-is:          Formatter.hs
+  build-depends:    base == 4.*
+                  , directory
+                  , filepath
+                  , text
+                  , containers
+  ghc-options:      -threaded -rtsopts -with-rtsopts=-N
+  default-language: Haskell2010
