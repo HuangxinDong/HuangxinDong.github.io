@@ -201,7 +201,7 @@ customPandocCompiler =
            , "--to", "html"
            , "--lua-filter", "filters/highlight.lua"
            , "--lua-filter", "filters/obsidian-callouts.lua"
-           , "--filter", "/Users/dhx/miniconda3/bin/pandoc-latex-environment"
+           , "--filter", "pandoc-latex-environment"
            , "--number-sections"
            , "--mathjax"
            ]
