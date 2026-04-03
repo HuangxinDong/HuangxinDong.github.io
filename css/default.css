@@ -35,64 +35,87 @@ body {
    Layout
    ============================================ */
 
-header, main, footer {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 1.5rem;
+.container {
+    display: flex;
+    min-height: 100vh;
 }
 
-header {
+.sidebar {
+    width: 160px;
+    padding: 3.5rem 2.5rem;
+    border-right: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    flex-shrink: 0;
+    background: var(--bg);
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding-top: 2.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 3rem;
+    flex-direction: column;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 3.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 main {
-    min-height: 60vh;
+    width: 100%;
+    max-width: var(--max-width);
+    min-height: 50vh;
 }
 
 footer {
-    margin-top: 4rem;
-    padding-top: 1rem;
-    padding-bottom: 2rem;
+    width: 100%;
+    max-width: var(--max-width);
+    margin-top: 6rem;
+    padding-top: 1.5rem;
+    padding-bottom: 3rem;
     border-top: 1px solid var(--border);
     font-size: 0.8rem;
     color: var(--muted);
 }
 
 /* ============================================
-   Header & Nav
+   Sidebar Nav
    ============================================ */
+
+.logo {
+    margin-bottom: 0.5rem;
+}
 
 .logo a {
     font-family: var(--font-serif);
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 600;
     color: var(--text);
-    text-decoration: none;
+    text-decoration: none !important;
     letter-spacing: 0.02em;
+    border: none;
 }
 
 nav {
     display: flex;
-    gap: 1.5rem;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-top: 2.5rem;
 }
 
 nav a {
     font-family: var(--font-sans);
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: var(--muted);
-    text-decoration: none;
-    letter-spacing: 0.05em;
+    text-decoration: none !important;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
+    transition: color 0.15s;
+    border: none !important;
 }
 
 nav a:hover {
-    color: var(--text);
+    color: var(--accent);
 }
 
 /* ============================================
@@ -375,4 +398,41 @@ hr {
 img {
     max-width: 100%;
     height: auto;
+}
+/* ============================================
+   Mobile Responsiveness
+   ============================================ */
+
+@media (max-width: 850px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        padding: 2.5rem 1.5rem;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.2rem;
+        margin-top: 1.5rem;
+    }
+
+    .content {
+        padding: 2.5rem 1.5rem;
+    }
+
+    header, main, footer {
+        padding: 0;
+    }
 }

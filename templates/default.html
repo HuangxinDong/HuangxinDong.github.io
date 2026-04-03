@@ -10,28 +10,32 @@
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </head>
     <body>
-        <header>
-            <div class="logo">
-                <a href="/">Huangxin Dong</a>
+        <div class="container">
+            <aside class="sidebar">
+                <div class="logo">
+                    <a href="/">Huangxin Dong</a>
+                </div>
+                <nav>
+                    <a href="/">Home</a>
+                    <a href="/posts.html">Posts</a>
+                    <a href="/about.html">About</a>
+                    <a href="/projects.html">Projects</a>
+                </nav>
+            </aside>
+
+            <div class="content">
+                <main role="main">
+                    <h1>$title$</h1>
+                    $body$
+                </main>
+
+                <footer>
+                    Created with <a href="http://jaspervdj.be/hakyll">Hakyll</a> &amp; <a href="https://obsidian.md/">Obsidian</a>
+                    &nbsp;|&nbsp;
+                    © 2026 Huangxin Dong
+                </footer>
             </div>
-            <nav>
-                <a href="/">Home</a>
-                <a href="/posts.html">Posts</a>
-                <a href="/about.html">About</a>
-                <a href="/projects.html">Projects</a>
-            </nav>
-        </header>
-
-        <main role="main">
-            <h1>$title$</h1>
-            $body$
-        </main>
-
-        <footer>
-            Created with <a href="http://jaspervdj.be/hakyll">Hakyll</a> &amp; <a href="https://obsidian.md/">Obsidian</a>
-            &nbsp;|&nbsp;
-            © 2026 Huangxin Dong
-        </footer>
+        </div>
         <script src="/js/copy-code.js"></script>
     </body>
 </html>
