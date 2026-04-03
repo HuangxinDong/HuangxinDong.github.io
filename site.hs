@@ -205,9 +205,8 @@ customPandocCompiler :: Compiler (Item String)
 customPandocCompiler = 
     getResourceBody >>= withItemBody (unixFilter "pandoc" args)
   where
-    args = [ "--from", "markdown+wikilinks_title_after_pipe-yaml_metadata_block"
+    args = [ "--from", "markdown+mark+wikilinks_title_after_pipe-yaml_metadata_block"
            , "--to", "html"
-           , "--lua-filter", "filters/highlight.lua"
            , "--lua-filter", "filters/obsidian-callouts.lua"
            , "--filter", "pandoc-latex-environment"
            , "--number-sections"
