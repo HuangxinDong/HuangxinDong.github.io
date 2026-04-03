@@ -27,13 +27,24 @@ jobs:
           ghc-version: '9.6.7'
           cabal-version: 'latest'
 
-      - name: Cache dependencies
+      - name: Cache Haskell dependencies and build artifacts
         uses: actions/cache@v4
         with:
-          path: ~/.cabal/store
-          key: ${{ runner.os }}-cabal-${{ hashFiles('**/*.cabal') }}
+          path: |
+            ~/.cabal/store
+            dist-newstyle
+          key: ${{ runner.os }}-cabal-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('site.hs') }}
           restore-keys: |
+            ${{ runner.os }}-cabal-${{ hashFiles('**/*.cabal') }}-
             ${{ runner.os }}-cabal-
+
+      - name: Cache Hakyll incremental data
+        uses: actions/cache@v4
+        with:
+          path: _cache
+          key: ${{ runner.os }}-hakyll-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-hakyll-
 
       - name: Install System Dependencies
         run: |
