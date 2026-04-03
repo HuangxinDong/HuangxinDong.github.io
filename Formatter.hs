@@ -117,6 +117,7 @@ processLines _  []     = []
 processLines st (l:ls) =
     let s         = T.strip l
         isCB      = "```" `T.isPrefixOf` s || "~~~" `T.isPrefixOf` s
+        -- Allow using <!-- formatter-disable --> and <!-- formatter-enable --> to disable formatting
         isDisable = "<!-- formatter-disable -->" `T.isInfixOf` l
         isEnable  = "<!-- formatter-enable -->"  `T.isInfixOf` l
 
@@ -171,9 +172,14 @@ splitFrontmatter ls = case ls of
 formatFileContent :: [T.Text] -> [T.Text]
 formatFileContent ls =
     let (fm, content) = splitFrontmatter ls
-        spaced        = processLines initialState content   -- spacing + blank lines
-        mathFixed     = fixDisplayMath spaced
-    in  fm ++ mathFixed
+        -- Check if any line in frontmatter contains "formatter: false" or "format: false"
+        -- This is used to disable formatting for specific files
+        isIgnored = any (\l -> "formatter: false" `T.isInfixOf` l || "format: false" `T.isInfixOf` l) fm
+    in if isIgnored
+       then ls -- Return original lines as-is
+       else let spaced    = processLines initialState content   -- spacing + blank lines
+                mathFixed = fixDisplayMath spaced
+            in  fm ++ mathFixed
 
 --------------------------------------------------------------------------------
 -- IO
