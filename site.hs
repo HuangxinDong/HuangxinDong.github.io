@@ -194,18 +194,18 @@ seriesCtx = itemCtx
 -- Disabling the extension makes '---' body dividers work correctly while
 -- Hakyll's own frontmatter extraction is unaffected.
 customPandocCompiler :: Compiler (Item String)
-customPandocCompiler =
-    pandocCompilerWithTransformM
-        readerOptions
-        writerOptions
-        return
+customPandocCompiler = 
+    getResourceBody >>= withItemBody (unixFilter "pandoc" args)
   where
-    readerOptions = defaultHakyllReaderOptions
-        { readerExtensions =
-            disableExtension Ext_yaml_metadata_block
-                (readerExtensions defaultHakyllReaderOptions)
-        }
-    writerOptions = defaultHakyllWriterOptions
+    args = [ "--from", "markdown+wikilinks_title_after_pipe-yaml_metadata_block"
+           , "--to", "html"
+           , "--lua-filter", "filters/highlight.lua"
+           , "--lua-filter", "filters/obsidian-callouts.lua"
+           , "--filter", "/Users/dhx/miniconda3/bin/pandoc-latex-environment"
+           , "--number-sections"
+           , "--mathjax"
+           ]
+
 
 
 --------------------------------------------------------------------------------
