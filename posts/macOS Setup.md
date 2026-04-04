@@ -2,10 +2,11 @@
 title: macOS 实用工具记录
 created: 2024-05-27
 modified: 2025-01-13
-description: 换电脑后的一些记录！
+description: macOS 个性化快捷键、软件和配置记录
 tags:
   - unfinished
   - tool
+lang: zh
 ---
 
 纠结了好久之后终于换了新电脑，多年 Windows 用户刚开始用 macOS 感觉很多地方都很陌生，因此在这里整理、记录、备忘一下。本文中的多数软件/功能仅适用于 macOS，也有部分软件适用于其他操作系统。

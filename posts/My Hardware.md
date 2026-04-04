@@ -5,6 +5,8 @@ tags:
 created: 2024-12-20
 title: 常用电子产品记录
 modified: 2025-11-30
+description: 我常用的电子产品与外设记录
+lang: zh
 ---
 
 

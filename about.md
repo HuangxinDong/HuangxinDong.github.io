@@ -6,6 +6,7 @@ tags:
 created: 2023-06-19
 modified: 2025-01-21
 description: About this website
+lang: zh
 formatter: false
 ---
 

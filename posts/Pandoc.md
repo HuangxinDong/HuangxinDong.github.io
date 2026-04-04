@@ -1,9 +1,11 @@
 ---
+title: My Pandoc Setup (test post)
 tags:
   - tool
-modified: 2025-01-18
-title: My Pandoc Setup (test post)
+lang: zh
 created: 2025-01-17
+modified: 2025-01-18
+description: Notes on my Pandoc setup, template choices, and command-line workflow.
 ---
 
 [Pandoc](https://pandoc.org/) is a free-software document converter. It can convert between numerous markup and word processing formats, including, but not limited to, various flavors of [[Markdown Cheatsheet|Markdown]], [[HTML]], [[LaTeX|LaTeX]] , PDF and [Word docx](https://en.wikipedia.org/wiki/Office_Open_XML).
