@@ -29,3 +29,5 @@ formatter: false
 ## About Me
 
 太简介了无法丰富。
+
+![me](/images/aboutme.png)

@@ -21,11 +21,7 @@ I tried Hugo, Quartz, Next.js, and a working Python/Pandoc/Jinja2 pipeline to bu
 
 I've been learning *Functional Programming* for a while, and I thought it would be a good idea to use it to build my own blog: it allows you to describe a solution rather than commanding a sequence of steps. Top-down design, pattern matching, no hidden state, no side effects you didn't ask for, and so on.
 
-For example, `site.hs` *is* the build system. There's no hidden convention underneath it. Every route, every compiler, every dependency is explicit code I wrote and can read back. 
-
-The other reason is types. When I wire up a compiler pipeline, GHC tells me immediately if the pieces don't fit. Refactoring a route is less scary when the type errors are caught before I check the output in a browser.
-
-I don't know enough Haskell to do anything fancy. For now, `site.hs` is mostly combinators from the Hakyll API glued together. But that's already enough for me.
+For example, `site.hs` *is* the build system. There's no hidden convention underneath it. Every route, every compiler, every dependency is explicit code I wrote and can read back. The other reason is types. When I wire up a compiler pipeline, GHC tells me immediately if the pieces don't fit. Refactoring a route is less scary when the type errors are caught before I check the output in a browser. I don't know enough Haskell to do anything fancy. For now, `site.hs` is mostly combinators from the Hakyll API glued together. But that's already enough for me.
 
 Essentially, it's not about which tool or which language I'm using, but how I'm using it to convey my thoughts and design my own logic of blogging.
 

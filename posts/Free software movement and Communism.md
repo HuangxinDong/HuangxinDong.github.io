@@ -7,12 +7,12 @@ tags:
   - 社会与政治
   - 中文
 modified: 2025-11-18
-description: 一篇关于自由软件、开源软件与共产主义之间差异与联系的随笔。
+description: 一篇关于自由软件、开源软件与共产主义的随笔。
 lang: zh
 ---
 
 >[!note]
->2025/11/17：上 *Computer Architecture and Operating Systems* 课程老师提到 Richard Stallman，想起来之前看到的文章，因此更新一下。
+>2025/11/17：上 *Computer Architecture and Operating Systems* 课程时听到老师提起 Richard Stallman，想起来之前看到的文章，因此更新一下。
 
 ---
 
