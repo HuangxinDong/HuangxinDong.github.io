@@ -3,8 +3,7 @@ date: 2026-04-02
 title: "Fixing My Zsh Setup: Autosuggestions & History Search"
 tags:
   - tool
-  - en
-description: Notes on simplifying my zsh setup and fixing autosuggestion and history search key bindings on macOS.
+description: Notes on simplifying my zsh setup and fixing autosuggestion and history search key bindings.
 ---
 
 I use macOS Terminal with [ohmyzsh](https://github.com/ohmyzsh/ohmyzsh), since I’m not a power user and just want the simplest and most convenient setup. But for a while my shell config had two problems I kept ignoring:
