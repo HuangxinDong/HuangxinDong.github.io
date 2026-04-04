@@ -4,6 +4,11 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+    inputs:
+      force_rebuild:
+        description: 'Force clean rebuild (ignore cache)'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -42,9 +47,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: _cache
-          key: ${{ runner.os }}-hakyll-${{ github.sha }}
+          key: ${{ runner.os }}-hakyll-${{ hashFiles('site.hs') }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-hakyll-
+            ${{ runner.os }}-hakyll-${{ hashFiles('site.hs') }}-
 
       - name: Install System Dependencies
         run: |
@@ -62,7 +67,7 @@ jobs:
       - name: Build Site
         run: |
           cabal update
-          cabal run site build
+          ${{ github.event.inputs.force_rebuild == 'true' && 'cabal run site clean &&' || '' }} cabal run site build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
