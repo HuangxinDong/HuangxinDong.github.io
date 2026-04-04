@@ -45,11 +45,11 @@ The compiler calls Pandoc as an external process via `unixFilter`:
 ```haskell
 getResourceBody >>= withItemBody (unixFilter "pandoc" args)
 ```
+
 The args passed to Pandoc:
 ```
---from markdown+wikilinks_title_after_pipe-yaml_metadata_block
+--from markdown+mark+wikilinks_title_after_pipe-yaml_metadata_block
 --to html
---lua-filter filters/highlight.lua
 --lua-filter filters/obsidian-callouts.lua
 --filter pandoc-latex-environment
 --number-sections
@@ -60,15 +60,13 @@ The args passed to Pandoc:
 
 In Obsidian, I use [obsidian-pandoc](https://github.com/OliverBalfour/obsidian-pandoc) to export my notes to PDF files through $\LaTeX$ (See [HuangxinDong/Eisvogel-for-Obsidian](https://github.com/HuangxinDong/Eisvogel-for-Obsidian) for more). It supports custom lua filters, so I use it to add some custom filters to my markdown files. 
 
-I currently use one filter:
-
-- `obsidian-callouts.lua`: Converts Obsidian callout blocks to styled divs for HTML or \begin{quote} for LaTeX.
+I currently use `obsidian-callouts.lua` filter, since I just found out Pandoc has build-in support for syntax highlighting.   It converts Obsidian callout blocks to styled divs for HTML or `\begin{quote}` for LaTeX.
 
 ## Formatter.hs
 
-I write most of my notes and articals in Obsidian, although they can be rendered normally in most markdown viewers, some of them does not work in Pandoc. For example, if there's no blank line before a heading, Pandoc will render it as a normal text. Inspired by prettier, I though it would be convient to have a tool that automatically formats the markdown files. I know prettier can also format markdown files, but it's a nice practice to write it in Haskell, and custom it to my needs.
+I write most of my notes and articles in Obsidian, although they can be rendered normally in most markdown viewers, some of them does not work in Pandoc. For example, if there's no blank line before a heading, Pandoc will render it as a normal text. Inspired by [Prettier](https://prettier.io/), I though it would be convient to have a tool that automatically formats the markdown files. I know prettier can also format markdown files, but it's a nice practice to write it in Haskell, and custom it to my needs.
 
-`Formatter.hs` is a separate executable in the same cabal file. It walks the project directory, finds all `.md` and `.markdown` files, and applies a set of typography fixes
+`Formatter.hs` is a separate executable in the same cabal file. It finds all `.md` and `.markdown` files in the project directory, and applies a set of typography fixes
 in-place before the Hakyll build runs:
 
 - CJK/Latin spacing: inserts a space between Chinese characters and Latin

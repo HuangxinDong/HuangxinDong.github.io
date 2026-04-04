@@ -1,5 +1,5 @@
 ---
-title: 3b1b Calculus Series Notes
+title: 3b1b Calculus Series Notes (test post for math)
 tags:
   - math
 created: 2023-11-04
