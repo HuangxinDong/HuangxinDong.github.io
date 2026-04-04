@@ -1,4 +1,7 @@
 # README
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+[![Content: CC BY-NC 4.0](https://img.shields.io/badge/Content-CC--BY--NC--4.0-blue.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
+  
 
 This repo contains my personal blog built with Hakyll.
 
@@ -47,3 +50,8 @@ cabal run formatter -- --dry-run
 
 - The site build calls `pandoc` as an external process from `site.hs`.
 - Custom Pandoc Lua filters live in `filters/`.
+
+## License
+
+- Source code is licensed under the MIT License.
+- All blog content (including posts, images, and other assets) is licensed under CC BY-NC 4.0 unless otherwise noted.
