@@ -18,6 +18,14 @@ import           Control.Monad.Except (catchError)
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
+    match "favicon/*" $ do
+        route   idRoute
+        compile copyFileCompiler
+
+    match (fromList ["favicon.ico"]) $ do
+        route   idRoute
+        compile copyFileCompiler
+
     match "images/*" $ do
         route   idRoute
         compile copyFileCompiler
