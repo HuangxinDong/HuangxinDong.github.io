@@ -1,8 +1,8 @@
-<ul>
+<ul class="post-list">
     $for(posts)$
         <li>
             <a href="$url$">$title$</a>
-            $if(date)$ <span class="date">— $date$</span>$endif$
+            $if(date)$<time class="post-date" datetime="$dateIso$">$date$</time>$endif$
         </li>
     $endfor$
 </ul>

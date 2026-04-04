@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="$lang$">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -18,21 +18,22 @@
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </head>
     <body>
+        <a class="skip-link" href="#main-content">Skip to content</a>
         <div class="container">
             <aside class="sidebar">
                 <div class="logo">
                     <a href="/">Huangxin Dong</a>
                 </div>
-                <nav>
-                    <a href="/">Home</a>
-                    <a href="/posts.html">Posts</a>
-                    <a href="/about.html">About</a>
-                    <a href="/projects.html">Projects</a>
+                <nav aria-label="Primary">
+                    <a href="/" $homeCurrent$>Home</a>
+                    <a href="/posts.html" $postsCurrent$>Posts</a>
+                    <a href="/about.html" $aboutCurrent$>About</a>
+                    <a href="/projects.html" $projectsCurrent$>Projects</a>
                 </nav>
             </aside>
 
             <div class="content">
-                <main role="main">
+                <main id="main-content" tabindex="-1">
                     <h1>$title$</h1>
                     $body$
                 </main>

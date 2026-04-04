@@ -4,7 +4,8 @@ title: Making of this blog
 tags:
   - tool
   - programming
-  - en
+lang: en
+description: Why I built this blog with Hakyll, how it works, and what I want to improve next.
 ---
 
 ## Stack

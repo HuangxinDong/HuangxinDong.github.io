@@ -1,7 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
+import           Control.Applicative (empty)
 import           Control.Monad    (msum, filterM)
-import           Data.Char        (isAlphaNum, toLower)
-import           Data.List        (sortBy)
+import           Data.Char        (isAlphaNum, isSpace, toLower)
+import           Data.List        (isPrefixOf, sortBy)
+import           Data.Maybe       (fromMaybe)
 import           Data.Monoid      (mappend)
 import           Data.Ord         (Down (..), comparing)
 import           Data.Time        (UTCTime, formatTime, defaultTimeLocale,
@@ -13,6 +15,18 @@ import           System.FilePath  (takeBaseName)
 -- import           Text.Pandoc.Options
 import           Control.Monad.Except (catchError)
 
+
+siteTitle :: String
+siteTitle = "Huangxin Dong"
+
+siteUrl :: String
+siteUrl = "https://huangxindong.github.io"
+
+defaultDescription :: String
+defaultDescription = "Personal blog by Huangxin Dong on programming, books, games, and notes from everyday learning."
+
+defaultLang :: String
+defaultLang = "en"
 
 
 --------------------------------------------------------------------------------
@@ -42,14 +56,15 @@ main = hakyll $ do
         route   idRoute
         compile copyFileCompiler
 
+    -- Build tag index from published posts and series only
+    tags <- buildTags ("posts/*" .||. "series/*") (fromCapture "tags/*.html")
+
+    -- Static pages
     match (fromList ["about.md", "projects.md"]) $ do
         route   $ setExtension "html"
         compile $ customPandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
+            >>= loadAndApplyTemplate "templates/default.html" pageCtx
             >>= relativizeUrls
-
-    -- Build tag index from published posts and series only
-    tags <- buildTags ("posts/*" .||. "series/*") (fromCapture "tags/*.html")
 
     -- Posts
     match ("posts/*.markdown" .||. "posts/*.md") $ do
@@ -76,9 +91,10 @@ main = hakyll $ do
             allItems <- loadAll pattern
             items    <- filterM isPublished allItems
             let tagCtx =
-                    constField "title" ("Tagged: " ++ tag)          `mappend`
-                    listField "posts" (itemCtx tags) (return items)  `mappend`
-                    defaultContext
+                    constField "title" ("Posts tagged: " ++ tag)                    `mappend`
+                    constField "description" ("Browse posts tagged with " ++ tag ++ ".") `mappend`
+                    listField "posts" (itemCtx tags) (return items)                 `mappend`
+                    pageCtx
             makeItem ""
                 >>= loadAndApplyTemplate "templates/tag.html"     tagCtx
                 >>= loadAndApplyTemplate "templates/default.html" tagCtx
@@ -92,9 +108,10 @@ main = hakyll $ do
                  =<< filterM isPublished
                  =<< loadAll ("posts/*.markdown" .||. "posts/*.md")
             let postsCtx =
-                    listField "posts" (itemCtx tags) (return posts) `mappend`
-                    constField "title" "Posts"                       `mappend`
-                    defaultContext
+                    listField "posts" (itemCtx tags) (return posts)                            `mappend`
+                    constField "title" "Posts"                                                  `mappend`
+                    constField "description" "Browse all posts on the blog, listed from newest to oldest." `mappend`
+                    pageCtx
             makeItem ""
                 >>= loadAndApplyTemplate "templates/post-list-page.html" postsCtx
                 >>= loadAndApplyTemplate "templates/default.html"        postsCtx
@@ -109,7 +126,7 @@ main = hakyll $ do
                  =<< loadAll ("posts/*.markdown" .||. "posts/*.md")
             let indexCtx =
                     listField "posts" (itemCtx tags) (return posts) `mappend`
-                    defaultContext
+                    pageCtx
             getResourceBody
                 >>= applyAsTemplate indexCtx
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
@@ -135,9 +152,7 @@ isPublished item = do
 --------------------------------------------------------------------------------
 -- | Convert a filename to a URL-safe slug.
 slugify :: String -> String
-slugify = map (\c -> if c == ' ' then '-' else c)
-        . map toLower
-        . filter (\c -> isAlphaNum c || c == ' ')
+slugify = map ((\c -> if c == ' ' then '-' else c) . toLower) . filter (\c -> isAlphaNum c || c == ' ')
 
 -- | Route series files to /series/<slug>.html regardless of original filename.
 seriesRoute :: Routes
@@ -188,15 +203,81 @@ smartDateCtx fieldName fmt metaKeys = field fieldName $ \item -> do
         Nothing -> unsafeCompiler $ getModificationTime (toFilePath (itemIdentifier item))
     return $ formatTime defaultTimeLocale fmt utc
 
+metadataDateCtx :: String
+                -> String
+                -> String
+                -> Context String
+metadataDateCtx fieldName fmt metaKey = field fieldName $ \item -> do
+    meta <- getMetadata (itemIdentifier item)
+    case lookupString metaKey meta >>= parseDate of
+        Just utc -> return $ formatTime defaultTimeLocale fmt utc
+        Nothing  -> empty
+
+langCtx :: Context String
+langCtx = field "lang" $ \item -> do
+    meta <- getMetadata (itemIdentifier item)
+    return $ fromMaybe defaultLang (lookupString "lang" meta)
+
+canonicalUrlCtx :: Context String
+canonicalUrlCtx = field "canonicalUrl" $ \item -> do
+    route <- getRoute (itemIdentifier item)
+    return $ siteUrl ++ maybe "/" canonicalPath route
+
+descriptionCtx :: Context String
+descriptionCtx = field "description" $ \item -> do
+    meta <- getMetadata (itemIdentifier item)
+    let fromMeta = msum [ lookupString key meta | key <- ["description", "summary"] ]
+        fallback = summarizeHtml 160 (itemBody item)
+        description = case fromMeta of
+            Just text -> text
+            Nothing   -> if null fallback then defaultDescription else fallback
+    return $ escapeHtmlAttr description
+
+navStateCtx :: Context String
+navStateCtx =
+    field "homeCurrent"     (navField "home")     `mappend`
+    field "postsCurrent"    (navField "posts")    `mappend`
+    field "aboutCurrent"    (navField "about")    `mappend`
+    field "projectsCurrent" (navField "projects")
+  where
+    navField target item = do
+        route <- getRoute (itemIdentifier item)
+        let current = maybe False ((== target) . sectionFromRoute) route
+        return $ if current then "aria-current=\"page\"" else ""
+
+sectionFromRoute :: FilePath -> String
+sectionFromRoute route
+    | route == "index.html" = "home"
+    | route == "posts.html" = "posts"
+    | "posts/" `isPrefixOf` route = "posts"
+    | "series/" `isPrefixOf` route = "posts"
+    | "tags/" `isPrefixOf` route = "posts"
+    | route == "about.html" = "about"
+    | route == "projects.html" = "projects"
+    | otherwise = ""
+
+siteCtx :: Context String
+siteCtx =
+    constField "siteTitle" siteTitle                 `mappend`
+    constField "defaultDescription" defaultDescription `mappend`
+    langCtx                                          `mappend`
+    descriptionCtx                                   `mappend`
+    canonicalUrlCtx                                  `mappend`
+    navStateCtx
+
+pageCtx :: Context String
+pageCtx = siteCtx `mappend` defaultContext
 
 --------------------------------------------------------------------------------
 -- | Universal context for all items (posts and series).
 itemCtx :: Tags -> Context String
 itemCtx tags =
     tagsField "tags" tags                                           `mappend`
-    smartDateCtx "date"     "%B %e, %Y" ["date", "created"]        `mappend`
-    smartDateCtx "modified" "%B %e, %Y" ["modified"]               `mappend`
-    defaultContext
+    smartDateCtx    "date"        "%B %e, %Y" ["date", "created"]  `mappend`
+    smartDateCtx    "dateIso"     "%Y-%m-%d" ["date", "created"]   `mappend`
+    metadataDateCtx "modified"    "%B %e, %Y" "modified"           `mappend`
+    metadataDateCtx "modifiedIso" "%Y-%m-%d" "modified"            `mappend`
+    pageCtx
 
 postCtx :: Tags -> Context String
 postCtx = itemCtx
@@ -215,7 +296,7 @@ seriesCtx = itemCtx
 -- Disabling the extension makes '---' body dividers work correctly while
 -- Hakyll's own frontmatter extraction is unaffected.
 customPandocCompiler :: Compiler (Item String)
-customPandocCompiler = 
+customPandocCompiler =
     getResourceBody >>= withItemBody (unixFilter "pandoc" args)
   where
     args = [ "--from", "markdown+mark+wikilinks_title_after_pipe-yaml_metadata_block"
@@ -241,3 +322,41 @@ safeCompiler compiler = compiler `catchError` \errors -> do
             ++ errorMessage ++ "</pre>"
             ++ "<p style=\"font-size: 0.85rem; margin-bottom: 0; color: #666;\">Check the console for more information or fix the source file to retry.</p>"
             ++ "</div>"
+
+canonicalPath :: FilePath -> FilePath
+canonicalPath route
+    | route == "index.html" = "/"
+    | otherwise             = '/' : route
+
+summarizeHtml :: Int -> String -> String
+summarizeHtml limit =
+    trimWhitespace . collapseWhitespace . take limit . stripHtmlTags
+
+stripHtmlTags :: String -> String
+stripHtmlTags [] = []
+stripHtmlTags ('<':xs) = stripHtmlTags (drop 1 (dropWhile (/= '>') xs))
+stripHtmlTags ('&':'n':'b':'s':'p':';':xs) = ' ' : stripHtmlTags xs
+stripHtmlTags ('&':'a':'m':'p':';':xs) = '&' : stripHtmlTags xs
+stripHtmlTags ('&':'q':'u':'o':'t':';':xs) = '"' : stripHtmlTags xs
+stripHtmlTags ('&':'#':'3':'9':';':xs) = '\'' : stripHtmlTags xs
+stripHtmlTags ('&':'l':'t':';':xs) = '<' : stripHtmlTags xs
+stripHtmlTags ('&':'g':'t':';':xs) = '>' : stripHtmlTags xs
+stripHtmlTags (x:xs) = x : stripHtmlTags xs
+
+collapseWhitespace :: String -> String
+collapseWhitespace = unwords . words
+
+trimWhitespace :: String -> String
+trimWhitespace = f . f
+  where
+    f = reverse . dropWhile isSpace
+
+escapeHtmlAttr :: String -> String
+escapeHtmlAttr [] = []
+escapeHtmlAttr (c:cs) = case c of
+    '&'  -> "&amp;"  ++ escapeHtmlAttr cs
+    '"'  -> "&quot;" ++ escapeHtmlAttr cs
+    '<'  -> "&lt;"   ++ escapeHtmlAttr cs
+    '>'  -> "&gt;"   ++ escapeHtmlAttr cs
+    '\'' -> "&#39;"  ++ escapeHtmlAttr cs
+    _    -> c : escapeHtmlAttr cs

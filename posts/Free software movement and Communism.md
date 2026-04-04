@@ -7,6 +7,8 @@ tags:
   - 社会与政治
   - 中文
 modified: 2025-11-18
+description: 一篇关于自由软件、开源软件与共产主义之间差异与联系的随笔。
+lang: zh
 ---
 
 >[!note]
