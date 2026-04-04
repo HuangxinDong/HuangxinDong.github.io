@@ -44,20 +44,21 @@ body {
 }
 
 .skip-link {
-    position: absolute;
-    left: 1rem;
+    position: fixed;
+    left: -9999px;
     top: 1rem;
     padding: 0.65rem 0.9rem;
     background: var(--text);
     color: var(--bg);
     border-radius: 4px;
-    transform: translateY(-200%);
+    transform: translateY(-120%);
     transition: transform 0.15s ease;
     z-index: 100;
     border-bottom: none;
 }
 
 .skip-link:focus {
+    left: 1rem;
     transform: translateY(0);
 }
 
