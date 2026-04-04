@@ -11,8 +11,7 @@ tags:
 
 - **Hakyll** — Haskell static site generator (library, not framework)
 - **Pandoc** — document compiler, called via `unixFilter`
-- Two Lua filters: `highlight.lua`, `obsidian-callouts.lua`
-- `pandoc-latex-environment` filter (for $\LaTeX$-style environments in Markdown)
+- Lua filter: `obsidian-callouts.lua`
 - A small companion executable: `Formatter.hs`
 
 ## Why Hakyll
@@ -51,7 +50,6 @@ The args passed to Pandoc:
 --from markdown+mark+wikilinks_title_after_pipe-yaml_metadata_block
 --to html
 --lua-filter filters/obsidian-callouts.lua
---filter pandoc-latex-environment
 --number-sections
 --mathjax
 ```
@@ -92,7 +90,6 @@ During the development of the formatter, I realised there're much more edge case
 - Tags are implemented but the tag pages are unstyled.
 - `--number-sections` should probably be opt-in per post, not global.
 - The `series/` concept is half-baked — I'm still not sure how to use it.
-- I'm calling Pandoc as an external process rather than using the Haskell Pandoc library directly. This works fine but means the Lua filters and the `pandoc-latex-environment` filter need to be installed separately. At some point I'll probably switch to the library API to make the build more self-contained.
 - css is still pretty basic: no support for dark mode, no responsive design, etc.
 - Write more posts rather than just playing with the blog!
 - Maybe add some interesting gadgets...

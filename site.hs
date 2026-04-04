@@ -9,8 +9,8 @@ import           Data.Time        (UTCTime, formatTime, defaultTimeLocale,
 import           Hakyll
 import           System.Directory (getModificationTime)
 import           System.FilePath  (takeBaseName)
-import           Text.Pandoc.Extensions (disableExtension, Extension (Ext_yaml_metadata_block))
-import           Text.Pandoc.Options
+-- import           Text.Pandoc.Extensions (disableExtension, Extension (Ext_yaml_metadata_block))
+-- import           Text.Pandoc.Options
 import           Control.Monad.Except (catchError)
 
 
@@ -213,11 +213,9 @@ customPandocCompiler =
     args = [ "--from", "markdown+mark+wikilinks_title_after_pipe-yaml_metadata_block"
            , "--to", "html"
            , "--lua-filter", "filters/obsidian-callouts.lua"
-           , "--filter", "pandoc-latex-environment"
            , "--number-sections"
            , "--mathjax"
            ]
-
 
 
 --------------------------------------------------------------------------------
@@ -228,7 +226,7 @@ safeCompiler compiler = compiler `catchError` \errors -> do
     ident <- getUnderlying
     let errorMessage = unlines errors
     makeItem $ "<div class=\"compiler-error\" style=\"border: 3px solid #f44336; padding: 1.5rem; margin: 2rem 0; background: #fff5f5; border-radius: 8px; color: #d32f2f; font-family: system-ui, -apple-system, sans-serif;\">"
-            ++ "<h2 style=\"margin-top: 0; color: #b71c1c;\">⚠️ Render Error</h2>"
+            ++ "<h2 style=\"margin-top: 0; color: #b71c1c;\">Render Error</h2>"
             ++ "<p>There was an error compiling <strong>" ++ show ident ++ "</strong>. The build continued, but this page could not be rendered normally.</p>"
             ++ "<h3 style=\"font-size: 1rem; margin-bottom: 0.5rem;\">Error Details:</h3>"
             ++ "<pre style=\"background: #ffebee; padding: 1rem; border-radius: 4px; overflow-x: auto; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size: 0.9rem; line-height: 1.4;\">"
