@@ -9,6 +9,10 @@ on:
         description: 'Force clean rebuild (ignore cache)'
         type: boolean
         default: false
+      run_cabal_update:
+        description: 'Run cabal update before building'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -32,41 +36,42 @@ jobs:
           ghc-version: '9.6.7'
           cabal-version: 'latest'
 
-      - name: Cache Haskell dependencies and build artifacts
+      - name: Cache Cabal store
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.cabal/store
-            dist-newstyle
-          key: ${{ runner.os }}-cabal-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('site.hs') }}
+          path: ~/.cabal/store
+          key: ${{ runner.os }}-ghc-9.6.7-cabal-store-${{ hashFiles('**/*.cabal') }}
           restore-keys: |
-            ${{ runner.os }}-cabal-${{ hashFiles('**/*.cabal') }}-
-            ${{ runner.os }}-cabal-
+            ${{ runner.os }}-ghc-9.6.7-cabal-store-
+
+      - name: Cache dist-newstyle
+        uses: actions/cache@v4
+        with:
+          path: dist-newstyle
+          key: ${{ runner.os }}-ghc-9.6.7-dist-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('site.hs', 'Formatter.hs') }}
+          restore-keys: |
+            ${{ runner.os }}-ghc-9.6.7-dist-${{ hashFiles('**/*.cabal') }}-
+            ${{ runner.os }}-ghc-9.6.7-dist-
 
       - name: Cache Hakyll incremental data
         uses: actions/cache@v4
         with:
           path: _cache
-          key: ${{ runner.os }}-hakyll-${{ hashFiles('site.hs') }}-${{ github.sha }}
+          key: ${{ runner.os }}-hakyll-${{ hashFiles('site.hs', 'templates/**', 'filters/**', 'posts/**', 'series/**', 'about.md', 'projects.md', 'index.html') }}
           restore-keys: |
-            ${{ runner.os }}-hakyll-${{ hashFiles('site.hs') }}-
+            ${{ runner.os }}-hakyll-
 
       - name: Install System Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y pandoc
-      
-      - name: Install Python and LaTeX filter
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-      
-      - name: Install pandoc-latex-environment
-        run: pip install pandoc-latex-environment
+
+      - name: Update Cabal package index
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_cabal_update }}
+        run: cabal update
 
       - name: Build Site
         run: |
-          cabal update
           ${{ github.event.inputs.force_rebuild == 'true' && 'cabal run site clean &&' || '' }} cabal run site build
 
       - name: Upload artifact
