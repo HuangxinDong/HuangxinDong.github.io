@@ -7,6 +7,8 @@ aliases:
   - Godot Scripts
 created: 2024-05-22
 modified: 2024-11-29
+description: Godot GDScript 学习笔记，包含基础语法、常见用法与参考链接。
+lang: zh
 ---
 
 >[!note]
@@ -346,4 +348,3 @@ How you can easily make your code simpler in Godot 4
 18. subclasses
 
 ```
-
