@@ -45,7 +45,7 @@ main = hakyll $ do
 
     -- Posts
     match ("posts/*.markdown" .||. "posts/*.md") $ do
-        route $ setExtension "html"
+        route postRoute
         compile $ safeCompiler $
             customPandocCompiler
                 >>= loadAndApplyTemplate "templates/post.html"    (itemCtx tags)
@@ -135,6 +135,11 @@ slugify = map (\c -> if c == ' ' then '-' else c)
 seriesRoute :: Routes
 seriesRoute = customRoute $ \ident ->
     "series/" ++ slugify (takeBaseName (toFilePath ident)) ++ ".html"
+
+-- | Route post files to /posts/<slug>.html regardless of original filename.
+postRoute :: Routes
+postRoute = customRoute $ \ident ->
+    "posts/" ++ slugify (takeBaseName (toFilePath ident)) ++ ".html"
 
 
 --------------------------------------------------------------------------------
