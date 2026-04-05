@@ -7,30 +7,66 @@
     font-size: 0.85rem;
     color: var(--muted);
     margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.post-meta-main {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.45rem;
+    line-height: 1.7;
+}
+
+.post-meta time {
+    color: var(--text);
+}
+
+.post-meta-inline {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25rem;
+}
+
+.post-meta-prefix {
+    text-transform: lowercase;
+}
+
+.post-meta-separator {
+    color: color-mix(in srgb, var(--muted) 70%, transparent);
 }
 
 /* ============================================
    Tags
    ============================================ */
 
-.post-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 0.5rem;
+.tags {
+    line-height: 1.7;
 }
 
-.post-tags a {
+.tags a {
     font-family: var(--font-sans);
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     color: var(--muted);
     text-decoration: none;
-    letter-spacing: 0.05em;
     border-bottom: none;
 }
 
-.post-tags a:hover {
+.tags a::before {
+    content: "#";
+}
+
+.tags a:hover {
     color: var(--accent);
+}
+
+@media (max-width: 640px) {
+    .post-meta {
+        gap: 0.35rem;
+    }
 }
 
 /* ============================================
@@ -38,7 +74,7 @@
    ============================================ */
 
 .sidenote {
-    font-family: var(--font-sans);
+    font-family: var(--font-serif);
     font-size: 0.78rem;
     line-height: 1.7;
     color: var(--muted);
@@ -109,4 +145,144 @@
         color: var(--accent);
         opacity: 0.8;
     }
+}
+
+/* ============================================
+   Table of Contents (right fixed)
+   ============================================ */
+
+#toc {
+    position: fixed;
+    top: 3.5rem;
+    right: 2rem;
+    width: 240px;
+    max-height: calc(100vh - 7rem);
+    padding: 0.35rem 0.25rem 0.35rem 0;
+    overflow: hidden;
+    transition: opacity 0.2s ease;
+    z-index: 50;
+}
+
+#toc-list {
+    list-style: none;
+    padding: 0 0.35rem 0 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: calc(100vh - 7.7rem);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--border) 78%, transparent) transparent;
+}
+
+#toc-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+#toc-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#toc-list::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--border) 78%, transparent);
+    border-radius: 999px;
+}
+
+#toc-list a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    border: none;
+    color: var(--muted);
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    line-height: 1.3;
+    overflow: hidden;
+    padding: 0.2rem 0;
+    transition: color 0.15s ease;
+}
+
+/* The line indicator — length varies by heading level */
+#toc-list a::before {
+    content: '';
+    display: block;
+    flex-shrink: 0;
+    height: 4px;
+    background: currentColor;
+    border-radius: 999px;
+    opacity: 0.3;
+    transition: opacity 0.15s ease, width 0.15s ease;
+}
+
+#toc-list a[data-level="2"]::before { width: 16px; }
+#toc-list a[data-level="3"]::before { width: 10px; }
+#toc-list a[data-level="4"]::before { width: 6px; }
+
+/* Active state */
+#toc-list a.toc-active {
+    color: var(--accent);
+}
+
+#toc-list a.toc-active::before {
+    opacity: 1;
+    width: 20px;
+}
+
+#toc-list a span {
+    flex: 1;
+    min-width: 0;
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    opacity: 0;
+    transition: max-width 0.22s ease, opacity 0.18s ease;
+}
+
+#toc-list a.toc-active span,
+#toc:hover #toc-list a span {
+    max-width: 180px;
+    opacity: 1;
+}
+
+#toc-list a.toc-active {
+    font-weight: 600;
+}
+
+#toc-list a.toc-feedback {
+    color: var(--accent);
+}
+
+#toc-list a.toc-feedback::before {
+    opacity: 1;
+}
+
+article h2.toc-feedback,
+article h3.toc-feedback,
+article h4.toc-feedback {
+    animation: toc-heading-flash 0.85s ease;
+}
+
+@keyframes toc-heading-flash {
+    0% {
+        color: var(--accent);
+        text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+
+    35% {
+        color: var(--accent);
+        text-shadow: 0 0 0.6rem color-mix(in srgb, var(--accent) 28%, transparent);
+    }
+
+    100% {
+        color: inherit;
+        text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
+
+/* Only show on wide enough screens */
+@media (max-width: 1200px) {
+    #toc { display: none; }
 }

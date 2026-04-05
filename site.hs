@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 import           Control.Applicative (empty)
 import           Control.Monad    (msum, filterM)
-import           Data.Char        (isAlphaNum, isSpace, toLower)
+import           Data.Char        (isAlphaNum, isNumber, isSpace, toLower, ord)
 import           Data.List        (isPrefixOf, sortBy)
 import           Data.Maybe       (fromMaybe)
 import           Data.Monoid      (mappend)
@@ -226,24 +226,20 @@ canonicalUrlCtx = field "canonicalUrl" $ \item -> do
 descriptionCtx :: Context String
 descriptionCtx = field "description" $ \item -> do
     meta <- getMetadata (itemIdentifier item)
-    let fromMeta = msum [ lookupString key meta | key <- ["description", "summary"] ]
-        fallback = summarizeHtml 160 (itemBody item)
-        description = case fromMeta of
-            Just text -> text
-            Nothing   -> if null fallback then defaultDescription else fallback
-    return $ escapeHtmlAttr description
+    return $ escapeHtmlAttr $ fromMaybe defaultDescription $
+        msum [ lookupString key meta | key <- ["description", "summary"] ]
 
 navStateCtx :: Context String
-navStateCtx =
-    field "homeCurrent"     (navField "home")     `mappend`
-    field "postsCurrent"    (navField "posts")    `mappend`
-    field "aboutCurrent"    (navField "about")    `mappend`
-    field "projectsCurrent" (navField "projects")
-  where
-    navField target item = do
-        route <- getRoute (itemIdentifier item)
-        let current = maybe False ((== target) . sectionFromRoute) route
-        return $ if current then "aria-current=\"page\"" else ""
+navStateCtx = Context $ \key _ item -> do
+    route <- getRoute (itemIdentifier item)
+    let section = maybe "" sectionFromRoute route
+        active target = if section == target then StringField "aria-current=\"page\"" else EmptyField
+    return $ case key of
+        "homeCurrent"     -> active "home"
+        "postsCurrent"    -> active "posts"
+        "aboutCurrent"    -> active "about"
+        "projectsCurrent" -> active "projects"
+        _                 -> EmptyField
 
 sectionFromRoute :: FilePath -> String
 sectionFromRoute route
@@ -275,8 +271,11 @@ itemCtx tags =
     tagsField "tags" tags                                           `mappend`
     smartDateCtx    "date"        "%B %e, %Y" ["date", "created"]  `mappend`
     smartDateCtx    "dateIso"     "%Y-%m-%d" ["date", "created"]   `mappend`
+    smartDateCtx    "metaDate"    "%b %e, %Y" ["date", "created"]  `mappend`
     metadataDateCtx "modified"    "%B %e, %Y" "modified"           `mappend`
     metadataDateCtx "modifiedIso" "%Y-%m-%d" "modified"            `mappend`
+    metadataDateCtx "metaModified" "%b %e, %Y" "modified"          `mappend`
+    readingTimeCtx                                                   `mappend`
     pageCtx
 
 postCtx :: Tags -> Context String
@@ -314,23 +313,19 @@ safeCompiler :: Compiler (Item String) -> Compiler (Item String)
 safeCompiler compiler = compiler `catchError` \errors -> do
     ident <- getUnderlying
     let errorMessage = unlines errors
-    makeItem $ "<div class=\"compiler-error\" style=\"border: 3px solid #f44336; padding: 1.5rem; margin: 2rem 0; background: #fff5f5; border-radius: 8px; color: #d32f2f; font-family: system-ui, -apple-system, sans-serif;\">"
-            ++ "<h2 style=\"margin-top: 0; color: #b71c1c;\">Render Error</h2>"
+    makeItem $ "<div class=\"compiler-error\">"
+            ++ "<h2>Render Error</h2>"
             ++ "<p>There was an error compiling <strong>" ++ show ident ++ "</strong>. The build continued, but this page could not be rendered normally.</p>"
-            ++ "<h3 style=\"font-size: 1rem; margin-bottom: 0.5rem;\">Error Details:</h3>"
-            ++ "<pre style=\"background: #ffebee; padding: 1rem; border-radius: 4px; overflow-x: auto; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size: 0.9rem; line-height: 1.4;\">"
+            ++ "<h3>Error Details:</h3>"
+            ++ "<pre>"
             ++ errorMessage ++ "</pre>"
-            ++ "<p style=\"font-size: 0.85rem; margin-bottom: 0; color: #666;\">Check the console for more information or fix the source file to retry.</p>"
+            ++ "<p class=\"compiler-error-note\">Check the console for more information or fix the source file to retry.</p>"
             ++ "</div>"
 
 canonicalPath :: FilePath -> FilePath
 canonicalPath route
     | route == "index.html" = "/"
     | otherwise             = '/' : route
-
-summarizeHtml :: Int -> String -> String
-summarizeHtml limit =
-    trimWhitespace . collapseWhitespace . take limit . stripHtmlTags
 
 stripHtmlTags :: String -> String
 stripHtmlTags [] = []
@@ -346,11 +341,6 @@ stripHtmlTags (x:xs) = x : stripHtmlTags xs
 collapseWhitespace :: String -> String
 collapseWhitespace = unwords . words
 
-trimWhitespace :: String -> String
-trimWhitespace = f . f
-  where
-    f = reverse . dropWhile isSpace
-
 escapeHtmlAttr :: String -> String
 escapeHtmlAttr [] = []
 escapeHtmlAttr (c:cs) = case c of
@@ -360,3 +350,59 @@ escapeHtmlAttr (c:cs) = case c of
     '>'  -> "&gt;"   ++ escapeHtmlAttr cs
     '\'' -> "&#39;"  ++ escapeHtmlAttr cs
     _    -> c : escapeHtmlAttr cs
+
+readingTimeCtx :: Context String
+readingTimeCtx =
+    field "readTime" (\item -> return $ show $ readingMinutes (stats item)) `mappend`
+    field "wordCount" (\item -> return $ show $ readingUnits (stats item))
+  where
+    stats item = readingStats (stripHtmlTags (itemBody item))
+
+data ReadingStats = ReadingStats
+    { readingUnits :: Int
+    , readingMinutes :: Int
+    }
+
+readingStats :: String -> ReadingStats
+readingStats text =
+    let normalized = collapseWhitespace text
+        latinWords = countLatinWords normalized
+        cjkChars   = countCjkChars normalized
+        readingLoad = fromIntegral latinWords / 220.0 + fromIntegral cjkChars / 650.0
+        totalUnits = latinWords + cjkChars
+        minutes
+            | totalUnits <= 0 = 1
+            | otherwise       = max 1 (ceiling readingLoad)
+    in ReadingStats totalUnits minutes
+
+countLatinWords :: String -> Int
+countLatinWords = go False 0
+  where
+    go _ acc [] = acc
+    go inWord acc (c:cs)
+        | isLatinWordChar c =
+            let acc' = if inWord then acc else acc + 1
+            in go True acc' cs
+        | otherwise = go False acc cs
+
+countCjkChars :: String -> Int
+countCjkChars = length . filter isCjkChar
+
+isLatinWordChar :: Char -> Bool
+isLatinWordChar c = isAsciiLatin c || isNumber c || c == '\'' || c == '-'
+
+isAsciiLatin :: Char -> Bool
+isAsciiLatin c = ('a' <= lower && lower <= 'z')
+  where
+    lower = toLower c
+
+isCjkChar :: Char -> Bool
+isCjkChar c =
+    let code = ord c
+    in  (code >= 0x4E00  && code <= 0x9FFF)
+     || (code >= 0x3400  && code <= 0x4DBF)
+     || (code >= 0x20000 && code <= 0x2A6DF)
+     || (code >= 0x2A700 && code <= 0x2B73F)
+     || (code >= 0x2B740 && code <= 0x2B81F)
+     || (code >= 0x2B820 && code <= 0x2CEAF)
+     || (code >= 0xF900  && code <= 0xFAFF)

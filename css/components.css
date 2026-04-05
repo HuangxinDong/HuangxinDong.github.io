@@ -396,6 +396,46 @@ mark {
     white-space: nowrap;
 }
 
+.compiler-error {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    border: 1px solid color-mix(in srgb, #c53a2b 35%, var(--border) 65%);
+    border-left-width: 4px;
+    border-radius: 12px;
+    background: color-mix(in srgb, #c53a2b 10%, var(--bg) 90%);
+    color: var(--text);
+    font-family: var(--font-sans);
+}
+
+.compiler-error h2,
+.compiler-error h3 {
+    margin-top: 0;
+    color: color-mix(in srgb, #c53a2b 82%, var(--text) 18%);
+}
+
+.compiler-error h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.compiler-error pre {
+    margin: 0 0 1rem;
+    padding: 1rem;
+    overflow-x: auto;
+    border-radius: 8px;
+    background: color-mix(in srgb, #c53a2b 8%, var(--code-bg) 92%);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.compiler-error-note {
+    margin-bottom: 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
 /* ============================================
    Tables (booktabs style)
    ============================================ */

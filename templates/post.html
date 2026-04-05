@@ -1,16 +1,21 @@
 <article>
     <section class="post-meta" aria-label="Post metadata">
-        $if(date)$
-            <time class="date" datetime="$dateIso$">$date$</time>
-        $endif$
-        $if(author)$
-            &nbsp;· $author$
-        $endif$
-        $if(modified)$
-            <span class="modified">Updated <time datetime="$modifiedIso$">$modified$</time></span>
-        $endif$
+        <p class="post-meta-main">
+            $if(date)$
+                <time class="date" datetime="$dateIso$">$metaDate$</time>
+            $endif$
+            $if(modified)$
+                <span class="post-meta-separator" aria-hidden="true">&middot;</span>
+                <span class="post-meta-inline">
+                    <span class="post-meta-prefix">updated</span>
+                    <time class="modified" datetime="$modifiedIso$">$metaModified$</time>
+                </span>
+            $endif$
+            <span class="post-meta-separator" aria-hidden="true">&middot;</span>
+            <span>$readTime$ min read ($wordCount$ words)</span>
+        </p>
         $if(tags)$
-            <span class="tags">$tags$</span>
+            <div class="tags">$tags$</div>
         $endif$
     </section>
     <section>
