@@ -1,0 +1,282 @@
+/* ============================================
+   Code
+   ============================================ */
+
+code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    background: var(--code-bg);
+    padding: 0.15em 0.35em;
+    border-radius: 3px;
+}
+
+pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.2rem;
+    max-width: 100%;
+    overflow-x: auto;
+    line-height: 1.6;
+    margin: 1.5rem 0;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    font-size: 0.85rem;
+    color: var(--text);
+}
+
+.code-block-container {
+    position: relative;
+    margin: 1.8rem 0;
+    width: 100%;
+    max-width: 100%;
+}
+
+.code-block-container pre {
+    margin: 0;
+}
+
+div.sourceCode,
+.scroll-wrapper {
+    width: 100%;
+    max-width: 100%;
+}
+
+.copy-button {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s, color 0.15s;
+    z-index: 10;
+}
+
+.code-block-container:hover .copy-button,
+.code-block-container:focus-within .copy-button {
+    opacity: 1;
+}
+
+.copy-button:hover,
+.copy-button:focus-visible {
+    color: var(--accent);
+}
+
+.copy-button.copied {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.copy-button svg {
+    display: block;
+}
+
+/* ============================================
+   Syntax Highlighting (Pandoc token classes)
+   ============================================ */
+
+.sourceCode .co { color: #8e908c; font-style: italic; }
+.sourceCode .ot { color: #8959a8; }
+.sourceCode .at { color: #eab700; }
+.sourceCode .ss { color: #718c00; }
+.sourceCode .st { color: #718c00; }
+.sourceCode .va { color: #c82829; }
+.sourceCode .cf { color: #8959a8; font-weight: bold; }
+.sourceCode .op { color: #3e999f; }
+.sourceCode .bu { color: #eab700; }
+.sourceCode .ex { color: #4271ae; }
+.sourceCode .pp { color: #8959a8; }
+.sourceCode .do { color: #8e908c; font-style: italic; }
+.sourceCode .an { color: #eab700; }
+.sourceCode .cv { color: #8e908c; font-style: italic; }
+.sourceCode .in { color: #8e908c; font-style: italic; }
+.sourceCode .kw { color: #8959a8; font-weight: bold; }
+.sourceCode .dt { color: #eab700; }
+.sourceCode .dv { color: #f5871f; }
+.sourceCode .bn { color: #f5871f; }
+.sourceCode .fl { color: #f5871f; }
+.sourceCode .ch { color: #718c00; }
+.sourceCode .fu { color: #4271ae; }
+
+/* ============================================
+   Blockquote
+   ============================================ */
+
+blockquote {
+    font-family: var(--font-serif);
+    margin: 1.5rem 0;
+    padding: 0.8rem 1.2rem;
+    border-left: 3px solid var(--border);
+    color: var(--muted);
+}
+
+blockquote p {
+    margin: 0;
+    text-align: left;
+}
+
+/* ============================================
+   Obsidian Callouts
+   ============================================ */
+
+.callout {
+    margin: 1.5rem 0;
+    padding: 0.75rem 1.1rem;
+    border-left: 2px solid var(--border);
+    background: transparent;
+}
+
+.callout-title {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.78rem;
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+}
+
+.callout p {
+    margin: 0;
+    font-size: 0.95em;
+}
+
+.callout-note      { border-color: #5a7fa8; }
+.callout-note      .callout-title { color: #5a7fa8; }
+
+.callout-info      { border-color: #3a8fa8; }
+.callout-info      .callout-title { color: #3a8fa8; }
+
+.callout-tip       { border-color: var(--accent); }
+.callout-tip       .callout-title { color: var(--accent); }
+
+.callout-warning   { border-color: #b07d2a; }
+.callout-warning   .callout-title { color: #b07d2a; }
+
+.callout-danger,
+.callout-error     { border-color: #a03030; }
+.callout-danger    .callout-title,
+.callout-error     .callout-title { color: #a03030; }
+
+.callout-important { border-color: #7a3a8a; }
+.callout-important .callout-title { color: #7a3a8a; }
+
+.callout-example   { border-color: #6a4aaa; }
+.callout-example   .callout-title { color: #6a4aaa; }
+
+.callout-quote     { border-color: var(--muted); }
+.callout-quote     .callout-title { color: var(--muted); }
+
+.callout-success   { border-color: #2d7a4a; }
+.callout-success   .callout-title { color: #2d7a4a; }
+
+/* ============================================
+   Highlight (==text==)
+   ============================================ */
+
+mark {
+    background: #fff3b0;
+    color: inherit;
+    padding: 0.05em 0.2em;
+    border-radius: 2px;
+}
+
+/* ============================================
+   Post list (Archive / Home)
+   ============================================ */
+
+.post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.post-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    gap: 1rem;
+}
+
+.post-list li:first-child {
+    border-top: 1px solid var(--border);
+}
+
+.post-list .post-date {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+/* ============================================
+   Tables (booktabs style)
+   ============================================ */
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: auto;
+    max-width: 100%;
+    margin: 1.5rem 0;
+    font-size: 0.95em;
+    border-top: 2px solid var(--text);
+    border-bottom: 2px solid var(--text);
+    counter-increment: caption;
+}
+
+thead tr > th {
+    border-bottom: 1px solid var(--text);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+}
+
+th, td {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    line-height: 1.4;
+}
+
+tbody tr:first-child > td {
+    padding-top: 0.6rem;
+}
+
+caption {
+    text-align: left;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    color: var(--muted);
+    padding: 0 0 0.4rem;
+    caption-side: top;
+}
+
+caption::before {
+    content: 'Table ' counter(caption) '. ';
+    font-weight: 500;
+}
+
+.scroll-wrapper {
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+.scroll-wrapper > table {
+    margin: 0;
+    white-space: nowrap;
+}

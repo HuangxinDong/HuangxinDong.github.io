@@ -136,6 +136,12 @@ Below is a test of the website frontend.
 
 Lorem ==ipsum dolor== sit amet, consectetur adipiscing elit. Nam aliquet libero quis lectus elementum fermentum.
 
+> [!sidenote]
+> This is a sidenote. 这是一大段话 consectetur adipiscing elit. Nam aliquet libero quis lectus elementum fermentum. Nam aliquet libero quis lectus elementum fermentum. Nam aliquet libero quis lectus elementum fermentum.
+
+> [!sidenote-l]
+> This is a left sidenote. 这是一大段话 consectetur adipiscing elit. Nam aliquet libero quis lectus elementum fermentum. Nam aliquet libero quis lectus elementum fermentum. Nam aliquet libero quis lectus elementum fermentum.
+
 表格：
 
 | table | a   | 中文   | what |

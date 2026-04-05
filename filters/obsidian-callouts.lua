@@ -1,10 +1,14 @@
 -- obsidian-callouts.lua
 -- Converts Obsidian callout blocks to styled HTML divs.
---
--- Supported callout types (maps to CSS class .callout-<type>):
+
+-- Standard callout types (maps to CSS class .callout-<type>):
 --   note, info, tip, warning, caution, danger, error, important,
 --   abstract, summary, question, quote, example, success, check,
 --   done, fail, bug
+
+-- Special callout types (rendered as sidenotes):
+--   sidenote   → floats to the right margin
+--   sidenote-l → floats to the left margin
 
 function BlockQuote(el)
     if #el.content == 0 then return el end
@@ -20,7 +24,6 @@ function BlockQuote(el)
     if not ctype then return el end
 
     local ctype_lower = ctype:lower()
-    local title = ctype:sub(1,1):upper() .. ctype:sub(2):lower()  -- Title-case default
 
     -- Collect any additional title text after [!type] up to the first line break
     local content_start_idx = 2
@@ -33,13 +36,6 @@ function BlockQuote(el)
         else
             table.insert(title_parts, elem)
             content_start_idx = i + 1
-        end
-    end
-
-    if #title_parts > 0 then
-        local title_str = pandoc.utils.stringify(title_parts):gsub("^%s+", "")
-        if title_str ~= "" then
-            title = title_str
         end
     end
 
@@ -60,6 +56,32 @@ function BlockQuote(el)
     -- Render body to HTML
     local content_doc  = pandoc.Pandoc(new_blocks)
     local content_html = pandoc.write(content_doc, 'html')
+
+    -- Sidenote
+    if ctype_lower == "sidenote" then
+        local html = string.format(
+            '<span class="sidenote sidenote-right">%s</span>',
+            content_html
+        )
+        return pandoc.RawBlock('html', html)
+    end
+
+    if ctype_lower == "sidenote-l" then
+        local html = string.format(
+            '<span class="sidenote sidenote-left">%s</span>',
+            content_html
+        )
+        return pandoc.RawBlock('html', html)
+    end
+
+    -- Standard callout
+    local title = ctype:sub(1,1):upper() .. ctype:sub(2):lower()
+    if #title_parts > 0 then
+        local title_str = pandoc.utils.stringify(title_parts):gsub("^%s+", "")
+        if title_str ~= "" then
+            title = title_str
+        end
+    end
 
     local html = string.format(
         '<div class="callout callout-%s">\n<div class="callout-title">%s</div>\n%s</div>',
