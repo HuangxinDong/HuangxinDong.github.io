@@ -13,7 +13,10 @@
         <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" sizes="180x180">
         <link rel="manifest" href="/favicon/site.webmanifest">
         <meta name="theme-color" content="#d2d9cb">
-        <link rel="stylesheet" href="/css/default.css" />
+        <link rel="stylesheet" href="/css/base.css" />
+        <link rel="stylesheet" href="/css/layout.css" />
+        <link rel="stylesheet" href="/css/components.css" />
+        <link rel="stylesheet" href="/css/post.css" />
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </head>
@@ -24,12 +27,20 @@
                 <div class="logo">
                     <a href="/">Huangxin Dong</a>
                 </div>
-                <nav aria-label="Primary">
+                <nav class="sidebar-nav site-links" aria-label="Primary">
                     <a href="/" $homeCurrent$>Home</a>
-                    <a href="/posts.html" $postsCurrent$>Posts</a>
                     <a href="/about.html" $aboutCurrent$>About</a>
+                    <a href="/posts.html" $postsCurrent$>Posts</a>
                     <a href="/projects.html" $projectsCurrent$>Projects</a>
                 </nav>
+                <div class="sidebar-section">
+                    <p class="sidebar-section-label">Elsewhere</p>
+                    <nav class="sidebar-nav external-links" aria-label="External links">
+                        <a href="https://dhx.vercel.app" target="_blank" rel="noreferrer">Notebook</a>
+                        <a href="https://github.com/huangxindong" target="_blank" rel="noreferrer">GitHub</a>
+                        <a href="https://www.douban.com/people/dddhx" target="_blank" rel="noreferrer">Douban</a>
+                    </nav>
+                </div>
             </aside>
 
             <div class="content">
