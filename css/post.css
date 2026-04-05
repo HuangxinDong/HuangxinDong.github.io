@@ -1,0 +1,112 @@
+/* ============================================
+   Post metadata
+   ============================================ */
+
+.post-meta {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+}
+
+/* ============================================
+   Tags
+   ============================================ */
+
+.post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+}
+
+.post-tags a {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    border-bottom: none;
+}
+
+.post-tags a:hover {
+    color: var(--accent);
+}
+
+/* ============================================
+   Sidenotes
+   ============================================ */
+
+.sidenote {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    line-height: 1.7;
+    color: var(--muted);
+    display: block;
+    float: right;
+    clear: right;
+    width: var(--sidenote-right-width);
+    margin-right: calc(-1 * (var(--sidenote-right-width) + var(--sidenote-gap)));
+    margin-top: 0.2rem;
+    margin-bottom: 1rem;
+    text-align: left;
+    padding-right: var(--sidenote-right-padding);
+    overflow-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+}
+
+.sidenote p {
+    margin: 0;
+    font-size: inherit;
+}
+
+.sidenote + .sidenote {
+    margin-top: 0.8rem;
+}
+
+.sidenote-left {
+    float: left;
+    width: var(--sidenote-left-width);
+    margin-left: calc(-1 * (var(--sidenote-left-width) + var(--sidenote-gap)));
+    margin-right: 0.4rem;
+    text-align: left;
+    padding-right: 0;
+}
+
+@media (max-width: 1100px) {
+    main {
+        padding-right: 0;
+    }
+
+    .sidenote {
+        float: none;
+        display: block;
+        width: auto;
+        margin: 1rem 0;
+        padding: 0.9rem 1rem;
+        color: color-mix(in srgb, var(--muted) 92%, var(--text) 8%);
+        background: color-mix(in srgb, var(--code-bg) 72%, white 28%);
+        border: 1px solid color-mix(in srgb, var(--border) 84%, var(--accent) 16%);
+        border-radius: 10px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    }
+
+    .sidenote-left {
+        margin-left: 0;
+        margin-right: 0;
+        text-align: left;
+    }
+
+    .sidenote::before {
+        content: "Note";
+        display: block;
+        margin-bottom: 0.35rem;
+        font-size: 0.66rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        opacity: 0.8;
+    }
+}

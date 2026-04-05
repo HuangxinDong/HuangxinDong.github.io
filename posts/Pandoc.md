@@ -127,6 +127,24 @@ Below is a test of the website frontend.
 > [!note]
 > This is an Obsidian Callout.
 
+> [!info]
+> This is an info callout.
+
+> [!warning]
+> This is a warning callout.
+
+> [!danger]
+> This is a danger callout.
+
+> [!question]
+> This is a question callout.
+
+> [!bug]
+> This is a bug callout.
+
+> [!example]
+> This is an example callout.
+
 
 >这是一段 quote
 
@@ -134,7 +152,15 @@ Below is a test of the website frontend.
 
 注意内部链接格式需要为 [测试](#标题-2)
 
+
+> [!sidenote-l]
+> This is a left sidenote. 这是一大段话 consectetur adipiscing elit. Nam aliquet libero quis lectus elementum fermentum. Nam aliquet libero quis lectus elementum fermentum. Nam aliquet libero quis lectus elementum fermentum.
+
 Lorem ==ipsum dolor== sit amet, consectetur adipiscing elit. Nam aliquet libero quis lectus elementum fermentum.
+
+> [!sidenote]
+> This is a sidenote. 这是一大段话 consectetur adipiscing elit. Nam aliquet libero quis lectus elementum fermentum. Nam aliquet libero quis lectus elementum fermentum. Nam aliquet libero quis lectus elementum fermentum.
+
 
 表格：
 
