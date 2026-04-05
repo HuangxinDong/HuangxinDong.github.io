@@ -233,13 +233,13 @@ navStateCtx :: Context String
 navStateCtx = Context $ \key _ item -> do
     route <- getRoute (itemIdentifier item)
     let section = maybe "" sectionFromRoute route
-        active target = if section == target then StringField "aria-current=\"page\"" else EmptyField
-    return $ case key of
-        "homeCurrent"     -> active "home"
-        "postsCurrent"    -> active "posts"
-        "aboutCurrent"    -> active "about"
-        "projectsCurrent" -> active "projects"
-        _                 -> EmptyField
+        active target = if section == target then "aria-current=\"page\"" else ""
+    case key of
+        "homeCurrent"     -> return $ StringField (active "home")
+        "postsCurrent"    -> return $ StringField (active "posts")
+        "aboutCurrent"    -> return $ StringField (active "about")
+        "projectsCurrent" -> return $ StringField (active "projects")
+        _                 -> empty
 
 sectionFromRoute :: FilePath -> String
 sectionFromRoute route
