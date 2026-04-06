@@ -82,34 +82,11 @@
         <script src="/js/nav.js" defer></script>
         <script src="/js/copy-code.js" defer></script>
         <script>
-            (function () {
-                var UNREGISTER_FLAG = 'sw-unregister-once-v1';
-                var alreadyRan = false;
-
-                try {
-                    alreadyRan = window.localStorage.getItem(UNREGISTER_FLAG) === '1';
-                } catch (_) {
-                    alreadyRan = false;
-                }
-
-                if (alreadyRan || !('serviceWorker' in navigator)) {
-                    return;
-                }
-
-                navigator.serviceWorker.getRegistrations().then(function (registrations) {
-                    return Promise.all(
-                        registrations.map(function (registration) {
-                            return registration.unregister();
-                        })
-                    );
-                }).finally(function () {
-                    try {
-                        window.localStorage.setItem(UNREGISTER_FLAG, '1');
-                    } catch (_) {
-                        // Ignore localStorage failures; unregister has already been attempted.
-                    }
-                });
-            })();
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            registrations.forEach(function(r) { r.unregister(); });
+            });
+        }
         </script>
     </body>
 </html>
