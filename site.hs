@@ -54,10 +54,7 @@ main = hakyll $ do
             makeItem $ intercalate "\n" [baseCss, layoutCss, componentsCss, postCss]
 
     match "js/*" $ do
-        route $ customRoute $ \ident ->
-            if toFilePath ident == "js/sw.js"
-                then "sw.js"
-                else toFilePath ident
+        route   idRoute
         compile copyFileCompiler
 
     match "assets/**" $ do

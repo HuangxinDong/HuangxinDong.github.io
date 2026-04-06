@@ -11,7 +11,6 @@
         <link rel="icon" href="/favicon/favicon-96x96.png" type="image/png" sizes="96x96">
         <link rel="icon" href="/favicon.ico" sizes="any">
         <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" sizes="180x180">
-        <link rel="manifest" href="/favicon/site.webmanifest">
         <meta name="theme-color" content="#d2d9cb">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -83,13 +82,34 @@
         <script src="/js/nav.js" defer></script>
         <script src="/js/copy-code.js" defer></script>
         <script>
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function () {
-                    navigator.serviceWorker.register('/sw.js').catch(function () {
-                        // Ignore registration failures to avoid impacting page render.
-                    });
+            (function () {
+                var UNREGISTER_FLAG = 'sw-unregister-once-v1';
+                var alreadyRan = false;
+
+                try {
+                    alreadyRan = window.localStorage.getItem(UNREGISTER_FLAG) === '1';
+                } catch (_) {
+                    alreadyRan = false;
+                }
+
+                if (alreadyRan || !('serviceWorker' in navigator)) {
+                    return;
+                }
+
+                navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                    return Promise.all(
+                        registrations.map(function (registration) {
+                            return registration.unregister();
+                        })
+                    );
+                }).finally(function () {
+                    try {
+                        window.localStorage.setItem(UNREGISTER_FLAG, '1');
+                    } catch (_) {
+                        // Ignore localStorage failures; unregister has already been attempted.
+                    }
                 });
-            }
+            })();
         </script>
     </body>
 </html>
