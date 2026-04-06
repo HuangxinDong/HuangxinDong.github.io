@@ -70,6 +70,12 @@ jobs:
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_cabal_update }}
         run: cabal update
 
+      - name: Bump Service Worker cache version
+        run: |
+          SHORT_SHA="$(git rev-parse --short=12 HEAD)"
+          sed -i "s/__GIT_COMMIT_SHORT_SHA__/${SHORT_SHA}/g" js/sw.js
+          echo "Service Worker cache version: ${SHORT_SHA}"
+
       - name: Build Site
         run: |
           ${{ github.event.inputs.force_rebuild == 'true' && 'cabal run site clean &&' || '' }} cabal run site build

@@ -45,7 +45,10 @@ main = hakyll $ do
         compile compressCssCompiler
 
     match "js/*" $ do
-        route   idRoute
+        route $ customRoute $ \ident ->
+            if toFilePath ident == "js/sw.js"
+                then "sw.js"
+                else toFilePath ident
         compile copyFileCompiler
 
     match "assets/**" $ do

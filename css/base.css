@@ -236,6 +236,7 @@ main li a,
 main blockquote a,
 main td a,
 main th a,
+.content footer a,
 .callout a {
     text-decoration: underline;
     text-decoration-color: rgba(45, 90, 39, 0.45);
@@ -250,6 +251,7 @@ main li a:hover,
 main blockquote a:hover,
 main td a:hover,
 main th a:hover,
+.content footer a:hover,
 .callout a:hover {
     text-decoration-color: var(--accent);
     text-underline-offset: 2px;
@@ -259,7 +261,8 @@ main p a:focus-visible,
 main li a:focus-visible,
 main blockquote a:focus-visible,
 main td a:focus-visible,
-main th a:focus-visible {
+main th a:focus-visible,
+.content footer a:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 2px;
