@@ -11,6 +11,10 @@
     );
     if (headings.length === 0) return;
 
+    let headingOffsets = headings.map((h) => h.offsetTop);
+    let activeUpdateQueued = false;
+    let offsetUpdateQueued = false;
+
     tocList.replaceChildren();
 
     // Give every heading an id if it doesn't have one.
@@ -34,8 +38,6 @@
 
     const links = Array.from(tocList.querySelectorAll('a'));
     let activeId = null;
-    let headingOffsets = [];
-    let activeUpdateQueued = false;
 
     function flashFeedback(target, className) {
       if (!target) return;
@@ -62,7 +64,14 @@
     }
 
     function updateHeadingOffsets() {
-      headingOffsets = headings.map((h) => h.offsetTop);
+      if (offsetUpdateQueued) return;
+      offsetUpdateQueued = true;
+
+      window.requestAnimationFrame(() => {
+        offsetUpdateQueued = false;
+        headingOffsets = headings.map((h) => h.offsetTop);
+        queueSetActive();
+      });
     }
 
     function setActive() {
@@ -101,10 +110,9 @@
       });
     }
 
-    updateHeadingOffsets();
+    queueSetActive();
     window.addEventListener('resize', () => {
       updateHeadingOffsets();
-      queueSetActive();
     });
     window.addEventListener('load', updateHeadingOffsets, { once: true });
     window.addEventListener('scroll', queueSetActive, { passive: true });

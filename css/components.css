@@ -399,10 +399,10 @@ mark {
 .compiler-error {
     margin: 2rem 0;
     padding: 1.5rem;
-    border: 1px solid color-mix(in srgb, #c53a2b 35%, var(--border) 65%);
+    border: 1px solid var(--border);
     border-left-width: 4px;
     border-radius: 12px;
-    background: color-mix(in srgb, #c53a2b 10%, var(--bg) 90%);
+    background: var(--code-bg);
     color: var(--text);
     font-family: var(--font-sans);
 }
@@ -410,7 +410,7 @@ mark {
 .compiler-error h2,
 .compiler-error h3 {
     margin-top: 0;
-    color: color-mix(in srgb, #c53a2b 82%, var(--text) 18%);
+    color: var(--text);
 }
 
 .compiler-error h3 {
@@ -423,7 +423,8 @@ mark {
     padding: 1rem;
     overflow-x: auto;
     border-radius: 8px;
-    background: color-mix(in srgb, #c53a2b 8%, var(--code-bg) 92%);
+    background: var(--bg);
+    border: 1px solid var(--border);
     color: var(--text);
     font-family: var(--font-mono);
     font-size: 0.9rem;

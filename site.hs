@@ -2,7 +2,7 @@
 import           Control.Applicative (empty)
 import           Control.Monad    (msum, filterM)
 import           Data.Char        (isAlphaNum, isNumber, isSpace, toLower, ord)
-import           Data.List        (isInfixOf, isPrefixOf, sortBy)
+import           Data.List        (intercalate, isInfixOf, isPrefixOf, sortBy)
 import           Data.Maybe       (fromMaybe)
 import           Data.Monoid      (mappend)
 import           Data.Ord         (Down (..), comparing)
@@ -43,6 +43,15 @@ main = hakyll $ do
     match "css/*" $ do
         route   idRoute
         compile compressCssCompiler
+
+    create ["css/site.css"] $ do
+        route idRoute
+        compile $ do
+            baseCss <- loadBody "css/base.css"
+            layoutCss <- loadBody "css/layout.css"
+            componentsCss <- loadBody "css/components.css"
+            postCss <- loadBody "css/post.css"
+            makeItem $ intercalate "\n" [baseCss, layoutCss, componentsCss, postCss]
 
     match "js/*" $ do
         route $ customRoute $ \ident ->
@@ -216,6 +225,7 @@ mathJaxCtx :: Context String
 mathJaxCtx = field "hasMathJax" $ \item -> do
     meta <- getMetadata (itemIdentifier item)
     let sourcePath = toFilePath (itemIdentifier item)
+        allowAutoDetection = "posts/" `isPrefixOf` sourcePath || "series/" `isPrefixOf` sourcePath
     hasSourceFile <- unsafeCompiler $ doesFileExist sourcePath
     sourceBody <- if hasSourceFile
         then unsafeCompiler $ readFile sourcePath
@@ -238,8 +248,9 @@ mathJaxCtx = field "hasMathJax" $ \item -> do
         detectedMath = hasMathContent sourceBody
         enabled
             | isDisabled "math" || isDisabled "mathjax" = False
-            | otherwise = isEnabled "math" || isEnabled "mathjax" || hasMathTag || detectedMath
-    return $ if enabled then "true" else ""
+            | otherwise = isEnabled "math" || isEnabled "mathjax"
+                       || (allowAutoDetection && (hasMathTag || detectedMath))
+    if enabled then return "true" else empty
 
 langCtx :: Context String
 langCtx = field "lang" $ \item -> do
