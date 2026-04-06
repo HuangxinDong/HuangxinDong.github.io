@@ -4,7 +4,6 @@ created: 2024-05-27
 modified: 2025-01-13
 description: macOS 个性化快捷键、软件和配置记录
 tags:
-  - unfinished
   - tool
 lang: zh
 ---
