@@ -2,14 +2,14 @@
 import           Control.Applicative (empty)
 import           Control.Monad    (msum, filterM)
 import           Data.Char        (isAlphaNum, isNumber, isSpace, toLower, ord)
-import           Data.List        (isPrefixOf, sortBy)
+import           Data.List        (isInfixOf, isPrefixOf, sortBy)
 import           Data.Maybe       (fromMaybe)
 import           Data.Monoid      (mappend)
 import           Data.Ord         (Down (..), comparing)
 import           Data.Time        (UTCTime, formatTime, defaultTimeLocale,
                                    parseTimeM)
 import           Hakyll
-import           System.Directory (getModificationTime)
+import           System.Directory (doesFileExist, getModificationTime)
 import           System.FilePath  (takeBaseName)
 -- import           Text.Pandoc.Extensions (disableExtension, Extension (Ext_yaml_metadata_block))
 -- import           Text.Pandoc.Options
@@ -40,19 +40,15 @@ main = hakyll $ do
         route   idRoute
         compile copyFileCompiler
 
-    match "images/*" $ do
-        route   idRoute
-        compile copyFileCompiler
-
     match "css/*" $ do
         route   idRoute
         compile compressCssCompiler
 
-    match "files/*" $ do
+    match "js/*" $ do
         route   idRoute
         compile copyFileCompiler
 
-    match "js/*" $ do
+    match "assets/**" $ do
         route   idRoute
         compile copyFileCompiler
 
@@ -213,6 +209,35 @@ metadataDateCtx fieldName fmt metaKey = field fieldName $ \item -> do
         Just utc -> return $ formatTime defaultTimeLocale fmt utc
         Nothing  -> empty
 
+mathJaxCtx :: Context String
+mathJaxCtx = field "hasMathJax" $ \item -> do
+    meta <- getMetadata (itemIdentifier item)
+    let sourcePath = toFilePath (itemIdentifier item)
+    hasSourceFile <- unsafeCompiler $ doesFileExist sourcePath
+    sourceBody <- if hasSourceFile
+        then unsafeCompiler $ readFile sourcePath
+        else return ""
+    let isEnabled key = case lookupString key meta of
+            Just "true" -> True
+            Just "True" -> True
+            Just "yes"  -> True
+            Just "on"   -> True
+            _           -> False
+        isDisabled key = case lookupString key meta of
+            Just "false" -> True
+            Just "False" -> True
+            Just "no"    -> True
+            Just "off"   -> True
+            _            -> False
+        hasMathTag = case lookupString "tags" meta of
+            Just tagsValue -> "math" `elem` map (map toLower . stripSpaces) (splitOn ',' tagsValue)
+            Nothing        -> False
+        detectedMath = hasMathContent sourceBody
+        enabled
+            | isDisabled "math" || isDisabled "mathjax" = False
+            | otherwise = isEnabled "math" || isEnabled "mathjax" || hasMathTag || detectedMath
+    return $ if enabled then "true" else ""
+
 langCtx :: Context String
 langCtx = field "lang" $ \item -> do
     meta <- getMetadata (itemIdentifier item)
@@ -262,7 +287,7 @@ siteCtx =
     navStateCtx
 
 pageCtx :: Context String
-pageCtx = siteCtx `mappend` defaultContext
+pageCtx = mathJaxCtx `mappend` siteCtx `mappend` defaultContext
 
 --------------------------------------------------------------------------------
 -- | Universal context for all items (posts and series).
@@ -340,6 +365,38 @@ stripHtmlTags (x:xs) = x : stripHtmlTags xs
 
 collapseWhitespace :: String -> String
 collapseWhitespace = unwords . words
+
+stripSpaces :: String -> String
+stripSpaces = reverse . dropWhile isSpace . reverse . dropWhile isSpace
+
+splitOn :: Char -> String -> [String]
+splitOn _ [] = [""]
+splitOn delimiter (c:cs)
+    | c == delimiter = "" : splitOn delimiter cs
+    | otherwise =
+        case splitOn delimiter cs of
+            [] -> [[c]]
+            (segment:rest) -> (c : segment) : rest
+
+hasMathContent :: String -> Bool
+hasMathContent body =
+    any (`isInfixOf` body)
+        [ "$$"
+        , "\\("
+        , "\\)"
+        , "\\["
+        , "\\]"
+        , "\\begin{equation"
+        , "\\begin{align"
+        , "\\begin{gather"
+        , "\\begin{multline"
+        , "\\begin{matrix"
+        , "\\begin{cases"
+        , "\\begin{pmatrix"
+        , "\\begin{bmatrix"
+        , "\\begin{vmatrix"
+        , "\\begin{Vmatrix"
+        ]
 
 escapeHtmlAttr :: String -> String
 escapeHtmlAttr [] = []

@@ -16,7 +16,7 @@ lang: zh
 
 ---
 
-作为一个真的来自大陆北方的网友，想到 [自由软件运动](https://en.wikipedia.org/wiki/Free_software_movement)、[开源软件运动](https://en.wikipedia.org/wiki/Open-source_software_movement) 与共产主义之间的关系似乎是一件相当自然而然的事，但是这几种理念各自本身究竟各自代表什么，各有怎样的出发点和现实效果，我一直没有深入思考过；即使愿意探讨，也常常觉得缺乏切口，因为一面是技术领域的还在不断变更的潮流，一面是源流深远且每个脉络都已经可以分支成学科的主义，而我对他们的想法和理解都更多来自于感知而非理论。
+作为一位来自大陆北方的网友，在 CS 学习之余想到 [自由软件运动](https://en.wikipedia.org/wiki/Free_software_movement)、[开源软件运动](https://en.wikipedia.org/wiki/Open-source_software_movement) 与共产主义之间的关系似乎是一件相当自然而然的事，但是这几种理念各自本身究竟各自代表什么，各有怎样的出发点和现实效果，我一直没有深入思考过；即使愿意探讨，也常常觉得缺乏切口，因为一面是技术领域的还在不断变更的潮流，一面是源流深远且每个脉络都已经可以分支成学科的主义，而我对他们的想法和理解都更多来自于感知而非理论。
 
 不过一个大约的、基础的感想是，Open-source software movement 听名字感觉像是一个有点“左”的运动，实际上核心却是注重协作方式和效率，而几乎是刻意地不强调潜在的政治性或者道德性，Free software movement 更多给人以一种 moral duty 的感觉，但是其 political 程度又不足以和 communism 有太多联系，或者因为根本就来自不同的出发点和目的，只是/但是在形式上（甚至情感上）给参与者分享一种近似的体验。
 

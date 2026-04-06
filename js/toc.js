@@ -34,18 +34,24 @@
 
     const links = Array.from(tocList.querySelectorAll('a'));
     let activeId = null;
+    let headingOffsets = [];
+    let activeUpdateQueued = false;
 
     function flashFeedback(target, className) {
       if (!target) return;
-
-      target.classList.remove(className);
-      void target.offsetWidth;
-      target.classList.add(className);
 
       const existingTimer = feedbackTimers.get(target);
       if (existingTimer) {
         window.clearTimeout(existingTimer);
       }
+
+      // Re-apply feedback class on next paint without forcing a layout read.
+      target.classList.remove(className);
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          target.classList.add(className);
+        });
+      });
 
       const timer = window.setTimeout(() => {
         target.classList.remove(className);
@@ -55,13 +61,23 @@
       feedbackTimers.set(target, timer);
     }
 
+    function updateHeadingOffsets() {
+      headingOffsets = headings.map((h) => h.offsetTop);
+    }
+
     function setActive() {
       const mid = window.scrollY + window.innerHeight * 0.3;
-      let active = headings[0];
+      let activeIndex = 0;
 
-      headings.forEach((h) => {
-        if (h.offsetTop <= mid) active = h;
-      });
+      for (let i = 0; i < headingOffsets.length; i += 1) {
+        if (headingOffsets[i] <= mid) {
+          activeIndex = i;
+        } else {
+          break;
+        }
+      }
+
+      const active = headings[activeIndex];
 
       links.forEach((a) => {
         a.classList.toggle('toc-active', a.getAttribute('href') === '#' + active.id);
@@ -76,7 +92,22 @@
       }
     }
 
-    window.addEventListener('scroll', setActive, { passive: true });
+    function queueSetActive() {
+      if (activeUpdateQueued) return;
+      activeUpdateQueued = true;
+      window.requestAnimationFrame(() => {
+        activeUpdateQueued = false;
+        setActive();
+      });
+    }
+
+    updateHeadingOffsets();
+    window.addEventListener('resize', () => {
+      updateHeadingOffsets();
+      queueSetActive();
+    });
+    window.addEventListener('load', updateHeadingOffsets, { once: true });
+    window.addEventListener('scroll', queueSetActive, { passive: true });
     setActive();
 
     tocList.addEventListener('click', (e) => {

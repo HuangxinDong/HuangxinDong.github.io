@@ -27,7 +27,7 @@ I also want to write more in English, which is not my native language. In Chines
 
 ## About Me
 
-![*Me, MacPaint, and Floyd–Steinberg dithering*](/images/aboutme.png)
+![*Me, MacPaint, and Floyd–Steinberg dithering*](/assets/images/aboutme.png)
 
 I'm currently a MSc Computer Science student at UCL, with a background in Linguistics and Literature. I am interested in *pattern matching* in a broad sense: not only in programming languages, but also in video games, natural languages, daily life, and in the way we perceive and understand the world.
 

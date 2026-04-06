@@ -94,4 +94,4 @@ This also enables `Ctrl+T` (fuzzy file picker, inserts path into command line) a
 
 ## Final config
 
-Feel free to check [my final zshrc](/files/zshrc.txt)!
+Feel free to check [my final zshrc](/assets/files/zshrc.txt)!
