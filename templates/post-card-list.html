@@ -1,0 +1,20 @@
+$if(posts)$
+<div class="posts-grid">
+  $for(posts)$
+  <article class="post-card">
+    <a href="$url$" class="post-card__link">
+      <div class="post-card__inner">
+        <time class="post-card__date" datetime="$date$">$date$</time>
+        <h3 class="post-card__title">$title$</h3>
+        $if(description)$
+        <p class="post-card__desc">$description$</p>
+        $endif$
+        <span class="post-card__arrow">→</span>
+      </div>
+    </a>
+  </article>
+  $endfor$
+</div>
+$else$
+<p class="no-posts">No posts yet.</p>
+$endif$
