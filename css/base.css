@@ -268,3 +268,142 @@ main th a:focus-visible,
     border-radius: 2px;
     text-decoration: none;
 }
+
+/* ============================================================
+   Homepage Post Grid — system.css window style
+   Requires: https://unpkg.com/@sakun/system.css
+
+   Usage: add to <head> alongside system.css import
+   ============================================================ */
+
+/* ── Grid layout ── */
+.pg-desktop {
+  background:
+    linear-gradient(90deg, #fff 21px, transparent 1%) 50%,
+    linear-gradient(#fff 21px, transparent 1%) 50%,
+    #000;
+  background-size: 22px 22px;
+  padding: 16px;
+  margin: 2rem 0 3rem;
+}
+
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: minmax(170px, auto);
+  gap: 10px;
+}
+
+/* ── Card sizing — 1 large + 2 small per group ── */
+.post-card {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.post-card:nth-child(3n + 1) {
+  grid-column: span 4;
+  grid-row: span 2;
+}
+
+/* Alternating: group-2 large card shifts right */
+.post-card:nth-child(6n + 4) {
+  grid-column: 3 / span 4;
+}
+
+/* ── Window chrome ── */
+.post-card .window {
+  height: 100%;
+  margin: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 2px 0 #000;
+}
+
+/* ── Window pane = clickable content area ── */
+.post-card .window-pane {
+  flex: 1;
+  overflow: hidden;
+  padding: 8px 12px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.post-card .window-pane:hover {
+  background: #000;
+}
+
+.post-card .window-pane:hover .pc-date,
+.post-card .window-pane:hover .pc-title,
+.post-card .window-pane:hover .pc-desc {
+  color: #fff;
+}
+
+/* ── Typography ── */
+.pc-date {
+  display: block;
+  font-family: Geneva_9, monospace;
+  font-size: 11px;
+  color: #555;
+  margin: 0 0 5px;
+}
+
+.pc-title {
+  font-family: Chicago_12, Chicago, serif;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1.4;
+  color: #000;
+  margin: 0 0 6px;
+}
+
+.post-card:nth-child(3n + 1) .pc-title {
+  font-size: 15px;
+}
+
+.pc-desc {
+  font-family: Geneva_9, monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.post-card:not(:nth-child(3n + 1)) .pc-desc {
+  -webkit-line-clamp: 2;
+}
+
+/* ── Responsive ── */
+@media (max-width: 720px) {
+  .posts-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: minmax(140px, auto);
+  }
+
+  .post-card,
+  .post-card:nth-child(3n + 1),
+  .post-card:nth-child(6n + 4) {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+
+  .post-card:nth-child(3n + 1) .pc-title {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pg-desktop { padding: 8px; }
+  .posts-grid { grid-template-columns: 1fr; gap: 8px; }
+  .post-card,
+  .post-card:nth-child(3n + 1),
+  .post-card:nth-child(6n + 4) {
+    grid-column: span 1;
+  }
+}

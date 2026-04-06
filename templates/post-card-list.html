@@ -1,20 +1,29 @@
 $if(posts)$
-<div class="posts-grid">
-  $for(posts)$
-  <article class="post-card">
-    <a href="$url$" class="post-card__link">
-      <div class="post-card__inner">
-        <time class="post-card__date" datetime="$date$">$date$</time>
-        <h3 class="post-card__title">$title$</h3>
-        $if(description)$
-        <p class="post-card__desc">$description$</p>
-        $endif$
-        <span class="post-card__arrow">→</span>
+<div class="pg-desktop">
+  <div class="posts-grid">
+    $for(posts)$
+    <article class="post-card">
+      <div class="window">
+        <div class="title-bar">
+          <button aria-label="Close" class="close"></button>
+          <h1 class="title">$title$</h1>
+          <button aria-label="Resize" class="resize"></button>
+        </div>
+        <div class="separator"></div>
+        <a href="$url$" style="text-decoration:none; color:inherit; display:contents;">
+          <div class="window-pane">
+            <time class="pc-date" datetime="$date$">$date$</time>
+            <h3 class="pc-title">$title$</h3>
+            $if(description)$
+            <p class="pc-desc">$description$</p>
+            $endif$
+          </div>
+        </a>
       </div>
-    </a>
-  </article>
-  $endfor$
+    </article>
+    $endfor$
+  </div>
 </div>
 $else$
-<p class="no-posts">No posts yet.</p>
+<p>No posts yet.</p>
 $endif$
