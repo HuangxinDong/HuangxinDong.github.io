@@ -391,7 +391,8 @@ splitOn delimiter (c:cs)
 
 hasMathContent :: String -> Bool
 hasMathContent body =
-    any (`isInfixOf` body)
+    hasLikelyInlineDollarMath body
+    || any (`isInfixOf` body)
         [ "$$"
         , "\\("
         , "\\)"
@@ -408,6 +409,25 @@ hasMathContent body =
         , "\\begin{vmatrix"
         , "\\begin{Vmatrix"
         ]
+
+hasLikelyInlineDollarMath :: String -> Bool
+hasLikelyInlineDollarMath = go False False False
+  where
+    go _ _ _ [] = False
+    go isEscaped inMath hasContent (c:cs)
+        | isEscaped =
+            let hasContent' = hasContent || (inMath && not (isSpace c))
+            in go False inMath hasContent' cs
+        | c == '\\' = go True inMath hasContent cs
+        | c == '$' =
+            if inMath
+                then if hasContent
+                    then True
+                    else go False False False cs
+                else go False True False cs
+        | otherwise =
+            let hasContent' = hasContent || (inMath && not (isSpace c))
+            in go False inMath hasContent' cs
 
 escapeHtmlAttr :: String -> String
 escapeHtmlAttr [] = []
