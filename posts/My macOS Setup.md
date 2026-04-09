@@ -4,7 +4,6 @@ created: 2024-05-27
 modified: 2025-01-13
 description: macOS 个性化快捷键、软件和配置记录
 tags:
-  - unfinished
   - tool
 lang: zh
 ---
@@ -16,6 +15,10 @@ lang: zh
 
 - [OCD's Guide to Setting up Mac](https://github.com/macdao/ocds-guide-to-setting-up-mac)
 - [Introduction · macOS Setup Guide](https://sourabhbajaj.com/mac-setup/)
+
+Useful Links:
+- [macOS defaults list](https://macos-defaults.com/)
+- [Free Macintosh Software!](http://www.macattorney.com/free.html)
 
 ---
 

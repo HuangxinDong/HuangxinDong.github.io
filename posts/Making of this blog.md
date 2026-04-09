@@ -84,9 +84,9 @@ During the development of the formatter, I realised there're much more edge case
 
 ## What's next
 
-- Tags are implemented but the tag pages are unstyled.
-- `--number-sections` should probably be opt-in per post, not global.
-- The `series/` concept is half-baked — I'm still not sure how to use it.
-- css is still pretty basic: no support for dark mode, no responsive design, etc.
-- Write more posts rather than just playing with the blog!
-- Maybe add some interesting gadgets...
+- [ ] Tags are implemented but the tag pages are unstyled.
+- [ ] `--number-sections` should probably be opt-in per post, not global.
+- [ ] The `series/` concept is half-baked — I'm still not sure how to use it.
+- [x] css is still pretty basic: no support for dark mode, no responsive design, etc.
+- [ ] Write more posts rather than just playing with the blog!
+- [ ] Maybe add some interesting gadgets...
