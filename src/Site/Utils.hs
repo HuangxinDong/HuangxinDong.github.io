@@ -40,7 +40,8 @@ module Site.Utils
 import           Control.Applicative (empty)
 import           Control.Monad       (filterM, msum)
 import           Control.Monad.Except (catchError)
-import           Data.Char           (isAlphaNum, isNumber, isSpace, ord, toLower)
+import           Data.Char           (isAlphaNum, isAsciiLower, isNumber,
+                                      isSpace, ord, toLower)
 import           Data.List           (intercalate, isInfixOf, isPrefixOf, sortBy)
 import           Data.Maybe          (fromMaybe)
 import           Data.Monoid         (mappend)
@@ -167,7 +168,7 @@ langCtx = field "lang" $ \item -> do
 canonicalUrlCtx :: Context String
 canonicalUrlCtx = field "canonicalUrl" $ \item -> do
     route <- getRoute (itemIdentifier item)
-    return $ siteUrl ++ maybe "/" (\r -> '/' : r) route
+    return $ siteUrl ++ maybe "/" ('/' :) route
 
 descriptionCtx :: Context String
 descriptionCtx = field "description" $ \item -> do
@@ -299,14 +300,14 @@ hasLikelyInlineDollarMath = go False False False
         | c == '\\' = go True inMath hasContent cs
         | c == '$' =
             if inMath
-                then if hasContent then True else go False False False cs
+                then hasContent || go False False False cs
                 else go False True False cs
         | otherwise = go False inMath (hasContent || (inMath && not (isSpace c))) cs
 
 readingTimeCtx :: Context String
 readingTimeCtx =
-    field "readTime" (\item -> return $ show $ readingMinutes (stats item)) `mappend`
-    field "wordCount" (\item -> return $ show $ readingUnits (stats item))
+    field "readTime" (return . show . readingMinutes . stats) `mappend`
+    field "wordCount" (return . show . readingUnits . stats)
   where
     stats item = readingStats (stripHtmlTags (itemBody item))
 
@@ -334,7 +335,7 @@ countCjkChars :: String -> Int
 countCjkChars = length . filter isCjkChar
 
 isLatinWordChar :: Char -> Bool
-isLatinWordChar c = ('a' <= toLower c && toLower c <= 'z') || isNumber c || c == '\'' || c == '-'
+isLatinWordChar c = isAsciiLower (toLower c) || isNumber c || c == '\'' || c == '-'
 
 isCjkChar :: Char -> Bool
 isCjkChar c =

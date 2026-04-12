@@ -1,3 +1,4 @@
+{-# LANGUAGE TupleSections #-}
 module Douban.Records
     ( Category(..)
     , RecordStatus(..)
@@ -144,7 +145,7 @@ rowsToRecords category status path rows =
                 indexedRows = zip [2 ..] bodyRows
                 parsedRows = map (rowToRecord category status path normalizedHeader) indexedRows
                 nonFatalWarnings = concatMap snd parsedRows
-                records = catMaybes (map (fst . fst) parsedRows)
+                records = mapMaybe (fst . fst) parsedRows
             in (records, nonFatalWarnings)
 
 rowToRecord
@@ -171,7 +172,7 @@ rowToRecord category status path header (rowNumber, rowValues)
             localWarnings = [ "Row has fewer columns than expected; missing values were treated as empty."
                             | length rowValues < length header
                             ]
-            warnings = map (\message -> ImportWarning path (Just rowNumber) message) recordLevelWarnings
+            warnings = map (ImportWarning path (Just rowNumber)) recordLevelWarnings
         in case titleValue of
             Nothing ->
                 ((Nothing, []), warnings ++ [ImportWarning path (Just rowNumber) "Skipped row because title is empty."])
@@ -199,9 +200,9 @@ lookupFieldValue category fieldKey pairs =
 aliasesFor :: Category -> FieldKey -> [String]
 aliasesFor category fieldKey = case fieldKey of
     FieldTitle      -> map normalizeHeader titleAliases
-    FieldRating     -> map normalizeHeader ["个人评分"]
-    FieldRecordedAt -> map normalizeHeader ["打分日期"]
-    FieldComment    -> map normalizeHeader ["我的短评"]
+    FieldRating     -> [normalizeHeader "个人评分"]
+    FieldRecordedAt -> [normalizeHeader "打分日期"]
+    FieldComment    -> [normalizeHeader "我的短评"]
     FieldSubjectDate -> map normalizeHeader $ case category of
         Book  -> ["出版日期"]
         Movie -> ["上映日期"]
@@ -212,7 +213,7 @@ aliasesFor category fieldKey = case fieldKey of
         Movie -> ["导演", "导演 / 主演"]
         Music -> ["音乐家"]
         Game  -> []
-    FieldLink -> map normalizeHeader ["条目链接"]
+    FieldLink -> [normalizeHeader "条目链接"]
 
 titleAliases :: [String]
 titleAliases =
@@ -276,7 +277,7 @@ selectLatestSources files =
         let matches = [ path | path <- files, classifyCsvFile path == Just (category, status) ]
         in case matches of
             [] -> Nothing
-            _  -> Just (category, status, maximumBy compare matches)
+            _  -> Just (category, status, maximum matches)
 
 classifyCsvFile :: FilePath -> Maybe (Category, RecordStatus)
 classifyCsvFile path =
@@ -288,7 +289,7 @@ classifyCsvFile path =
             | "db-music" `isInfixOf` name = Just Music
             | "db-game" `isInfixOf` name = Just Game
             | otherwise = Nothing
-    in fmap (\resolvedCategory -> (resolvedCategory, status)) category
+    in fmap (, status) category
 
 listCsvFilesRecursive :: FilePath -> IO [FilePath]
 listCsvFilesRecursive root = do
@@ -319,7 +320,7 @@ removeAt index values =
     in before ++ drop 1 after
 
 parseCsv :: String -> Either String [[String]]
-parseCsv input = parseRows [] [] [] False input
+parseCsv = parseRows [] [] [] False
 
 parseRows :: [[String]] -> [String] -> String -> Bool -> String -> Either String [[String]]
 parseRows rows currentRow currentField inQuotes remaining =

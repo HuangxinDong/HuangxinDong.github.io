@@ -89,10 +89,10 @@ main = hakyll $ do
                 >>= relativizeUrls
 
     -- One page per tag
-    tagsRules tags $ \tag pattern -> do
+    tagsRules tags $ \tag pat -> do
         route idRoute
         compile $ do
-            items <- smartRecentFirst =<< filterM isPublished =<< loadAll pattern
+            items <- smartRecentFirst =<< filterM isPublished =<< loadAll pat
             let tagCtx =
                     constField "title" ("Posts tagged: " ++ tag) `mappend`
                     constField "description" ("Browse posts tagged with " ++ tag ++ ".") `mappend`

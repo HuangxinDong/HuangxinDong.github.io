@@ -10,7 +10,7 @@ module Douban.UI
 
 import           Control.Applicative (empty)
 import           Data.Char        (isNumber, toLower)
-import           Data.Maybe       (fromMaybe)
+import           Data.Maybe       (fromMaybe, isJust)
 import           Douban.Records   (Category (..), DoubanRecord (..),
                                    ImportResult (..), RecordStatus (..),
                                    categoryDescription, categoryLabel,
@@ -66,7 +66,7 @@ doubanStatusPageCtx imported category status baseCtx =
   where
     sources = [ path | (_, _, path) <- importSources imported ]
     targetedRecords = [ r | r <- importRecords imported, recordCategory r == category, recordStatus r == status ]
-    showFilter = status == Done && any (maybe False (const True) . recordRating) targetedRecords
+    showFilter = status == Done && any (isJust . recordRating) targetedRecords
     pageTitle = categoryLabel category
 
 -- | Context for the main records index page.

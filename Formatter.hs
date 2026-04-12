@@ -4,7 +4,7 @@ import qualified Data.Text.IO as TIO
 import System.Directory (listDirectory, doesDirectoryExist)
 import System.FilePath ((</>), takeExtension)
 import System.Environment (getArgs)
-import Data.Char (isDigit)
+import Data.Char (isDigit, isAsciiLower, isAsciiUpper)
 import Control.Monad (forM, forM_)
 
 --------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ isChinese c =
  || (c >= '\x3400' && c <= '\x4DBF')  -- 扩展A
 
 isLatinish :: Char -> Bool
-isLatinish c = (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')
+isLatinish c = isAsciiLower c || isAsciiUpper c || isDigit c
 
 needsSpace :: Char -> Char -> Bool
 needsSpace x y =
@@ -123,9 +123,10 @@ processLines st (l:ls) =
         -- Update state BEFORE processing so that the opening ``` line itself
         -- is not mangled, and the closing ``` line exits code mode correctly.
         newCB       = if isCB then not (inCodeBlock st) else inCodeBlock st
-        newDisabled = if isDisable then True
-                      else if isEnable then False
-                      else isManuallyDisabled st
+        newDisabled
+            | isDisable = True
+            | isEnable = False
+            | otherwise = isManuallyDisabled st
         nextSt = State newCB newDisabled
 
         -- Only apply typography fixes when outside code blocks and not disabled
