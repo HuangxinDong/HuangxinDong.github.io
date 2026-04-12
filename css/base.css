@@ -79,7 +79,6 @@
     --sidebar-width: 190px;
     --sidebar-padding-x: 2.5rem;
     --sidebar-padding-y: 3.5rem;
-    --sidebar-total-width: calc(var(--sidebar-width) + 5rem + 1px);
 
     --text:        #1e1e1e;
     --muted:       #666666;
@@ -92,6 +91,8 @@
     --sidenote-left-width: 120px;
     --sidenote-gap: 1.35rem;
     --sidenote-right-padding: 0.25rem;
+    --sidenote-right-offset: calc(-1 * (var(--sidenote-right-width) + var(--sidenote-gap)));
+    --sidenote-left-offset:  calc(-1 * (var(--sidenote-left-width) + var(--sidenote-gap)));
 }
 
 @media (prefers-color-scheme: dark) {

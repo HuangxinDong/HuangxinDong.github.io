@@ -62,7 +62,6 @@
 
 main {
     width: 100%;
-    max-width: var(--max-width);
     min-width: 0;
     min-height: 50vh;
 }
@@ -129,7 +128,7 @@ footer {
         float: right;
         clear: right;
         width: var(--sidenote-right-width);
-        margin-right: calc(-1 * (var(--sidenote-right-width) + var(--sidenote-gap)));
+        margin-right: var(--sidenote-right-offset);
         margin-top: 0.2rem;
         margin-bottom: 2rem;
         margin-left: 0;
