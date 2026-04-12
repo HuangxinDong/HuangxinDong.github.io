@@ -68,6 +68,7 @@ main = hakyll $ do
     match (fromList ["about.md", "projects.md"]) $ do
         route   $ setExtension "html"
         compile $ customPandocCompiler
+            >>= loadAndApplyTemplate "templates/page.html"    pageCtx
             >>= loadAndApplyTemplate "templates/default.html" pageCtx
             >>= relativizeUrls
 

@@ -5,17 +5,39 @@ description: Personal blog by Huangxin Dong.
 
 <style>
 	#toc { display: none !important; }
+	main > h1:first-child { display: none; }
 </style>
 
-<h2>Welcome</h2>
+<section class="home-hero" aria-label="Homepage hero">
+	<div class="home-hero-media">
+		<img
+			src="/assets/images/hero-home.jpg"
+			width="2400"
+			height="1598"
+			fetchpriority="high"
+			alt="Kyoto, June 2025 — shot on Nikon FE, 28mm f/3.5"
+		/>
+	</div>
+</section>
 
-<img width="300" height="116" src="/assets/images/Welcome.png" alt="Welcome" fetchpriority="high" style="float: right; margin: 10px;" />
+<div class="container-content">
+	<main id="main-content" tabindex="-1">
+		<h2>Welcome</h2>
 
-<p>Welcome to my blog!</p>
+		<p>Welcome to my blog!</p>
+		<img
+			class="side-image"
+			width="300"
+			height="116"
+			src="/assets/images/Welcome.png"
+			alt="Welcome: Hi! Thanks for stopping by. I'm still tring to write a bit more :)"
+		/>
 
-<p>I've reproduced a list of recent posts here for your reading pleasure:</p>
+		<p>I've reproduced a list of recent posts here for your reading pleasure:</p>
 
-<h2>Posts</h2>
-$partial("templates/post-list.html")$
+		<h2>Posts</h2>
+		$partial("templates/post-list.html")$
 
-<p>…or you can find all posts on the <a href="/posts.html">Posts</a> page.</p>
+		<p>…or you can find all posts on the <a href="/posts.html">Posts</a> page.</p>
+	</main>
+</div>
