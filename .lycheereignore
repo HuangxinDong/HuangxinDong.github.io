@@ -1,0 +1,13 @@
+# Google Fonts
+https://fonts\.googleapis\.com/.*
+https://fonts\.gstatic\.com/.*
+
+# Static Assets & CDNs
+https://cdn\.jsdelivr\.net/.*
+
+# Analytics & Tracking
+https://cloud\.umami\.is/.*
+
+# Common social sites that use rate-limiting
+https://www\.douban\.com/.*
+https://github\.com/.*

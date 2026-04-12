@@ -1,0 +1,48 @@
+name: QA (Haskell Lint & Link Check)
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  schedule:
+    - cron: "0 0 * * 0" # Weekly on Sundays
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    name: Code & Content Quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Haskell
+        uses: haskell-actions/setup@v2
+        with:
+          ghc-version: '9.6.7'
+          cabal-version: 'latest'
+
+      - name: HLint Check
+        uses: haskell-actions/hlint-setup@v2
+        with:
+          version: '3.8'
+
+      - name: Run HLint
+        run: hlint site.hs src/ Formatter.hs
+
+      - name: Cabal Check
+        run: cabal check
+
+      - name: Link Checker (Lychee)
+        uses: lycheeverse/lychee-action@v2.3.0
+        with:
+          # Check all markdown files in the repo
+          args: --verbose --no-progress --cache --max-cache-age 1d .
+          fail: false
+          jobSummary: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
