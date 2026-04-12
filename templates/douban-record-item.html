@@ -1,0 +1,25 @@
+<li class="record-card" $if(isDone)$data-record-item data-rating="$ratingValue$"$else$data-record-item$endif$>
+    <div class="record-card-header">
+        <h3 class="record-title">
+            $if(hasLink)$
+            <a href="$link$" target="_blank" rel="noreferrer">$title$</a>
+            $else$
+            $title$
+            $endif$
+        </h3>
+        <div class="record-card-tools">
+            <span class="record-stars">$stars$</span>
+        </div>
+    </div>
+    <div class="record-meta">
+        $if(hasCreator)$<p class="record-meta-line"><span class="record-meta-label">By</span> $creator$</p>$endif$
+        $if(subjectDate)$<p class="record-meta-line"><span class="record-meta-label">$subjectLabel$</span> $subjectDate$</p>$endif$
+        $if(recordedAt)$<p class="record-meta-line"><span class="record-meta-label">Logged</span> $recordedAt$</p>$endif$
+    </div>
+    $if(hasComment)$
+    <div class="record-comment">
+        <span class="record-comment-label">Review: </span>
+        <span class="record-comment-body">$comment$</span>
+    </div>
+    $endif$
+</li>

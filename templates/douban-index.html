@@ -1,0 +1,11 @@
+<div class="records-intro">
+    <p>A archive of books, films, music, and games exported from Douban.</p>
+</div>
+
+<div class="records-overview-grid">
+    $for(categories)$
+        $partial("templates/douban-overview-card.html")$
+    $endfor$
+</div>
+
+<p class="records-footnote">Archived on $archiveDate$</p>

@@ -217,12 +217,6 @@ footer {
     margin-top: 0;
 }
 
-.external-links a::after {
-    content: "↗";
-    margin-left: 0.35rem;
-    font-size: 0.72rem;
-    vertical-align: 0.08em;
-}
 
 /* ============================================
    Mobile

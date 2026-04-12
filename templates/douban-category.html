@@ -1,0 +1,38 @@
+<div class="records-intro">
+    <p>$categoryDescription$</p>
+    <p class="records-backlink">
+        <a href="/records.html">← All records</a>
+    </p>
+</div>
+
+$if(showFilter)$
+<div class="records-toolbar" data-record-filter>
+    <label class="records-filter-label" for="records-rating-filter">Filter by rating</label>
+    <select id="records-rating-filter" class="records-filter-select">
+        <option value="">All ratings</option>
+        <option value="5">5/5</option>
+        <option value="4">4/5</option>
+        <option value="3">3/5</option>
+        <option value="2">2/5</option>
+        <option value="1">1/5</option>
+    </select>
+</div>
+$endif$
+
+<section class="records-section" id="$categorySlug$-$statusLabel$">
+    <div class="records-section-heading">
+        <h2>$if(isDone)$$doneLabel$ $endif$$categoryLabel$$if(isWishlist)$ Wishlist$endif$</h2>
+        <p class="records-section-count">$recordCount$ item$if(countMoreThanOne)$s$endif$</p>
+    </div>
+    $if(records)$
+    <ol class="records-list">
+        $for(records)$
+            $partial("templates/douban-record-item.html")$
+        $endfor$
+    </ol>
+    $else$
+    <p class="records-empty">No entries here yet.</p>
+    $endif$
+</section>
+
+<p class="records-footnote">Archived on $archiveDate$</p>

@@ -1,0 +1,291 @@
+/* ============================================
+   Records
+   ============================================ */
+
+.records-intro {
+    margin-bottom: 2.5rem;
+}
+
+.records-intro p {
+    max-width: 44rem;
+}
+
+.records-backlink {
+    margin-top: 0.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.records-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.2rem;
+    margin: 2rem 0 2.5rem;
+}
+
+.records-overview-card {
+    padding: 1.25rem 1.4rem;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    .records-overview-card {
+        background: rgba(255, 255, 255, 0.03);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/*
+.records-overview-card:hover {
+    border-color: var(--accent);
+}
+*/
+
+.records-overview-card h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.2rem;
+}
+
+.records-overview-copy {
+    margin: 0.45rem 0 1rem;
+    color: var(--muted);
+    text-align: left;
+}
+
+.records-overview-stats {
+    display: flex;
+    gap: 1rem;
+    margin: 0;
+}
+
+.records-overview-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+}
+
+.records-overview-stat dt {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.records-overview-stat dd {
+    margin: 0;
+    font-family: var(--font-structure);
+    font-size: 1.15rem;
+    font-weight: 500;
+}
+
+.records-intro a,
+.records-backlink a,
+.records-section-heading h2 a,
+.record-title a,
+.records-overview-stat dt a {
+    text-decoration: underline;
+    text-decoration-color: rgba(var(--accent-rgb, 45, 90, 39), 0.3);
+    text-underline-offset: 3px;
+    transition: all 0.15s ease;
+}
+
+.records-intro a:hover,
+.records-backlink a:hover,
+.records-section-heading h2 a:hover,
+.record-title a:hover,
+.records-overview-stat dt a:hover {
+    text-decoration-color: var(--accent);
+    text-underline-offset: 2px;
+}
+
+.records-overview-stat dt a:hover {
+    color: var(--accent);
+}
+
+.records-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 1.75rem 0 2rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.22);
+}
+
+.records-filter-label {
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+}
+
+.records-filter-select {
+    min-width: 9rem;
+    padding: 0.45rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg);
+    color: var(--text);
+    font: inherit;
+}
+
+.records-section {
+    margin-top: 2.6rem;
+}
+
+.records-section-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.records-section-heading h2 {
+    margin: 0;
+}
+
+.records-section-count {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+}
+
+.records-list {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+}
+
+.record-card {
+    padding: 1rem 0 1.15rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.record-card:last-child {
+    border-bottom: none;
+}
+
+.record-stars {
+    color: #f5c518;
+    letter-spacing: 0.1em;
+    font-size: 1.1em;
+}
+
+.record-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.record-title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 1.04rem;
+    line-height: 1.45;
+}
+
+.record-title a {
+    text-decoration: none;
+}
+
+.record-card-tools {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.record-pill {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.9rem;
+    padding: 0.15rem 0.65rem;
+    border: 1px solid rgba(45, 90, 39, 0.26);
+    border-radius: 999px;
+    color: var(--accent);
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.record-inline-link {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.record-meta {
+    margin-top: 0.5rem;
+}
+
+.record-meta-line {
+    margin: 0.18rem 0;
+    color: var(--muted);
+    text-align: left;
+}
+
+.record-meta-label {
+    font-family: var(--font-sans);
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.record-comment {
+    margin-top: 0.75rem;
+}
+
+.record-comment summary {
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 0.84rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.record-comment-body {
+    margin-top: 0.65rem;
+    color: var(--text);
+}
+
+.records-empty {
+    color: var(--muted);
+    text-align: left;
+}
+
+.records-footnote {
+    margin-top: 2.5rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+@media (max-width: 850px) {
+    .records-overview-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .records-toolbar,
+    .records-section-heading,
+    .record-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .record-card-tools {
+        justify-content: flex-start;
+    }
+}
