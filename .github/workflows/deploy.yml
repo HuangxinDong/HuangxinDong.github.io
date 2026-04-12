@@ -24,6 +24,17 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Runs in parallel with build — no Haskell compile needed
+  hlint:
+    name: HLint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: haskell-actions/hlint-setup@v2
+        with:
+          version: '3.8'
+      - run: hlint site.hs src/ Formatter.hs
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -57,20 +68,22 @@ jobs:
         uses: actions/cache@v4
         with:
           path: _cache
-          key: ${{ runner.os }}-hakyll-${{ hashFiles('site.hs', 'templates/**', 'filters/**', 'posts/**', 'series/**', 'about.md', 'projects.md', 'index.html') }}
+          # Key on site logic only; Hakyll incremental build handles content changes itself
+          key: ${{ runner.os }}-hakyll-${{ hashFiles('site.hs', 'templates/**', 'filters/**') }}
           restore-keys: |
             ${{ runner.os }}-hakyll-
 
-      - name: Install System Dependencies
+      - name: Install Pandoc
         run: |
-          sudo apt-get update
-          sudo apt-get install -y pandoc
+          PANDOC_VER=3.6.4
+          curl -fsSL "https://github.com/jgm/pandoc/releases/download/${PANDOC_VER}/pandoc-${PANDOC_VER}-linux-amd64.tar.gz" \
+            | sudo tar -xz --strip-components=2 -C /usr/local/bin pandoc-${PANDOC_VER}/bin/pandoc
 
       - name: Update Cabal package index
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_cabal_update }}
         run: cabal update
 
-      - name: Build Site
+      - name: Build site
         run: |
           ${{ github.event.inputs.force_rebuild == 'true' && 'cabal run site clean &&' || '' }} cabal run site build
 
@@ -84,7 +97,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: [hlint, build]
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
