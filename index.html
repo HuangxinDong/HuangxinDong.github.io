@@ -5,17 +5,39 @@ description: Personal blog by Huangxin Dong.
 
 <style>
 	#toc { display: none !important; }
+	main > h1:first-child { display: none; }
 </style>
 
-<h2>Welcome</h2>
+<section class="home-hero" aria-label="Homepage hero">
+	<div class="home-hero-media">
+		<img
+			src="/assets/images/hero-home.jpg"
+			width="2400"
+			height="1598"
+			alt=""
+			aria-hidden="true"
+			fetchpriority="high"
+		/>
+	</div>
+</section>
 
-<img width="300" height="116" src="/assets/images/Welcome.png" alt="Welcome" fetchpriority="high" style="float: right; margin: 10px;" />
+<section class="home-content">
+	<h2>Welcome</h2>
 
-<p>Welcome to my blog!</p>
+	<img
+		class="home-welcome-image"
+		width="300"
+		height="116"
+		src="/assets/images/Welcome.png"
+		alt="Welcome"
+	/>
 
-<p>I've reproduced a list of recent posts here for your reading pleasure:</p>
+	<p>Welcome to my blog!</p>
 
-<h2>Posts</h2>
-$partial("templates/post-list.html")$
+	<p>I've reproduced a list of recent posts here for your reading pleasure:</p>
 
-<p>…or you can find all posts on the <a href="/posts.html">Posts</a> page.</p>
+	<h2>Posts</h2>
+	$partial("templates/post-list.html")$
+
+	<p>…or you can find all posts on the <a href="/posts.html">Posts</a> page.</p>
+</section>
