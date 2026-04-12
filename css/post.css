@@ -172,21 +172,12 @@
     gap: 6px;
     max-height: calc(100vh - 7.7rem);
     overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: color-mix(in srgb, var(--border) 78%, transparent) transparent;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 #toc-list::-webkit-scrollbar {
-    width: 6px;
-}
-
-#toc-list::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-#toc-list::-webkit-scrollbar-thumb {
-    background: color-mix(in srgb, var(--border) 78%, transparent);
-    border-radius: 999px;
+    display: none;
 }
 
 #toc-list a {
