@@ -21,23 +21,24 @@ description: Personal blog by Huangxin Dong.
 	</div>
 </section>
 
-<section class="home-content">
-	<h2>Welcome</h2>
+<div class="container-content">
+	<main id="main-content" tabindex="-1">
+		<h2>Welcome</h2>
 
-	<img
-		class="home-welcome-image"
-		width="300"
-		height="116"
-		src="/assets/images/Welcome.png"
-		alt="Welcome"
-	/>
+		<p>Welcome to my blog!</p>
+		<img
+			class="side-image"
+			width="300"
+			height="116"
+			src="/assets/images/Welcome.png"
+			alt="Welcome"
+		/>
 
-	<p>Welcome to my blog!</p>
+		<p>I've reproduced a list of recent posts here for your reading pleasure:</p>
 
-	<p>I've reproduced a list of recent posts here for your reading pleasure:</p>
+		<h2>Posts</h2>
+		$partial("templates/post-list.html")$
 
-	<h2>Posts</h2>
-	$partial("templates/post-list.html")$
-
-	<p>…or you can find all posts on the <a href="/posts.html">Posts</a> page.</p>
-</section>
+		<p>…or you can find all posts on the <a href="/posts.html">Posts</a> page.</p>
+	</main>
+</div>
