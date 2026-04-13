@@ -1,0 +1,59 @@
+:is(
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .HyperMD-header-1,
+    .HyperMD-header-2,
+    .HyperMD-header-3,
+    .HyperMD-header-4,
+    .HyperMD-header-5,
+    .HyperMD-header-6
+  )::before {
+  font-size: 12px;
+  padding-right: 0.5em;
+  color: var(--text-accent);
+}
+
+/* reading mode */
+/*
+h1::before {
+  content: "H1";
+}
+h2::before {
+  content: "H2";
+}
+h3::before {
+  content: "H3";
+}
+h4::before {
+  content: "H4";
+}
+h5::before {
+  content: "H5";
+}
+h6::before {
+  content: "H6";
+}*/
+
+/* live preview */
+.HyperMD-header-1:not(.cm-active)::before {
+  content: "H1    ";
+}
+.HyperMD-header-2:not(.cm-active)::before {
+  content: "H2    ";
+}
+.HyperMD-header-3:not(.cm-active)::before {
+  content: "H3    ";
+}
+.HyperMD-header-4:not(.cm-active)::before {
+  content: "H4    ";
+}
+.HyperMD-header-5:not(.cm-active)::before {
+  content: "H5    ";
+}
+.HyperMD-header-6:not(.cm-active)::before {
+  content: "H6    ";
+}

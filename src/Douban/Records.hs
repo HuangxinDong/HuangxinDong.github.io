@@ -101,14 +101,22 @@ loadDoubanDirectory root = do
     if not exists
         then return $ ImportResult [] [] []
         else do
-            files <- listCsvFilesRecursive root
-            let selected = selectLatestSources files
-            parsed <- mapM parseSelectedSource selected
-            return $ ImportResult
-                { importRecords = concatMap (\(_, _, _, records, _) -> records) parsed
-                , importWarnings = concatMap (\(_, _, _, _, warnings) -> warnings) parsed
-                , importSources = [ (category, status, path) | (category, status, path, _, _) <- parsed ]
-                }
+            -- Find the latest archive directory (e.g., archive-20260412)
+            contents <- listDirectory root
+            let archives = sort $ filter ("archive-" `isPrefixOf`) contents
+            case reverse archives of
+                [] -> return $ ImportResult [] [] []
+                (latestDir : _) -> do
+                    let latestPath = root </> latestDir
+                    files <- map (latestPath </>) . filter (\f -> ".csv" `isSuffixOf` map toLower f) 
+                               <$> listDirectory latestPath
+                    let selected = selectLatestSources files
+                    parsed <- mapM parseSelectedSource selected
+                    return $ ImportResult
+                        { importRecords = concatMap (\(_, _, _, records, _) -> records) parsed
+                        , importWarnings = concatMap (\(_, _, _, _, warnings) -> warnings) parsed
+                        , importSources = [ (category, status, path) | (category, status, path, _, _) <- parsed ]
+                        }
 
 formatImportWarning :: ImportWarning -> String
 formatImportWarning warning =
@@ -291,18 +299,6 @@ classifyCsvFile path =
             | otherwise = Nothing
     in fmap (, status) category
 
-listCsvFilesRecursive :: FilePath -> IO [FilePath]
-listCsvFilesRecursive root = do
-    children <- sort <$> listDirectory root
-    nested <- mapM visit children
-    return (concat nested)
-  where
-    visit name = do
-        let path = root </> name
-        isDirectory <- doesDirectoryExist path
-        if isDirectory
-            then listCsvFilesRecursive path
-            else return [ path | ".csv" `isSuffixOf` map toLower name ]
 
 stripBom :: String -> String
 stripBom ('\xfeff':rest) = rest

@@ -1,5 +1,6 @@
 ---
 created: "2026-04-03"
+modified: "2026-04-13"
 title: Making of this blog
 tags:
   - tool
@@ -12,7 +13,7 @@ description: Why I built this blog with Hakyll, how it works, and what I want to
 
 - **Hakyll** — Haskell static site generator (library, not framework)
 - **Pandoc** — document compiler, called via `unixFilter`
-- Lua filter: `obsidian-callouts.lua`
+- Lua filter
 - A small companion executable: `Formatter.hs`
 
 ## Why Hakyll
@@ -34,6 +35,9 @@ Based on the template provided by Hakyll, I added a few more features:
 - **Smart dates**: Hakyll's default date system requires a specific filename convention (`YYYY-MM-DD-title.md`). I didn't want to be locked into that, so `getSmartDate` tries metadata keys in order (`date`, then `created`), then falls back to the file's modification time from the filesystem. This means any file can have a date without encoding it in the filename. I also added `modified` field to the frontmatter to display the modification time of the post.
 
 - **`safeCompiler`**: Wraps a compiler in `catchError` so a single broken post doesn't abort the entire build. Instead, the failed page renders a styled error div with the error message. Useful during drafting when a post might have broken syntax or malformed LaTeX.
+
+- **Modular CSS**: Instead of one giant CSS file, I split them into `base.css`, `layout.css`, `components.css`, etc. Hakyll concatenates and compresses them into a single `site.css` during the build using `compressCssCompiler`.
+
 
 ## Pandoc pipeline
 
@@ -81,6 +85,17 @@ cabal run formatter -- --dry-run # print diff without writing
 
 During the development of the formatter, I realised there're much more edge cases than I thought. The dry-run mode turned out to be really useful because the formatter can be a bit aggressive, and it's always a good idea to check the diff before applying the changes, before I can 100% trust my code.
 
+## Data Integration: Douban Archive
+
+I wanted to have a place to keep track of the books I've read and movies I've watched, without relying on a third-party service. Since I've been using [Douban](https://www.douban.com/) for years, I decided to import my data from there.
+
+The implementation is split into a few parts:
+
+- **Ingestion**: Using Hakyll's `preprocess`, the site-building process loads CSV exports from `assets/douban/`.
+- **`Douban.Records`**: A Haskell module that handles the heavy lifting of CSV parsing (dealing with BOM, multi-line fields, and weird encoding quirks). It normalises the data into a common `DoubanRecord` format.
+- **Dynamic Routing**: Instead of creating a markdown file for every category, `site.hs` uses `createRecordStatusPages` to programmatically generate pages for Books, Movies, Music, and Games, including separate "Read/Watched/etc." and "Wishlist" views.
+
+This keeps my "Records" section automatically updated whenever I drop a new CSV export into the folder and rebuild the site.
 
 ## What's next
 
@@ -88,5 +103,6 @@ During the development of the formatter, I realised there're much more edge case
 - [ ] `--number-sections` should probably be opt-in per post, not global.
 - [ ] The `series/` concept is half-baked — I'm still not sure how to use it.
 - [x] css is still pretty basic: no support for dark mode, no responsive design, etc.
+- [x] Integrate reading/watching/listening/gaming records.
 - [ ] Write more posts rather than just playing with the blog!
 - [ ] Maybe add some interesting gadgets...

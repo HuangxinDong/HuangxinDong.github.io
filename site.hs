@@ -43,10 +43,13 @@ main = hakyll $ do
     -- Build tag index from published posts and series only
     tags <- buildTags ("posts/*" .||. "series/*") (fromCapture "tags/*.html")
     
-    doubanImport <- preprocess $ do
-        imported <- loadDoubanDirectory "assets/douban"
-        mapM_ (hPutStrLn stderr . formatImportWarning) (importWarnings imported)
-        return imported
+    -- Douban data loading helper
+    let loadImportedDouban = do
+            -- Register dependency on all CSV files
+            _ <- loadAll "assets/douban/**/*.csv" :: Compiler [Item CopyFile]
+            imported <- unsafeCompiler $ loadDoubanDirectory "assets/douban"
+            unsafeCompiler $ mapM_ (hPutStrLn stderr . formatImportWarning) (importWarnings imported)
+            return imported
 
     -- Static pages
     match (fromList ["about.md", "projects.md"]) $ do
@@ -58,17 +61,18 @@ main = hakyll $ do
 
     -- Douban Records Index
     create ["records.html"] $ do
-        route idRoute
-        compile $ do
-            let ctx = doubanIndexCtx doubanImport pageCtx
-            makeItem ""
-                >>= loadAndApplyTemplate "templates/douban-index.html" ctx
-                >>= loadAndApplyTemplate "templates/page.html" ctx
-                >>= loadAndApplyTemplate "templates/default.html" ctx
-                >>= relativizeUrls
+            route idRoute
+            compile $ do
+                imported <- loadImportedDouban
+                let ctx = doubanIndexCtx imported pageCtx
+                makeItem ""
+                    >>= loadAndApplyTemplate "templates/douban-index.html" ctx
+                    >>= loadAndApplyTemplate "templates/page.html" ctx
+                    >>= loadAndApplyTemplate "templates/default.html" ctx
+                    >>= relativizeUrls
 
     -- Douban Category Pages
-    mapM_ (createRecordStatusPages doubanImport) [Book, Movie, Music, Game]
+    mapM_ (createRecordStatusPages loadImportedDouban) [Book, Movie, Music, Game]
 
     -- Posts
     match ("posts/*.markdown" .||. "posts/*.md") $ do
@@ -134,13 +138,13 @@ main = hakyll $ do
 --------------------------------------------------------------------------------
 -- Helpers
 
-createRecordStatusPages :: ImportResult -> Category -> Rules ()
-createRecordStatusPages imported category = do
-    createRecordStatusPage imported category Done
-    createRecordStatusPage imported category Wishlist
+createRecordStatusPages :: Compiler ImportResult -> Category -> Rules ()
+createRecordStatusPages importedCompiler category = do
+    createRecordStatusPage importedCompiler category Done
+    createRecordStatusPage importedCompiler category Wishlist
 
-createRecordStatusPage :: ImportResult -> Category -> RecordStatus -> Rules ()
-createRecordStatusPage imported category status =
+createRecordStatusPage :: Compiler ImportResult -> Category -> RecordStatus -> Rules ()
+createRecordStatusPage importedCompiler category status =
     let slug = categorySlug category
         path = case status of
             Done     -> "records/" ++ slug ++ ".html"
@@ -148,6 +152,7 @@ createRecordStatusPage imported category status =
     in create [fromFilePath path] $ do
         route idRoute
         compile $ do
+            imported <- importedCompiler
             let ctx = doubanStatusPageCtx imported category status pageCtx
             makeItem ""
                 >>= loadAndApplyTemplate "templates/douban-category.html" ctx
