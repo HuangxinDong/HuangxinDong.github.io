@@ -17,6 +17,7 @@ lang: zh
 - [Introduction · macOS Setup Guide](https://sourabhbajaj.com/mac-setup/)
 
 Useful Links:
+
 - [macOS defaults list](https://macos-defaults.com/)
 - [Free Macintosh Software!](http://www.macattorney.com/free.html)
 
@@ -311,6 +312,11 @@ fn，点右上角放大之后在自定符号里面增加“技术符号”即可
 说是键盘很容易油什么的，感觉就擦吧无所谓了。屏幕我直接用相机的清理套装的喷雾喷在眼镜布上擦。
 
 ### 游戏
+
+macOS 游戏兼容性查询：
+
+- [MacGamingDB | Apple Silicon Mac Games – Compatibility & Benchmarks](https://macgamingdb.app/)
+- [M1 compatible games master list - Gaming on M1 Apple silicon Macs and MacBooks, bugs, fixes, compatiblity and troubleshooting guides - AppleGamingWiki](https://www.applegamingwiki.com/wiki/M1_compatible_games_master_list)
 
 感觉 steam、GOG、itch 和 Epic 的 macOS 版本都依托答辩……所以现在用[Heroic Games Launcher](https://heroicgameslauncher.com/)来替代 GOG 和 Epic。
 

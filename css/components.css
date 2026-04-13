@@ -248,6 +248,39 @@ figcaption {
     text-align: left;
 }
 
+/* ============================================
+   Image Grid
+   ============================================ */
+
+.image-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.2rem;
+    margin: 1.8rem 0;
+}
+
+.image-grid-2 img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.image-grid-2 figure {
+    margin: 0;
+}
+
+.image-grid-2 figcaption {
+    margin-top: 0.55rem;
+    font-size: 0.78rem;
+    text-align: center;
+}
+
+@media (max-width: 640px) {
+    .image-grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
 .callout-content {
     padding: 0.85rem 0.95rem;
     font-size: 0.95em;
