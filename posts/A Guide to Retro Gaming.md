@@ -64,9 +64,9 @@ Compared to the Steam client, [GOG GALAXY](https://www.gog.com/galaxy) is more f
 
 Early macOS had no such reputation for being "bad for gaming." In fact, we can still experience many of those cool old Mac games today through Macintosh emulators (or real old Macs if you have one).
 
-[Getting Started (WIP) – Macintosh Repository](https://www.macintoshrepository.org/articles/1-getting-started-wip-) is an excellent all-in-one introduction to the scene. My personal emulator of choice is [Mini vMac](https://www.gryphel.com/c/minivmac/index.html), simply because I adore the stark, monochrome minimalism of Macintosh System 7. Once you're up and running, [Macintosh Garden](https://macintoshgarden.org/) is a treasure trove of classic Mac games and software.
+[Getting Started (WIP) – Macintosh Repository](https://www.macintoshrepository.org/articles/1-getting-started-wip-) is an excellent all-in-one introduction to the scene. My personal emulator of choice is [Mini vMac](https://www.gryphel.com/c/minivmac/index.html), simply because I adore the 2bit minimalism of Macintosh System 7. Once you're up and running, [Macintosh Garden](https://macintoshgarden.org/) is a nice place for classic Mac games and software.
 
-My current favourite is [Déjà Vu](https://en.wikipedia.org/wiki/D%C3%A9j%C3%A0_Vu_(video_game)), which cleverly uses the Mac's native Finder interface as part of the game itself -- there's something wonderfully meta about it. Other standouts from the same era include Shufflepuck Café, SimCity, Glider, and Battle Chess, each remarkable in its own way.
+My current favourite is [Déjà Vu](https://en.wikipedia.org/wiki/D%C3%A9j%C3%A0_Vu_(video_game)), which cleverly uses the Mac's ==native Finder interface== as part of the game itself -- there's something wonderfully meta about it. Other standouts from the same era include Shufflepuck Café, SimCity, Glider, and Battle Chess, each remarkable in its own way.
 
 <div class="image-grid-2">
   <figure>
@@ -95,7 +95,7 @@ My current favourite is [Déjà Vu](https://en.wikipedia.org/wiki/D%C3%A9j%C3%A0
 
 As one of the defining forces in the games industry, Nintendo was producing design strokes of near-genius very early on -- *Super Mario Bros.*, the *Legend of Zelda* series, and a series of inventive hardware. The best place to explore Nintendo's history is the [Nintendo Museum](https://museum.nintendo.com/en/index.html), and Nintendo's own website also has a overview at [Nintendo History | Hardware](https://www.nintendo.com/en-gb/Hardware/Nintendo-History/Nintendo-History-625945.html).
 
-![Me and Zoe at Nintendo Museum](../assets/images/at-nintendo-museum.png)
+![Me and Zoe at Nintendo Museum](../assets/images/at-Nintendo-Museum.png)
 
 
 ### Nintendo Switch
@@ -106,11 +106,11 @@ For me, there's one particularly welcome feature: these games all support save s
 
 ### 3DS
 
-Unfortunately, Nintendo Classics hasn't yet included 3DS titles (probably because the 3DS doesn't quite feel old enough to qualify). Your options are to use an emulator or to pick up a second-hand unit. If you want an emulator, [Azahar](https://github.com/azahar-emu/azahar) is the currently active one, though I haven't tried it personally. Second-hand 3DS units come in a range of models, though most are still priced somewhat higher than you'd hope. After a long search on the second-hand market, I eventually found one -- the screen is slightly yellowed, but it works (and worth the price). The main caveats: battery life is poor, certain games trigger crash bugs, and SD card read speeds are painfully slow.
+Unfortunately, Nintendo Classics hasn't yet included 3DS titles (probably because the 3DS doesn't quite feel old enough to qualify). Your options are to use an emulator or to buy a second-hand 3DS. For emulator, [Azahar](https://github.com/azahar-emu/azahar) is the currently active one, though I haven't tried it personally; second-hand 3DS come in a range of models, though most are still priced somewhat higher than I'd hoped. After a long search on the second-hand market, I eventually found one -- the screen is slightly yellowed, battery life is poor, certain games trigger crash bugs, and SD card read speeds are painfully slow, but it **works** (and worth the price).
 
 ![Tomodachi Life screenshot from my 3DS](../assets/images/3DS-screenshot.png)
 
-The 3DS [game library](https://www.nintendo.com/en-gb/Hardware/Nintendo-3DS-Family/Games/Games-116361.html) is genuinely impressive, and many titles make wonderful use of it's unique hardware: dual screens (top and bottom), glasses-free 3D, a camera and microphone, a circle pad, a stylus. By today's standards the performance and fidelity are decidedly vintage, but put it all together and the experience still feels inventive and fresh. You'll find yourself marvelling repeatedly at the ingenuity of the people who designed both the games and the hardware. In that sense, the 3DS is one platform where buying a physical unit rather than using an emulator really does feel like the right call.
+The 3DS [game library](https://www.nintendo.com/en-gb/Hardware/Nintendo-3DS-Family/Games/Games-116361.html) is super impressive, and many titles make wonderful use of it's unique hardware: dual screens (top and bottom), glasses-free 3D, a camera and microphone, a circle pad, a stylus. By today's standards the performance and fidelity are decidedly vintage, but put it all together and the experience still feels inventive and fresh. You'll find yourself marvelling repeatedly at the ingenuity of the people who designed both the games and the hardware. In my opinion, the 3DS is one platform where buying a physical unit rather than using an emulator really does feel like the right call.
 
 #### Modding, Installing Games, and System Setup
 
@@ -135,7 +135,7 @@ Play online:
 - [RetroFab by Itizso](https://itizso.itch.io/retrofab)
 - [lcdgame.js – LCD game simulators](http://bdrgames.nl/lcdgames/)
 
-If you're curious, there are also many fan-made HTML Game & Watch games on itch.io and similar platforms, such as [Cuphead: Game And Watch Edition](https://dedjo0.itch.io/cuphead-game-and-watch-edition).
+There are also many fan-made HTML Game & Watch games on itch.io and similar platforms, such as [Cuphead: Game And Watch Edition](https://dedjo0.itch.io/cuphead-game-and-watch-edition) and [LCD, Please](https://dukope.itch.io/lcd-please) (the latter is made by Lucas Pope, one of my favourite indie game developers).
 
 ---
 
@@ -143,6 +143,6 @@ If you're curious, there are also many fan-made HTML Game & Watch games on itch.
 
 Looking back, writing this post turned out to be its own kind of rabbit hole. Somewhere in the middle of organising these resources, I ended up replaying a few rounds of Simcity on Mini vMac.
 
-And I realised there's a particular quality I love about the retro gaming community during searching: players who carefully document everything about a game on wikis and forums -- modding guides, fan translations, hardware compatibility lists -- not for any obvious reason, but simply because they don't want those things to disappear, and help others to enjoy them. That instinct feels as worth preserving as the games themselves.
+I also realised there's a particular quality I love about the retro gaming community: players who carefully document everything about a game on wikis and forums -- modding guides, fan translations, hardware compatibility lists -- not for any obvious reason, but simply because they don't want those things to disappear, and help others to enjoy them. That instinct feels as worth preserving as the games themselves.
 
 So perhaps this is less a guide than an invitation. If some half-remembered game from childhood suddenly comes back to you on a random weekend -- this is a place to start looking for it ;)
