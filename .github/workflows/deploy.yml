@@ -33,7 +33,7 @@ jobs:
       - uses: haskell-actions/hlint-setup@v2
         with:
           version: '3.8'
-      - run: hlint site.hs src/ Formatter.hs
+      - run: hlint src/
 
   build:
     runs-on: ubuntu-latest
@@ -59,7 +59,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: dist-newstyle
-          key: ${{ runner.os }}-ghc-9.6.7-dist-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('site.hs', 'Formatter.hs') }}
+          key: ${{ runner.os }}-ghc-9.6.7-dist-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('src/site.hs', 'src/Formatter.hs') }}
           restore-keys: |
             ${{ runner.os }}-ghc-9.6.7-dist-${{ hashFiles('**/*.cabal') }}-
             ${{ runner.os }}-ghc-9.6.7-dist-
@@ -69,7 +69,7 @@ jobs:
         with:
           path: _cache
           # Key on site logic only; Hakyll incremental build handles content changes itself
-          key: ${{ runner.os }}-hakyll-${{ hashFiles('site.hs', 'templates/**', 'filters/**') }}
+          key: ${{ runner.os }}-hakyll-${{ hashFiles('src/site.hs', 'templates/**', 'filters/**') }}
           restore-keys: |
             ${{ runner.os }}-hakyll-
 
