@@ -1,16 +1,20 @@
 {-# LANGUAGE OverloadedStrings #-}
+import           Control.Applicative ((<|>), empty)
 import           Control.Monad       (filterM)
-import           Data.List           (intercalate, nub, sort)
+import           Data.List           (intercalate, nub, nubBy, sort)
 import           Data.Maybe          (catMaybes)
+import           Data.Time           (defaultTimeLocale, formatTime)
 import           Douban.Records      (Category (..), ImportResult (..),
                                       RecordStatus (..), categorySlug,
                                       formatImportWarning, loadDoubanDirectory)
 import           Douban.UI           (doubanIndexCtx, doubanStatusPageCtx)
 import           Hakyll
+import           Network.URI         (escapeURIString, isUnreserved)
 import           Site.Utils          (customPandocCompiler, isPublished,
                                       itemCtx, pageCtx, postRoute,
+                                      parseDate,
                                       safeCompiler, seriesRoute,
-                                      smartRecentFirst)
+                                      siteUrl, smartRecentFirst)
 import           System.IO           (hPutStrLn, stderr)
 
 main :: IO ()
@@ -149,6 +153,43 @@ main = hakyll $ do
             postRoutes <- catMaybes <$> mapM getRoute postIds
             seriesRoutes <- catMaybes <$> mapM getRoute seriesIds
 
+            publishedPostItems <- filterM isPublished =<< (loadAll ("posts/*.markdown" .||. "posts/*.md") :: Compiler [Item String])
+            publishedSeriesItems <- filterM isPublished =<< (loadAll "series/*" :: Compiler [Item String])
+
+            let sitemapLastMod ident = do
+                    meta <- getMetadata ident
+                    let fromMeta =
+                            (lookupString "modified" meta >>= parseDate)
+                            <|> (lookupString "date" meta >>= parseDate)
+                            <|> (lookupString "created" meta >>= parseDate)
+                    return $ formatTime defaultTimeLocale "%Y-%m-%d" <$> fromMeta
+
+                toSitemapPath route =
+                    case route of
+                        "index.html" -> "/"
+                        "/index.html" -> "/"
+                        _ -> if null route || head route == '/'
+                                then route
+                                else '/' : route
+
+                encodeSitemapPath = escapeURIString (\c -> isUnreserved c || c == '/' || c == '.' || c == '%')
+
+                toAbsUrl route =
+                    let path = encodeSitemapPath (toSitemapPath route)
+                    in if path == "/" || null path
+                        then siteUrl ++ "/"
+                        else siteUrl ++ path
+
+                toRouteEntry route = makeItem (toAbsUrl route, Nothing :: Maybe String)
+
+                toItemEntry item = do
+                    route <- getRoute $ itemIdentifier item
+                    case route of
+                        Nothing -> makeItem ("", Nothing :: Maybe String)
+                        Just r -> do
+                            lm <- sitemapLastMod (itemIdentifier item)
+                            makeItem (toAbsUrl r, lm)
+
             let categoryRoutes = [ "records/" ++ slug ++ ".html"
                                  | category <- [Book, Movie, Music, Game]
                                  , let slug = categorySlug category
@@ -160,10 +201,6 @@ main = hakyll $ do
                 tagRoutes = [ "tags/" ++ tag ++ ".html" | (tag, _) <- tagsMap tags ]
                 fixedRoutes = ["/posts.html", "/records.html"]
                 non404Routes = filter (/= "404.html") pageRoutes
-                toSitemapPath route =
-                    if null route || head route == '/'
-                        then route
-                        else '/' : route
                 allRoutes = nub . sort $
                     fixedRoutes
                     ++ map toSitemapPath non404Routes
@@ -172,12 +209,21 @@ main = hakyll $ do
                     ++ map toSitemapPath categoryRoutes
                     ++ map toSitemapPath categoryWishlistRoutes
                     ++ map toSitemapPath tagRoutes
-                allLocs = map ("https://huangxindong.github.io" ++) allRoutes
 
-            entries <- mapM makeItem allLocs
+            routeEntries <- mapM toRouteEntry allRoutes
+            postEntries <- mapM toItemEntry publishedPostItems
+            seriesEntries <- mapM toItemEntry publishedSeriesItems
+
+            let dedupeByLoc items =
+                    nubBy (\first second -> fst (itemBody first) == fst (itemBody second))
+                        (filter (not . null . fst . itemBody) items)
+                entries = dedupeByLoc (postEntries ++ seriesEntries ++ routeEntries)
+                entryCtx =
+                    field "loc" (return . fst . itemBody) `mappend`
+                    field "lastmod" (\i -> maybe empty return (snd (itemBody i)))
             let sitemapCtx =
-                    constField "root" "https://huangxindong.github.io" `mappend`
-                    listField "pages" (field "loc" (return . itemBody)) (return entries) `mappend`
+                    constField "homeLoc" (siteUrl ++ "/") `mappend`
+                    listField "pages" entryCtx (return entries) `mappend`
                     defaultContext
 
             makeItem ""

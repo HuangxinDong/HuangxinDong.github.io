@@ -168,7 +168,10 @@ langCtx = field "lang" $ \item -> do
 canonicalUrlCtx :: Context String
 canonicalUrlCtx = field "canonicalUrl" $ \item -> do
     route <- getRoute (itemIdentifier item)
-    return $ siteUrl ++ maybe "/" ('/' :) route
+    return $ case route of
+        Nothing -> siteUrl ++ "/"
+        Just "index.html" -> siteUrl ++ "/"
+        Just r -> siteUrl ++ '/' : r
 
 descriptionCtx :: Context String
 descriptionCtx = field "description" $ \item -> do
