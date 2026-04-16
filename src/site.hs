@@ -220,7 +220,7 @@ main = hakyll $ do
                 entries = dedupeByLoc (postEntries ++ seriesEntries ++ routeEntries)
                 entryCtx =
                     field "loc" (return . fst . itemBody) `mappend`
-                    field "lastmod" (\i -> maybe empty return (snd (itemBody i)))
+                    field "lastmod" (maybe empty return . snd . itemBody)
             let sitemapCtx =
                     constField "homeLoc" (siteUrl ++ "/") `mappend`
                     listField "pages" entryCtx (return entries) `mappend`
