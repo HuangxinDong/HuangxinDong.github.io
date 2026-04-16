@@ -51,14 +51,6 @@ main = hakyll $ do
             unsafeCompiler $ mapM_ (hPutStrLn stderr . formatImportWarning) (importWarnings imported)
             return imported
 
-    -- Static pages
-    match (fromList ["about.md", "projects.md", "404.md"]) $ do
-        route   $ setExtension "html"
-        compile $ customPandocCompiler
-            >>= loadAndApplyTemplate "templates/page.html"    pageCtx
-            >>= loadAndApplyTemplate "templates/default.html" pageCtx
-            >>= relativizeUrls
-
     -- Douban Records Index
     create ["records.html"] $ do
             route idRoute
@@ -73,6 +65,14 @@ main = hakyll $ do
 
     -- Douban Category Pages
     mapM_ (createRecordStatusPages loadImportedDouban) [Book, Movie, Music, Game]
+
+    -- Static pages
+    match "pages/*" $ do
+        route   $ setExtension "html" `composeRoutes` gsubRoute "pages/" (const "")
+        compile $ customPandocCompiler
+            >>= loadAndApplyTemplate "templates/page.html"    pageCtx
+            >>= loadAndApplyTemplate "templates/default.html" pageCtx
+            >>= relativizeUrls
 
     -- Posts
     match ("posts/*.markdown" .||. "posts/*.md") $ do
