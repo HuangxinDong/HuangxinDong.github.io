@@ -226,7 +226,17 @@ itemCtx tags =
     metadataDateCtx "modifiedIso" "%Y-%m-%d" "modified"            `mappend`
     metadataDateCtx "metaModified" "%b %e, %Y" "modified"          `mappend`
     readingTimeCtx                                                   `mappend`
+    bilingualCtx                                                     `mappend`
     pageCtx
+
+bilingualCtx :: Context String
+bilingualCtx = field "bilingual" $ \item -> do
+    meta <- getMetadata (itemIdentifier item)
+    case lookupString "bilingual" meta of
+        Just "true" -> return "true"
+        Just "True" -> return "true"
+        Just "yes"  -> return "true"
+        _           -> empty
 
 postCtx :: Tags -> Context String
 postCtx = itemCtx
@@ -241,6 +251,7 @@ customPandocCompiler =
     args = [ "--from", "markdown+mark+wikilinks_title_after_pipe-yaml_metadata_block"
            , "--to", "html"
            , "--lua-filter", "filters/obsidian-callouts.lua"
+           , "--lua-filter", "filters/bilingual.lua"
            , "--number-sections"
            , "--mathjax"
            ]

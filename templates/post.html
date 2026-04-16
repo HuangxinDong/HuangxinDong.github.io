@@ -22,6 +22,13 @@
                 $endif$
             </section>
             <section>
+                $if(bilingual)$
+                    <div class="bilingual-switcher" aria-label="Language switcher">
+                        <button class="btn-zh active" aria-pressed="true">中文</button>
+                        <button class="btn-en" aria-pressed="false">English</button>
+                    </div>
+                    <script src="/js/bilingual.js"></script>
+                $endif$
                 $body$
             </section>
             <section class="comments" aria-label="Comments">

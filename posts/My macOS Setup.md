@@ -231,7 +231,9 @@ bclm read
 sudo bclm persist
 ```
 
+### 鼠标设置
 
+我目前使用的是一款罗技鼠标，但是由于罗技官方软件相当buggy，最后我选择了 [LinearMouse | The mouse and trackpad utility for Mac.](https://linearmouse.app/en/)，一款开源免费的鼠标设置软件，可以自定义鼠标移动速度、滚轮方向和速度、加速度、自定义按键功能等等。简单好用。
 
 ### 输入法
 

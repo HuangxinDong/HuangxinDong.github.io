@@ -277,3 +277,80 @@ article h4.toc-feedback {
 @media (max-width: 1200px) {
     #toc { display: none; }
 }
+
+/* ============================================
+   Bilingual Support
+   ============================================ */
+
+.lang-zh, .lang-en {
+    display: none; /* Hidden by default, shown by active class */
+}
+
+/* Initial state (no JS) - show both or default to primary? 
+   Let's show the language based on a body class.
+   If no class is present, we'll show English by default or based on meta.
+   But realistically, the JS will run almost immediately.
+*/
+
+/* Default: Show Chinese if no specific active class (common choice for this user) */
+body:not(.lang-en-active) .lang-zh {
+    display: block;
+}
+
+body.lang-en-active .lang-en {
+    display: block;
+}
+
+body.lang-en-active .lang-zh {
+    display: none;
+}
+
+body.lang-zh-active .lang-zh {
+    display: block;
+}
+
+body.lang-zh-active .lang-en {
+    display: none;
+}
+
+.bilingual-switcher {
+    display: inline-flex;
+    align-items: center;
+    background: color-mix(in srgb, var(--code-bg) 80%, var(--bg));
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 3px;
+    margin-bottom: 2rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    user-select: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.bilingual-switcher button {
+    background: transparent;
+    border: none;
+    padding: 4px 14px;
+    cursor: pointer;
+    color: var(--muted);
+    border-radius: 100px;
+    font-weight: 500;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bilingual-switcher button.active {
+    color: var(--accent);
+    background: var(--bg);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.bilingual-switcher button:hover:not(.active) {
+    color: var(--text);
+    background: rgba(0, 0, 0, 0.03);
+}
+
+@media (prefers-color-scheme: dark) {
+    .bilingual-switcher button:hover:not(.active) {
+        background: rgba(255, 255, 255, 0.05);
+    }
+}
