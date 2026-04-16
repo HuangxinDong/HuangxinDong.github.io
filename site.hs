@@ -52,7 +52,7 @@ main = hakyll $ do
             return imported
 
     -- Static pages
-    match (fromList ["about.md", "projects.md"]) $ do
+    match (fromList ["about.md", "projects.md", "404.md"]) $ do
         route   $ setExtension "html"
         compile $ customPandocCompiler
             >>= loadAndApplyTemplate "templates/page.html"    pageCtx
