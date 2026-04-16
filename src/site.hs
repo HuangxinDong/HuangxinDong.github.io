@@ -42,7 +42,7 @@ main = hakyll $ do
 
     -- Build tag index from published posts and series only
     tags <- buildTags ("posts/*" .||. "series/*") (fromCapture "tags/*.html")
-    
+
     -- Douban data loading helper
     let loadImportedDouban = do
             -- Register dependency on all CSV files
