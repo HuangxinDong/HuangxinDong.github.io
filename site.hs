@@ -67,7 +67,7 @@ main = hakyll $ do
     mapM_ (createRecordStatusPages loadImportedDouban) [Book, Movie, Music, Game]
 
     -- Static pages
-    match "pages/*" $ do
+    match ("pages/*.markdown" .||. "pages/*.md" ) $ do
         route   $ setExtension "html" `composeRoutes` gsubRoute "pages/" (const "")
         compile $ customPandocCompiler
             >>= loadAndApplyTemplate "templates/page.html"    pageCtx
@@ -123,8 +123,8 @@ main = hakyll $ do
                 >>= relativizeUrls
 
     -- Homepage
-    match "index.html" $ do
-        route idRoute
+    match "pages/index.html" $ do
+        route $ gsubRoute "pages/" (const "")
         compile $ do
             posts <- fmap (take 5) . smartRecentFirst =<< filterM isPublished =<< loadAll ("posts/*.markdown" .||. "posts/*.md")
             let indexCtx = listField "posts" (itemCtx tags) (return posts) `mappend` pageCtx
