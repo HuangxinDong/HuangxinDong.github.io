@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 import           Control.Monad       (filterM)
-import           Data.List           (intercalate)
+import           Data.List           (intercalate, nub, sort)
+import           Data.Maybe          (catMaybes)
 import           Douban.Records      (Category (..), ImportResult (..),
                                       RecordStatus (..), categorySlug,
                                       formatImportWarning, loadDoubanDirectory)
@@ -14,6 +15,10 @@ import           System.IO           (hPutStrLn, stderr)
 
 main :: IO ()
 main = hakyll $ do
+    match "robots.txt" $ do
+        route   idRoute
+        compile copyFileCompiler
+
     match "favicon/*" $ do
         route   idRoute
         compile copyFileCompiler
@@ -132,6 +137,51 @@ main = hakyll $ do
                 >>= applyAsTemplate indexCtx
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
                 >>= relativizeUrls
+
+    create ["sitemap.xml"] $ do
+        route idRoute
+        compile $ do
+            pageIds <- getMatches ("pages/*.markdown" .||. "pages/*.md")
+            postIds <- getMatches ("posts/*.markdown" .||. "posts/*.md")
+            seriesIds <- getMatches "series/*"
+
+            pageRoutes <- fmap catMaybes $ mapM getRoute pageIds
+            postRoutes <- fmap catMaybes $ mapM getRoute postIds
+            seriesRoutes <- fmap catMaybes $ mapM getRoute seriesIds
+
+            let categoryRoutes = [ "records/" ++ slug ++ ".html"
+                                 | category <- [Book, Movie, Music, Game]
+                                 , let slug = categorySlug category
+                                 ]
+                categoryWishlistRoutes = [ "records/" ++ slug ++ "/wishlist.html"
+                                         | category <- [Book, Movie, Music, Game]
+                                         , let slug = categorySlug category
+                                         ]
+                tagRoutes = [ "tags/" ++ tag ++ ".html" | (tag, _) <- tagsMap tags ]
+                fixedRoutes = ["/posts.html", "/records.html"]
+                non404Routes = filter (/= "404.html") pageRoutes
+                toSitemapPath route =
+                    if null route || head route == '/'
+                        then route
+                        else '/' : route
+                allRoutes = nub . sort $
+                    fixedRoutes
+                    ++ map toSitemapPath non404Routes
+                    ++ map toSitemapPath postRoutes
+                    ++ map toSitemapPath seriesRoutes
+                    ++ map toSitemapPath categoryRoutes
+                    ++ map toSitemapPath categoryWishlistRoutes
+                    ++ map toSitemapPath tagRoutes
+                allLocs = map ("https://huangxindong.github.io" ++) allRoutes
+
+            entries <- mapM makeItem allLocs
+            let sitemapCtx =
+                    constField "root" "https://huangxindong.github.io" `mappend`
+                    listField "pages" (field "loc" (return . itemBody)) (return entries) `mappend`
+                    defaultContext
+
+            makeItem ""
+                >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
 
     match "templates/*" $ compile templateBodyCompiler
 
