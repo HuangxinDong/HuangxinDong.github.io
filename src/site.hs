@@ -145,9 +145,9 @@ main = hakyll $ do
             postIds <- getMatches ("posts/*.markdown" .||. "posts/*.md")
             seriesIds <- getMatches "series/*"
 
-            pageRoutes <- fmap catMaybes $ mapM getRoute pageIds
-            postRoutes <- fmap catMaybes $ mapM getRoute postIds
-            seriesRoutes <- fmap catMaybes $ mapM getRoute seriesIds
+            pageRoutes <- catMaybes <$> mapM getRoute pageIds
+            postRoutes <- catMaybes <$> mapM getRoute postIds
+            seriesRoutes <- catMaybes <$> mapM getRoute seriesIds
 
             let categoryRoutes = [ "records/" ++ slug ++ ".html"
                                  | category <- [Book, Movie, Music, Game]
