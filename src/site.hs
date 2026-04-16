@@ -42,7 +42,7 @@ main = hakyll $ do
 
     -- Build tag index from published posts and series only
     tags <- buildTags ("posts/*" .||. "series/*") (fromCapture "tags/*.html")
-    
+
     -- Douban data loading helper
     let loadImportedDouban = do
             -- Register dependency on all CSV files
@@ -50,14 +50,6 @@ main = hakyll $ do
             imported <- unsafeCompiler $ loadDoubanDirectory "assets/douban"
             unsafeCompiler $ mapM_ (hPutStrLn stderr . formatImportWarning) (importWarnings imported)
             return imported
-
-    -- Static pages
-    match (fromList ["about.md", "projects.md", "404.md"]) $ do
-        route   $ setExtension "html"
-        compile $ customPandocCompiler
-            >>= loadAndApplyTemplate "templates/page.html"    pageCtx
-            >>= loadAndApplyTemplate "templates/default.html" pageCtx
-            >>= relativizeUrls
 
     -- Douban Records Index
     create ["records.html"] $ do
@@ -73,6 +65,14 @@ main = hakyll $ do
 
     -- Douban Category Pages
     mapM_ (createRecordStatusPages loadImportedDouban) [Book, Movie, Music, Game]
+
+    -- Static pages
+    match ("pages/*.markdown" .||. "pages/*.md" ) $ do
+        route   $ setExtension "html" `composeRoutes` gsubRoute "pages/" (const "")
+        compile $ customPandocCompiler
+            >>= loadAndApplyTemplate "templates/page.html"    pageCtx
+            >>= loadAndApplyTemplate "templates/default.html" pageCtx
+            >>= relativizeUrls
 
     -- Posts
     match ("posts/*.markdown" .||. "posts/*.md") $ do
@@ -123,8 +123,8 @@ main = hakyll $ do
                 >>= relativizeUrls
 
     -- Homepage
-    match "index.html" $ do
-        route idRoute
+    match "pages/index.html" $ do
+        route $ gsubRoute "pages/" (const "")
         compile $ do
             posts <- fmap (take 5) . smartRecentFirst =<< filterM isPublished =<< loadAll ("posts/*.markdown" .||. "posts/*.md")
             let indexCtx = listField "posts" (itemCtx tags) (return posts) `mappend` pageCtx
