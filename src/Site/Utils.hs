@@ -35,6 +35,7 @@ module Site.Utils
     , itemCtx
     , postCtx
     , seriesCtx
+    , absolutizeUrls
     ) where
 
 import           Control.Applicative (empty)
@@ -359,3 +360,10 @@ escapeHtmlText (c:cs) = case c of
 
 escapeHtmlAttr :: String -> String
 escapeHtmlAttr = escapeHtmlText
+
+-- | Helper to transform root-relative URLs into absolute ones.
+absolutizeUrls :: String -> String -> String
+absolutizeUrls rootUrl = withUrls $ \url ->
+    if "/" `isPrefixOf` url && not ("//" `isPrefixOf` url)
+        then rootUrl ++ url
+        else url

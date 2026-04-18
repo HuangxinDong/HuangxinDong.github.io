@@ -14,7 +14,7 @@ import           Site.Utils          (customPandocCompiler, isPublished,
                                       itemCtx, pageCtx, postRoute,
                                       parseDate,
                                       safeCompiler, seriesRoute,
-                                      siteUrl, smartRecentFirst)
+                                      absolutizeUrls, siteUrl, smartRecentFirst)
 import           System.IO           (hPutStrLn, stderr)
 
 main :: IO ()
@@ -78,10 +78,19 @@ main = hakyll $ do
     -- Static pages
     match ("pages/*.markdown" .||. "pages/*.md" ) $ do
         route   $ setExtension "html" `composeRoutes` gsubRoute "pages/" (const "")
-        compile $ customPandocCompiler
-            >>= loadAndApplyTemplate "templates/page.html"    pageCtx
-            >>= loadAndApplyTemplate "templates/default.html" pageCtx
-            >>= relativizeUrls
+        compile $ do
+            ident <- getUnderlying
+            rendered <- customPandocCompiler
+                >>= loadAndApplyTemplate "templates/page.html"    pageCtx
+                >>= loadAndApplyTemplate "templates/default.html" pageCtx
+            if toFilePath ident == "pages/404.md"
+                then return $ fmap (absolutizeUrls siteUrl) rendered
+                else relativizeUrls rendered
+
+    -- Redirect common language-prefix probes to canonical homepage.
+    create ["en/index.html", "zh-cn/index.html"] $ do
+        route idRoute
+        compile $ makeItem $ redirectHtml siteUrl
 
     -- Posts
     match ("posts/*.markdown" .||. "posts/*.md") $ do
@@ -255,3 +264,22 @@ createRecordStatusPage importedCompiler category status =
                 >>= loadAndApplyTemplate "templates/page.html" ctx
                 >>= loadAndApplyTemplate "templates/default.html" ctx
                 >>= relativizeUrls
+
+--------------------------------------------------------------------------------
+-- | Helper to generate a redirecting HTML page.
+redirectHtml :: String -> String
+redirectHtml url = unlines
+    [ "<!doctype html>"
+    , "<html lang=\"en\">"
+    , "<head>"
+    , "  <meta charset=\"utf-8\">"
+    , "  <meta http-equiv=\"refresh\" content=\"0; url=" ++ url ++ "/\">"
+    , "  <link rel=\"canonical\" href=\"" ++ url ++ "/\">"
+    , "  <title>Redirecting...</title>"
+    , "  <script>location.replace('" ++ url ++ "/');</script>"
+    , "</head>"
+    , "<body>"
+    , "  <p>Redirecting to <a href=\"" ++ url ++ "/\">homepage</a>...</p>"
+    , "</body>"
+    , "</html>"
+    ]
