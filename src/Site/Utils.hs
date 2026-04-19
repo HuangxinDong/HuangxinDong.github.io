@@ -2,7 +2,6 @@
 module Site.Utils
     ( slugify
     , parseDate
-    , getSmartDate
     , smartRecentFirst
     , smartDateCtx
     , metadataDateCtx
@@ -39,7 +38,7 @@ module Site.Utils
     , absolutizeUrls
     ) where
 
-import           Control.Applicative (empty)
+import           Control.Applicative (empty, (<|>))
 import           Control.Monad       (filterM, msum)
 import           Control.Monad.Except (catchError)
 import           Data.Char           (isAlphaNum, isAsciiLower, isNumber,
