@@ -50,8 +50,20 @@ import           Data.Ord            (Down (..), comparing)
 import           Data.Time           (UTCTime, defaultTimeLocale, formatTime,
                                       parseTimeM)
 import           Hakyll
+import           Hakyll.Web.Pandoc   (defaultHakyllReaderOptions,
+                                      defaultHakyllWriterOptions,
+                                      readPandocWith, writePandocWith)
+import           Site.Pandoc.Callouts (transformObsidianCallouts)
 import           System.Directory    (doesFileExist, getModificationTime)
 import           System.FilePath     (takeBaseName)
+import           Text.Pandoc.Options (Extension (Ext_mark,
+                                                 Ext_wikilinks_title_after_pipe,
+                                                 Ext_yaml_metadata_block),
+                                      HTMLMathMethod (MathJax),
+                                      ReaderOptions (readerExtensions),
+                                      WriterOptions (writerHTMLMathMethod,
+                                                     writerNumberSections),
+                                      enableExtension)
 
 siteTitle :: String
 siteTitle = "Huangxin Dong"
@@ -239,15 +251,42 @@ seriesCtx :: Tags -> Context String
 seriesCtx = itemCtx
 
 customPandocCompiler :: Compiler (Item String)
-customPandocCompiler =
-    getResourceBody >>= withItemBody (unixFilter "pandoc" args)
-  where
-    args = [ "--from", "markdown+mark+wikilinks_title_after_pipe-yaml_metadata_block"
-           , "--to", "html"
-           , "--lua-filter", "filters/obsidian-callouts.lua"
-           , "--number-sections"
-           , "--mathjax"
-           ]
+customPandocCompiler = do
+    ident <- getUnderlying
+    meta <- getMetadata ident
+    let readerOptions = customReaderOptions
+        writerOptions = customWriterOptions meta
+    source <- getResourceBody
+    document <- readPandocWith readerOptions source
+    return $ writePandocWith writerOptions (fmap transformObsidianCallouts document)
+
+customReaderOptions :: ReaderOptions
+customReaderOptions =
+    defaultHakyllReaderOptions
+        { readerExtensions =
+            enableExtension Ext_mark
+            . enableExtension Ext_wikilinks_title_after_pipe
+            . enableExtension Ext_yaml_metadata_block
+            $ readerExtensions defaultHakyllReaderOptions
+        }
+
+customWriterOptions :: Metadata -> WriterOptions
+customWriterOptions meta =
+    defaultHakyllWriterOptions
+        { writerHTMLMathMethod = MathJax ""
+        , writerNumberSections = metadataFlagDefaultTrue "number-sections" meta
+        }
+
+metadataFlagDefaultTrue :: String -> Metadata -> Bool
+metadataFlagDefaultTrue key meta =
+    case fmap (map toLower) (lookupString key meta) of
+        Just "false" -> False
+        Just "no"    -> False
+        Just "off"   -> False
+        Just "true"  -> True
+        Just "yes"   -> True
+        Just "on"    -> True
+        _            -> True
 
 safeCompiler :: Compiler (Item String) -> Compiler (Item String)
 safeCompiler compiler = compiler `catchError` \errors -> do

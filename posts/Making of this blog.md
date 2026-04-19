@@ -1,6 +1,6 @@
 ---
 created: "2026-04-03"
-modified: "2026-04-13"
+modified: "2026-04-19"
 title: Making of this blog
 tags:
   - tool
@@ -12,8 +12,8 @@ description: Why I built this blog with Hakyll, how it works, and what I want to
 ## Stack
 
 - **Hakyll** — Haskell static site generator (library, not framework)
-- **Pandoc** — document compiler, called via `unixFilter`
-- Lua filter
+- **Pandoc** — document compiler, now used as a library dependency inside the site build
+- A small Pandoc AST transform for Obsidian-style callouts and sidenotes
 - A small companion executable: `Formatter.hs`
 
 ## Why Hakyll
@@ -36,17 +36,15 @@ Based on the template provided by Hakyll, I added a few more features:
 
 - **`safeCompiler`**: Wraps a compiler in `catchError` so a single broken post doesn't abort the entire build. Instead, the failed page renders a styled error div with the error message. Useful during drafting when a post might have broken syntax or malformed LaTeX.
 
-- **Modular CSS**: Instead of one giant CSS file, I split them into `base.css`, `layout.css`, `components.css`, etc. Hakyll concatenates and compresses them into a single `site.css` during the build using `compressCssCompiler`.
-
 
 ## Pandoc pipeline
 
-The compiler calls Pandoc as an external process via `unixFilter`:
+Originally, the compiler called Pandoc as an external process via `unixFilter`:
 ```haskell
 getResourceBody >>= withItemBody (unixFilter "pandoc" args)
 ```
 
-The args passed to Pandoc:
+The args I passed to Pandoc were:
 ```
 --from markdown+mark+wikilinks_title_after_pipe-yaml_metadata_block
 --to html
@@ -55,11 +53,37 @@ The args passed to Pandoc:
 --mathjax
 ```
 
-### Lua filters
+That version worked fine for quite a while, and it matched the way I already used Pandoc elsewhere, especially in Obsidian. But it build depended on a separately installed `pandoc` binary, which made the build contract less explicit than I wanted. It also meant that version drift could affect the output in ways cabal itself did not really know about.
 
-In Obsidian, I use [obsidian-pandoc](https://github.com/OliverBalfour/obsidian-pandoc) to export my notes to PDF files through $\LaTeX$ (See [HuangxinDong/Eisvogel-for-Obsidian](https://github.com/HuangxinDong/Eisvogel-for-Obsidian) for more). It supports custom lua filters, so I use it to add some custom filters to my markdown files. 
+So I eventually rewrote this part. Now the site uses Pandoc through Hakyll's library integration instead of shelling out to the executable. In `Site.Utils`, the compiler now does three things in sequence:
 
-I currently use `obsidian-callouts.lua` filter, since I just found out Pandoc has build-in support for syntax highlighting.   It converts Obsidian callout blocks to styled divs for HTML or `\begin{quote}` for LaTeX.
+1. Read markdown into a Pandoc AST with custom reader options.
+2. Transform the AST in Haskell.
+3. Write it back to HTML with custom writer options.
+
+It's more complicated than the old way, I had to add explicit `pandoc`, `pandoc-types`, and `text` dependencies to the cabal file. But in return, the site build no longer depends on a external `pandoc` executable to render posts.
+
+### Replacing Lua filters
+
+In [Obsidian](https://obsidian.md), I use [obsidian-pandoc](https://github.com/OliverBalfour/obsidian-pandoc) to export my notes to PDF files through $\LaTeX$ (See [HuangxinDong/Eisvogel-for-Obsidian](https://github.com/HuangxinDong/Eisvogel-for-Obsidian) for more). It supports custom lua filters, so I use it to add some custom filters to my markdown files. 
+
+The legacy setup used [`filters/obsidian-callouts.lua`](../assets/files/obsidian-callouts.lua.txt) to turn Obsidian-style blockquotes like this:
+
+```md
+> [!note] title
+> some text
+
+> [!sidenote]
+> some text
+```
+
+into styled callouts and sidenotes.
+
+While refactoring the Pandoc Pipeline, I realised I was not really using the more complicated parts like folded callouts or type aliases, so I decided to move the transformation into Haskell without turning it into a huge rewrite.
+
+As part of the refactoring, I added a `Site.Pandoc.Callouts` module that walks the Pandoc AST and rewrites matching `BlockQuote`s into the HTML structure used by the site. Unknown callout types are left alone and rendered as ordinary blockquotes, which felt like a nicer failure mode than trying to be too clever.
+
+I moved `obsidian-callouts.lua` to the `assets/files` folder to keep it as a reference, but the website itself no longer depends on that filter during the build.
 
 ## Formatter.hs
 
@@ -100,9 +124,15 @@ This keeps my "Records" section automatically updated whenever I drop a new CSV 
 ## What's next
 
 - [ ] Tags are implemented but the tag pages are unstyled.
-- [ ] `--number-sections` should probably be opt-in per post, not global.
+- [x] `--number-sections` should probably be opt-in per post, not global. -> it can be controlled by frontmatter now.
+- [ ] It should probably become more deliberate per post, rather than just "on by default unless disabled".
 - [ ] The `series/` concept is half-baked — I'm still not sure how to use it.
 - [x] css is still pretty basic: no support for dark mode, no responsive design, etc.
 - [x] Integrate reading/watching/listening/gaming records.
+- [ ] Add a search function.
+- [x] Add a comment area. -> I added a comment section using giscus.
 - [ ] Write more posts rather than just playing with the blog!
-- [ ] Maybe add some interesting gadgets...
+
+---
+
+The [source code](https://github.com/HuangxinDong/HuangxinDong.github.io) of this blog is available on GitHub. Feel free to check it out if you're interested or have any suggestions! 
