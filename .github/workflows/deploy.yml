@@ -59,7 +59,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: dist-newstyle
-          key: ${{ runner.os }}-ghc-9.6.7-dist-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('src/site.hs', 'src/Formatter.hs') }}
+          key: ${{ runner.os }}-ghc-9.6.7-dist-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('src/**/*.hs') }}
           restore-keys: |
             ${{ runner.os }}-ghc-9.6.7-dist-${{ hashFiles('**/*.cabal') }}-
             ${{ runner.os }}-ghc-9.6.7-dist-
@@ -69,15 +69,9 @@ jobs:
         with:
           path: _cache
           # Key on site logic only; Hakyll incremental build handles content changes itself
-          key: ${{ runner.os }}-hakyll-${{ hashFiles('src/site.hs', 'templates/**', 'filters/**') }}
+          key: ${{ runner.os }}-hakyll-${{ hashFiles('src/**/*.hs', 'templates/**') }}
           restore-keys: |
             ${{ runner.os }}-hakyll-
-
-      - name: Install Pandoc
-        run: |
-          PANDOC_VER=3.6.4
-          curl -fsSL "https://github.com/jgm/pandoc/releases/download/${PANDOC_VER}/pandoc-${PANDOC_VER}-linux-amd64.tar.gz" \
-            | sudo tar -xz --strip-components=2 -C /usr/local/bin pandoc-${PANDOC_VER}/bin/pandoc
 
       - name: Update Cabal package index
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_cabal_update }}
