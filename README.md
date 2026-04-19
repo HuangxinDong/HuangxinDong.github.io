@@ -49,7 +49,7 @@ cabal run formatter -- --dry-run
 ## Notes
 
 - The site now renders Markdown through Pandoc as a library dependency inside the Hakyll build.
-- `filters/obsidian-callouts.lua` is retained as historical reference only; the live site no longer depends on it.
+- `assets/files/obsidian-callouts.lua.txt` is retained as historical reference only; the live site no longer depends on it.
 
 ## License
 
