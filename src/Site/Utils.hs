@@ -173,6 +173,37 @@ mathJaxCtx = field "hasMathJax" $ \item -> do
                        || (allowAutoDetection && (hasMathTag || detectedMath))
     if enabled then return "true" else empty
 
+hasTocCtx :: Context String
+hasTocCtx = field "hasToc" $ \item -> do
+    meta <- getMetadata (itemIdentifier item)
+    route <- getRoute (itemIdentifier item)
+    let allowToc = case route of
+            Just r -> any (`isInfixOf` r) ["posts", "series", "about", "projects", "records"]
+            _      -> False
+    if allowToc && metadataFlagDefaultTrue "toc" meta
+        then return "true"
+        else empty
+
+hasCopyCodeCtx :: Context String
+hasCopyCodeCtx = field "hasCopyCode" $ \item -> do
+    if "<pre" `isInfixOf` itemBody item
+        then return "true"
+        else empty
+
+hasRecordsCtx :: Context String
+hasRecordsCtx = field "hasRecords" $ \item -> do
+    route <- getRoute (itemIdentifier item)
+    case route of
+        Just r | "records/" `isPrefixOf` r || r == "records.html" -> return "true"
+        _ -> empty
+
+hasNavCtx :: Context String
+hasNavCtx = field "hasNav" $ \item -> do
+    meta <- getMetadata (itemIdentifier item)
+    if metadataFlagDefaultTrue "nav" meta
+        then return "true"
+        else empty
+
 langCtx :: Context String
 langCtx = field "lang" $ \item -> do
     meta <- getMetadata (itemIdentifier item)
@@ -222,6 +253,10 @@ siteCtx :: Context String
 siteCtx =
     constField "siteTitle" siteTitle                 `mappend`
     constField "defaultDescription" defaultDescription `mappend`
+    hasTocCtx                                        `mappend`
+    hasCopyCodeCtx                                   `mappend`
+    hasRecordsCtx                                    `mappend`
+    hasNavCtx                                        `mappend`
     langCtx                                          `mappend`
     descriptionCtx                                   `mappend`
     canonicalUrlCtx                                  `mappend`
