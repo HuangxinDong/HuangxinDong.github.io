@@ -21,6 +21,7 @@ rewriteBlockQuote block = block
 
 data CalloutSpec = CalloutSpec
     { calloutType    :: String
+    , calloutStyle   :: String
     , calloutTitle   :: [Inline]
     , calloutBody    :: [Block]
     , calloutVariant :: CalloutVariant
@@ -42,12 +43,13 @@ parseCallout (firstBlock:restBlocks) =
     parseFromFirstBlock [] = Nothing
     parseFromFirstBlock (Str marker : remaining)
         | Just rawType <- parseMarker (T.unpack marker)
-        , Just variant <- classifyType rawType =
+        , Just (variant, styleType) <- classifyType rawType =
             let (titleInlines, remainingInlines) = break isBreakInline remaining
                 inlineBody = dropWhile isBreakInline remainingInlines
                 bodyBlocks = assembleBodyBlocks inlineBody restBlocks
             in Just CalloutSpec
                 { calloutType = rawType
+                , calloutStyle = styleType
                 , calloutTitle =
                     if null titleInlines
                         then [Str (T.pack (defaultTitle rawType))]
@@ -77,12 +79,12 @@ parseMarker marker =
 isCalloutTypeChar :: Char -> Bool
 isCalloutTypeChar c = isAlphaNum c || c == '-'
 
-classifyType :: String -> Maybe CalloutVariant
+classifyType :: String -> Maybe (CalloutVariant, String)
 classifyType rawType
-    | rawType `elem` supportedCalloutTypes = Just StandardCallout
-    | rawType == "sidenote"                = Just SideNote
-    | rawType == "sidenote-l"              = Just SideNoteLeft
-    | otherwise                            = Nothing
+    | rawType == "sidenote"                = Just (SideNote, rawType)
+    | rawType == "sidenote-l"              = Just (SideNoteLeft, rawType)
+    | rawType `elem` supportedCalloutTypes = Just (StandardCallout, rawType)
+    | otherwise                            = Just (StandardCallout, "note")
 
 supportedCalloutTypes :: [String]
 supportedCalloutTypes =
@@ -106,12 +108,12 @@ renderCallout spec =
     case calloutVariant spec of
         StandardCallout ->
             Div
-                ("", map T.pack ["callout", "callout-" ++ calloutType spec], [("data-callout", T.pack (calloutType spec))])
+                ("", map T.pack ["callout", "callout-" ++ calloutStyle spec], [("data-callout", T.pack (calloutType spec))])
                 [ Div
                     ("", ["callout-title"], [])
                     [ Plain
                         [ Span
-                            ("", ["callout-icon"], [("aria-hidden", "true"), ("data-icon", T.pack (iconFor (calloutType spec)))])
+                            ("", ["callout-icon"], [("aria-hidden", "true"), ("data-icon", T.pack (iconFor (calloutStyle spec)))])
                             []
                         , Span ("", ["callout-title-inner"], []) (calloutTitle spec)
                         ]

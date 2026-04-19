@@ -128,6 +128,9 @@ Below is a test of the website frontend.
 > [!note]
 > This is an Obsidian Callout.
 
+> [!custom] title
+> This is an Obsidian Callout.
+
 > [!info]
 > This is an info callout.
 
