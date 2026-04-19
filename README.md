@@ -9,7 +9,6 @@ This repo contains my personal blog built with Hakyll.
 ## Requirements
 
 - GHC and Cabal
-- `pandoc`
 
 ## Getting Started
 
@@ -49,8 +48,8 @@ cabal run formatter -- --dry-run
 
 ## Notes
 
-- The site build calls `pandoc` as an external process from `site.hs`.
-- Custom Pandoc Lua filters live in `filters/`.
+- The site now renders Markdown through Pandoc as a library dependency inside the Hakyll build.
+- `filters/obsidian-callouts.lua` is retained as historical reference only; the live site no longer depends on it.
 
 ## License
 
