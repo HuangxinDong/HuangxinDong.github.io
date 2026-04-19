@@ -11,6 +11,7 @@ import           Douban.UI           (doubanIndexCtx, doubanStatusPageCtx)
 import           Hakyll
 import           Network.URI         (escapeURIString, isUnreserved)
 import           Site.Utils          (customPandocCompiler, isPublished,
+                                      isPublishedId,
                                       itemCtx, pageCtx, postRoute,
                                       parseDate,
                                       safeCompiler, seriesRoute,
@@ -50,7 +51,11 @@ main = hakyll $ do
         compile copyFileCompiler
 
     -- Build tag index from published posts and series only
-    tags <- buildTags ("posts/*" .||. "series/*") (fromCapture "tags/*.html")
+    let getPublishedTags ident = do
+            published <- isPublishedId ident
+            if published then getTags ident else return []
+
+    tags <- buildTagsWith getPublishedTags ("posts/*" .||. "series/*") (fromCapture "tags/*.html")
 
     -- Douban data loading helper
     let loadImportedDouban = do
@@ -155,8 +160,8 @@ main = hakyll $ do
         route idRoute
         compile $ do
             pageIds <- getMatches ("pages/*.markdown" .||. "pages/*.md")
-            postIds <- getMatches ("posts/*.markdown" .||. "posts/*.md")
-            seriesIds <- getMatches "series/*"
+            postIds <- filterM isPublishedId =<< getMatches ("posts/*.markdown" .||. "posts/*.md")
+            seriesIds <- filterM isPublishedId =<< getMatches "series/*"
 
             pageRoutes <- catMaybes <$> mapM getRoute pageIds
             postRoutes <- catMaybes <$> mapM getRoute postIds

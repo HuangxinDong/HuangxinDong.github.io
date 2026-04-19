@@ -13,6 +13,7 @@ module Site.Utils
     , navStateCtx
     , sectionFromRoute
     , isPublished
+    , isPublishedId
     , customPandocCompiler
     , safeCompiler
     , stripHtmlTags
@@ -80,13 +81,13 @@ defaultLang = "en"
 --------------------------------------------------------------------------------
 -- | Returns True if the item is NOT a draft.
 isPublished :: MonadMetadata m => Item a -> m Bool
-isPublished item = do
-    meta <- getMetadata (itemIdentifier item)
-    return $ case lookupString "draft" meta of
-        Just "true"  -> False
-        Just "True"  -> False
-        Just "yes"   -> False
-        _            -> True
+isPublished = isPublishedId . itemIdentifier
+
+-- | Returns True if the identifier represents a published item.
+isPublishedId :: MonadMetadata m => Identifier -> m Bool
+isPublishedId ident = do
+    meta <- getMetadata ident
+    return $ not (metadataFlag False "draft" meta)
 
 -- | Convert a filename to a URL-safe slug.
 slugify :: String -> String
@@ -151,25 +152,15 @@ mathJaxCtx = field "hasMathJax" $ \item -> do
     sourceBody <- if hasSourceFile
         then unsafeCompiler $ readFile sourcePath
         else return ""
-    let isEnabled key = case lookupString key meta of
-            Just "true" -> True
-            Just "True" -> True
-            Just "yes"  -> True
-            Just "on"   -> True
-            _           -> False
-        isDisabled key = case lookupString key meta of
-            Just "false" -> True
-            Just "False" -> True
-            Just "no"    -> True
-            Just "off"   -> True
-            _            -> False
+    let isExplicitlyDisabled key = not (metadataFlag True key meta)
+        isExplicitlyEnabled key = metadataFlag False key meta
         hasMathTag = case lookupString "tags" meta of
             Just tagsValue -> "math" `elem` map (map toLower . stripSpaces) (splitOn ',' tagsValue)
             Nothing        -> False
         detectedMath = hasMathContent sourceBody
         enabled
-            | isDisabled "math" || isDisabled "mathjax" = False
-            | otherwise = isEnabled "math" || isEnabled "mathjax"
+            | isExplicitlyDisabled "math" || isExplicitlyDisabled "mathjax" = False
+            | otherwise = isExplicitlyEnabled "math" || isExplicitlyEnabled "mathjax"
                        || (allowAutoDetection && (hasMathTag || detectedMath))
     if enabled then return "true" else empty
 
@@ -312,16 +303,21 @@ customWriterOptions meta =
         , writerNumberSections = metadataFlagDefaultTrue "number-sections" meta
         }
 
+parseBool :: String -> Maybe Bool
+parseBool s = case map toLower s of
+    "true"  -> Just True
+    "yes"   -> Just True
+    "on"    -> Just True
+    "false" -> Just False
+    "no"    -> Just False
+    "off"   -> Just False
+    _       -> Nothing
+
+metadataFlag :: Bool -> String -> Metadata -> Bool
+metadataFlag def key meta = fromMaybe def (lookupString key meta >>= parseBool)
+
 metadataFlagDefaultTrue :: String -> Metadata -> Bool
-metadataFlagDefaultTrue key meta =
-    case fmap (map toLower) (lookupString key meta) of
-        Just "false" -> False
-        Just "no"    -> False
-        Just "off"   -> False
-        Just "true"  -> True
-        Just "yes"   -> True
-        Just "on"    -> True
-        _            -> True
+metadataFlagDefaultTrue = metadataFlag True
 
 safeCompiler :: Compiler (Item String) -> Compiler (Item String)
 safeCompiler compiler = compiler `catchError` \errors -> do
