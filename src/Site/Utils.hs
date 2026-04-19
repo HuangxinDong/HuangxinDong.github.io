@@ -111,29 +111,39 @@ parseDate s = msum
     , parseTimeM True defaultTimeLocale "%Y-%m-%d %H:%M:%S"  s
     ]
 
--- | Get a date for an item.
-getSmartDate :: [String] -> Item a -> Compiler UTCTime
-getSmartDate metaKeys item = do
+-- | Get the primary date for an item (date or created), or fail the compiler.
+getPrimaryDate :: Item a -> Compiler UTCTime
+getPrimaryDate item = do
     meta <- getMetadata (itemIdentifier item)
-    let fromMeta = msum [ lookupString k meta >>= parseDate | k <- metaKeys ]
+    let fromMeta = (lookupString "date" meta <|> lookupString "created" meta) >>= parseDate
     case fromMeta of
         Just t  -> return t
-        Nothing -> unsafeCompiler $ getModificationTime (toFilePath (itemIdentifier item))
+        Nothing -> fail $ "No 'date' or 'created' metadata found for " ++ show (itemIdentifier item)
 
--- | Sort items newest-first using smart date resolution.
+-- | Sort items newest-first using strict metadata resolution.
+-- Primary sort: date/created. Secondary sort: modified (falling back to primary).
 smartRecentFirst :: [Item a] -> Compiler [Item a]
 smartRecentFirst items = do
-    pairs <- mapM (\i -> getSmartDate ["date", "created"] i >>= \t -> return (t, i)) items
-    return $ map snd $ sortBy (comparing (Down . fst)) pairs
+    itemsWithDates <- mapM (\i -> do
+        p <- getPrimaryDate i
+        meta <- getMetadata (itemIdentifier i)
+        let m = fromMaybe p (lookupString "modified" meta >>= parseDate)
+        return (p, m, i)) items
+    return $ map (\(_, _, i) -> i) $ sortBy compareItems itemsWithDates
+  where
+    compareItems (p1, m1, _) (p2, m2, _) =
+        case compare p2 p1 of
+            EQ -> compare m2 m1 -- Tie-breaker: newest modified first
+            res -> res
 
--- | A context field that resolves a date from metadata keys or the file system.
+-- | A context field that resolves a date from metadata keys. Fails if missing.
 smartDateCtx :: String -> String -> [String] -> Context String
 smartDateCtx fieldName fmt metaKeys = field fieldName $ \item -> do
     meta <- getMetadata (itemIdentifier item)
     let fromMeta = msum [ lookupString k meta >>= parseDate | k <- metaKeys ]
     utc <- case fromMeta of
         Just t  -> return t
-        Nothing -> unsafeCompiler $ getModificationTime (toFilePath (itemIdentifier item))
+        Nothing -> fail $ "Metadata key(s) " ++ show metaKeys ++ " not found for " ++ show (itemIdentifier item)
     return $ formatTime defaultTimeLocale fmt utc
 
 metadataDateCtx :: String -> String -> String -> Context String

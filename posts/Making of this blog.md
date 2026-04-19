@@ -32,7 +32,7 @@ Based on the template provided by Hakyll, I added a few more features:
 
 - **Draft system**: Posts can have `draft: true` in frontmatter. `isPublished` checks for this and filters drafts out of all listings. The compiled HTML is still accessible by direct URL tho, which is useful for previewing before publishing.
 
-- **Smart dates**: Hakyll's default date system requires a specific filename convention (`YYYY-MM-DD-title.md`). I didn't want to be locked into that, so `getSmartDate` tries metadata keys in order (`date`, then `created`), then falls back to the file's modification time from the filesystem. This means any file can have a date without encoding it in the filename. I also added `modified` field to the frontmatter to display the modification time of the post.
+- **Chronological dates from metadata**: Hakyll's default date system requires a specific filename convention (`YYYY-MM-DD-title.md`). I didn't want to be locked into that, so my implementation tries metadata keys in order (`date`, then `created`), and uses `modified` as a tie-breaker. To ensure stability across machines, sorting is strictly metadata-driven: all posts are required to have at least one date field in the frontmatter, and the build will fail if both are missing.
 
 - **`safeCompiler`**: Wraps a compiler in `catchError` so a single broken post doesn't abort the entire build. Instead, the failed page renders a styled error div with the error message. Useful during drafting when a post might have broken syntax or malformed LaTeX.
 
