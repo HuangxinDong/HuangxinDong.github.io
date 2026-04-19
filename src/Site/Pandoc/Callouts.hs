@@ -3,7 +3,7 @@ module Site.Pandoc.Callouts
     ( transformObsidianCallouts
     ) where
 
-import           Data.Char             (isAlphaNum, toLower)
+import           Data.Char             (isAlphaNum, isAsciiLower, toLower)
 import           Data.List             (intercalate)
 import qualified Data.Text             as T
 import           Text.Pandoc.Definition
@@ -14,9 +14,7 @@ transformObsidianCallouts = walk rewriteBlockQuote
 
 rewriteBlockQuote :: Block -> Block
 rewriteBlockQuote block@(BlockQuote blocks) =
-    case parseCallout blocks of
-        Just spec -> renderCallout spec
-        Nothing   -> block
+    maybe block renderCallout (parseCallout blocks)
 rewriteBlockQuote block = block
 
 data CalloutSpec = CalloutSpec
@@ -143,14 +141,14 @@ iconFor calloutTypeName = case calloutTypeName of
     _          -> "i"
 
 defaultTitle :: String -> String
-defaultTitle = intercalate " " . map capitalize . splitOnHyphen
+defaultTitle = unwords . map capitalize . splitOnHyphen
   where
     capitalize []     = []
     capitalize (x:xs) = toLower x `seq` (toUpperAscii x : map toLower xs)
 
 toUpperAscii :: Char -> Char
 toUpperAscii c
-    | 'a' <= c && c <= 'z' = toEnum (fromEnum c - 32)
+    | isAsciiLower c = toEnum (fromEnum c - 32)
     | otherwise            = c
 
 splitOnHyphen :: String -> [String]
