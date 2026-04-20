@@ -7,7 +7,6 @@ created: 2023-06-19
 modified: 2025-01-21
 description: About this website
 lang: en
-formatter: false
 ---
 
 ## About This Blog
@@ -15,7 +14,7 @@ formatter: false
 > “Die Sprache ist das Haus des Seins. In ihrer Behausung wohnt der Mensch. Die Denkenden und Dichtenden sind die Wächter dieser Behausung. Ihr Wachen ist das Vollbringen der Offenbarkeit des Seins, insofern sie diese durch ihr Sagen zur Sprache bringen und in der Sprache aufbewahren.”
 >
 > — Martin Heidegger [^1]
-  
+
 [^1]: Martin Heidegger. Über den Humanismus [M]. Frankfurt am Main: Vittorio Klostermann, 1947.
 
 
@@ -29,6 +28,6 @@ I also want to write more in English, which is not my native language. In Chines
 
 ![*Me, MacPaint, and Floyd–Steinberg dithering*](/assets/images/aboutme.png)
 
-I'm currently a MSc Computer Science student at UCL, with a background in Linguistics and Literature. I am interested in *pattern matching* in a broad sense: not only in programming languages, but also in video games, natural languages, daily life, and in the way we perceive and understand the world.
+My name is Huangxin, pronounced [xwɑŋ35 ɕɪn55] in IPA. I'm currently a MSc Computer Science student at UCL, with a background in Linguistics and Literature. I am interested in *pattern matching* in a broad sense: not only in programming languages, but also in video games, natural languages, daily life, and in the way we perceive and understand the world.
 
 In my spare time, I enjoy playing video games, photography, films, reading, and (of course) trying to develop some projects. I'm into all kinds of sports — bonus points if height isn't a factor. And since moving to the UK, I've found myself genuinely keen on cooking, as it is not only a great way to unwind, but also a way to connect with my cultural identity.
