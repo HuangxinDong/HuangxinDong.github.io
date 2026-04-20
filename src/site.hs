@@ -42,6 +42,8 @@ main = hakyll $ do
             bodies <- mapM loadBody ["css/base.css", "css/layout.css", "css/components.css", "css/records.css", "css/post.css"]
             makeItem $ intercalate "\n" bodies
 
+    createRedirects redirects
+
     match "js/*" $ do
         route   idRoute
         compile copyFileCompiler
@@ -92,10 +94,6 @@ main = hakyll $ do
                 then return $ fmap (absolutizeUrls siteUrl) rendered
                 else relativizeUrls rendered
 
-    -- Redirect common language-prefix probes to canonical homepage.
-    create ["en/index.html", "zh-cn/index.html"] $ do
-        route idRoute
-        compile $ makeItem $ redirectHtml siteUrl
 
     -- Posts
     match ("posts/*.markdown" .||. "posts/*.md") $ do
@@ -245,7 +243,17 @@ main = hakyll $ do
 
     match "templates/*" $ compile templateBodyCompiler
 
---------------------------------------------------------------------------------
+-- Redirects
+
+redirects :: [(Identifier, String)]
+redirects =
+    [ ("en/index.html",            siteUrl)
+    , ("zh-cn/index.html",         siteUrl)
+    -- Add more redirects here as needed
+    -- , ("posts/old-slug.html", siteUrl ++ "/posts/new-slug.html")
+    ]
+
+
 -- Helpers
 
 createRecordStatusPages :: Compiler ImportResult -> Category -> Rules ()
@@ -269,22 +277,3 @@ createRecordStatusPage importedCompiler category status =
                 >>= loadAndApplyTemplate "templates/page.html" ctx
                 >>= loadAndApplyTemplate "templates/default.html" ctx
                 >>= relativizeUrls
-
---------------------------------------------------------------------------------
--- | Helper to generate a redirecting HTML page.
-redirectHtml :: String -> String
-redirectHtml url = unlines
-    [ "<!doctype html>"
-    , "<html lang=\"en\">"
-    , "<head>"
-    , "  <meta charset=\"utf-8\">"
-    , "  <meta http-equiv=\"refresh\" content=\"0; url=" ++ url ++ "/\">"
-    , "  <link rel=\"canonical\" href=\"" ++ url ++ "/\">"
-    , "  <title>Redirecting...</title>"
-    , "  <script>location.replace('" ++ url ++ "/');</script>"
-    , "</head>"
-    , "<body>"
-    , "  <p>Redirecting to <a href=\"" ++ url ++ "/\">homepage</a>...</p>"
-    , "</body>"
-    , "</html>"
-    ]
