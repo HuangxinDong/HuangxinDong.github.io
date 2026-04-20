@@ -25,9 +25,11 @@
     </head>
     <body>
         <a class="skip-link" href="#main-content">Skip to content</a>
+        $if(hasToc)$
         <nav id="toc" aria-label="Table of contents" hidden>
             <ul id="toc-list"></ul>
         </nav>
+        $endif$
         <div class="container">
             <aside class="sidebar">
                 <div class="sidebar-header">
@@ -77,16 +79,17 @@
                 </footer>
             </div>
         </div>
+        $if(hasToc)$
         <script src="/js/toc.js" defer></script>
+        $endif$
+        $if(hasNav)$
         <script src="/js/nav.js" defer></script>
+        $endif$
+        $if(hasCopyCode)$
         <script src="/js/copy-code.js" defer></script>
+        $endif$
+        $if(hasRecords)$
         <script src="/js/records.js" defer></script>
-        <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function(registrations) {
-            registrations.forEach(function(r) { r.unregister(); });
-            });
-        }
-        </script>
+        $endif$
     </body>
 </html>

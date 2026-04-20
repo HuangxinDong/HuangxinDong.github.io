@@ -2,7 +2,6 @@
 module Site.Utils
     ( slugify
     , parseDate
-    , getSmartDate
     , smartRecentFirst
     , smartDateCtx
     , metadataDateCtx
@@ -13,6 +12,7 @@ module Site.Utils
     , navStateCtx
     , sectionFromRoute
     , isPublished
+    , isPublishedId
     , customPandocCompiler
     , safeCompiler
     , stripHtmlTags
@@ -38,7 +38,7 @@ module Site.Utils
     , absolutizeUrls
     ) where
 
-import           Control.Applicative (empty)
+import           Control.Applicative (empty, (<|>))
 import           Control.Monad       (filterM, msum)
 import           Control.Monad.Except (catchError)
 import           Data.Char           (isAlphaNum, isAsciiLower, isNumber,
@@ -80,13 +80,13 @@ defaultLang = "en"
 --------------------------------------------------------------------------------
 -- | Returns True if the item is NOT a draft.
 isPublished :: MonadMetadata m => Item a -> m Bool
-isPublished item = do
-    meta <- getMetadata (itemIdentifier item)
-    return $ case lookupString "draft" meta of
-        Just "true"  -> False
-        Just "True"  -> False
-        Just "yes"   -> False
-        _            -> True
+isPublished = isPublishedId . itemIdentifier
+
+-- | Returns True if the identifier represents a published item.
+isPublishedId :: MonadMetadata m => Identifier -> m Bool
+isPublishedId ident = do
+    meta <- getMetadata ident
+    return $ not (metadataFlag False "draft" meta)
 
 -- | Convert a filename to a URL-safe slug.
 slugify :: String -> String
@@ -110,29 +110,39 @@ parseDate s = msum
     , parseTimeM True defaultTimeLocale "%Y-%m-%d %H:%M:%S"  s
     ]
 
--- | Get a date for an item.
-getSmartDate :: [String] -> Item a -> Compiler UTCTime
-getSmartDate metaKeys item = do
+-- | Get the primary date for an item (date or created), or fail the compiler.
+getPrimaryDate :: Item a -> Compiler UTCTime
+getPrimaryDate item = do
     meta <- getMetadata (itemIdentifier item)
-    let fromMeta = msum [ lookupString k meta >>= parseDate | k <- metaKeys ]
+    let fromMeta = (lookupString "date" meta <|> lookupString "created" meta) >>= parseDate
     case fromMeta of
         Just t  -> return t
-        Nothing -> unsafeCompiler $ getModificationTime (toFilePath (itemIdentifier item))
+        Nothing -> fail $ "No 'date' or 'created' metadata found for " ++ show (itemIdentifier item)
 
--- | Sort items newest-first using smart date resolution.
+-- | Sort items newest-first using strict metadata resolution.
+-- Primary sort: date/created. Secondary sort: modified (falling back to primary).
 smartRecentFirst :: [Item a] -> Compiler [Item a]
 smartRecentFirst items = do
-    pairs <- mapM (\i -> getSmartDate ["date", "created"] i >>= \t -> return (t, i)) items
-    return $ map snd $ sortBy (comparing (Down . fst)) pairs
+    itemsWithDates <- mapM (\i -> do
+        p <- getPrimaryDate i
+        meta <- getMetadata (itemIdentifier i)
+        let m = fromMaybe p (lookupString "modified" meta >>= parseDate)
+        return (p, m, i)) items
+    return $ map (\(_, _, i) -> i) $ sortBy compareItems itemsWithDates
+  where
+    compareItems (p1, m1, _) (p2, m2, _) =
+        case compare p2 p1 of
+            EQ -> compare m2 m1 -- Tie-breaker: newest modified first
+            res -> res
 
--- | A context field that resolves a date from metadata keys or the file system.
+-- | A context field that resolves a date from metadata keys. Fails if missing.
 smartDateCtx :: String -> String -> [String] -> Context String
 smartDateCtx fieldName fmt metaKeys = field fieldName $ \item -> do
     meta <- getMetadata (itemIdentifier item)
     let fromMeta = msum [ lookupString k meta >>= parseDate | k <- metaKeys ]
     utc <- case fromMeta of
         Just t  -> return t
-        Nothing -> unsafeCompiler $ getModificationTime (toFilePath (itemIdentifier item))
+        Nothing -> fail $ "Metadata key(s) " ++ show metaKeys ++ " not found for " ++ show (itemIdentifier item)
     return $ formatTime defaultTimeLocale fmt utc
 
 metadataDateCtx :: String -> String -> String -> Context String
@@ -151,27 +161,48 @@ mathJaxCtx = field "hasMathJax" $ \item -> do
     sourceBody <- if hasSourceFile
         then unsafeCompiler $ readFile sourcePath
         else return ""
-    let isEnabled key = case lookupString key meta of
-            Just "true" -> True
-            Just "True" -> True
-            Just "yes"  -> True
-            Just "on"   -> True
-            _           -> False
-        isDisabled key = case lookupString key meta of
-            Just "false" -> True
-            Just "False" -> True
-            Just "no"    -> True
-            Just "off"   -> True
-            _            -> False
+    let isExplicitlyDisabled key = not (metadataFlag True key meta)
+        isExplicitlyEnabled key = metadataFlag False key meta
         hasMathTag = case lookupString "tags" meta of
             Just tagsValue -> "math" `elem` map (map toLower . stripSpaces) (splitOn ',' tagsValue)
             Nothing        -> False
         detectedMath = hasMathContent sourceBody
         enabled
-            | isDisabled "math" || isDisabled "mathjax" = False
-            | otherwise = isEnabled "math" || isEnabled "mathjax"
+            | isExplicitlyDisabled "math" || isExplicitlyDisabled "mathjax" = False
+            | otherwise = isExplicitlyEnabled "math" || isExplicitlyEnabled "mathjax"
                        || (allowAutoDetection && (hasMathTag || detectedMath))
     if enabled then return "true" else empty
+
+hasTocCtx :: Context String
+hasTocCtx = field "hasToc" $ \item -> do
+    meta <- getMetadata (itemIdentifier item)
+    route <- getRoute (itemIdentifier item)
+    let allowToc = case route of
+            Just r -> any (`isInfixOf` r) ["posts", "series", "about", "projects", "records"]
+            _      -> False
+    if allowToc && metadataFlagDefaultTrue "toc" meta
+        then return "true"
+        else empty
+
+hasCopyCodeCtx :: Context String
+hasCopyCodeCtx = field "hasCopyCode" $ \item -> do
+    if "<pre" `isInfixOf` itemBody item
+        then return "true"
+        else empty
+
+hasRecordsCtx :: Context String
+hasRecordsCtx = field "hasRecords" $ \item -> do
+    route <- getRoute (itemIdentifier item)
+    case route of
+        Just r | "records/" `isPrefixOf` r || r == "records.html" -> return "true"
+        _ -> empty
+
+hasNavCtx :: Context String
+hasNavCtx = field "hasNav" $ \item -> do
+    meta <- getMetadata (itemIdentifier item)
+    if metadataFlagDefaultTrue "nav" meta
+        then return "true"
+        else empty
 
 langCtx :: Context String
 langCtx = field "lang" $ \item -> do
@@ -222,6 +253,10 @@ siteCtx :: Context String
 siteCtx =
     constField "siteTitle" siteTitle                 `mappend`
     constField "defaultDescription" defaultDescription `mappend`
+    hasTocCtx                                        `mappend`
+    hasCopyCodeCtx                                   `mappend`
+    hasRecordsCtx                                    `mappend`
+    hasNavCtx                                        `mappend`
     langCtx                                          `mappend`
     descriptionCtx                                   `mappend`
     canonicalUrlCtx                                  `mappend`
@@ -277,16 +312,21 @@ customWriterOptions meta =
         , writerNumberSections = metadataFlagDefaultTrue "number-sections" meta
         }
 
+parseBool :: String -> Maybe Bool
+parseBool s = case map toLower s of
+    "true"  -> Just True
+    "yes"   -> Just True
+    "on"    -> Just True
+    "false" -> Just False
+    "no"    -> Just False
+    "off"   -> Just False
+    _       -> Nothing
+
+metadataFlag :: Bool -> String -> Metadata -> Bool
+metadataFlag def key meta = fromMaybe def (lookupString key meta >>= parseBool)
+
 metadataFlagDefaultTrue :: String -> Metadata -> Bool
-metadataFlagDefaultTrue key meta =
-    case fmap (map toLower) (lookupString key meta) of
-        Just "false" -> False
-        Just "no"    -> False
-        Just "off"   -> False
-        Just "true"  -> True
-        Just "yes"   -> True
-        Just "on"    -> True
-        _            -> True
+metadataFlagDefaultTrue = metadataFlag True
 
 safeCompiler :: Compiler (Item String) -> Compiler (Item String)
 safeCompiler compiler = compiler `catchError` \errors -> do

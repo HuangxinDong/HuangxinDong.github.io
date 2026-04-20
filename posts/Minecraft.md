@@ -7,6 +7,7 @@ created: 2021-12-12
 modified: 2023-06-20
 description: 一篇从《我的世界》出发，讨论电子游戏、机械复制与创作意义的旧文章。
 lang: zh
+number-sections: false
 ---
 
 > [!note]
