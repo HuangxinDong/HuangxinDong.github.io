@@ -8,14 +8,14 @@ tags:
   - assembly
 ---
 
-MIPS32 Digital Pet Simulator, a group project for COMP0068 Computer Architecture, is my first MIPS Assembly Language project, it simulates a virtual pet that requires care, attention, and energy management.
-
-The COMP0068 module covered the full stack from transistors to floating-point representations, but its most memorable component was the group coursework: build a digital pet simulator in MIPS assembly, then extend it with features of your own choosing.
-
-Useful links: 
+Useful links for learning MIPS assembly language: 
 
 - [MIPS Quick Tutorial](https://minnie.tuhs.org/CompArch/Resources/mips_quick_tutorial.html)
 - [rohitdwivedula/mips-exercises](https://github.com/rohitdwivedula/mips-exercises)
+
+The COMP0068 module covered the full stack from floating-point representations to transistors, but one of its most memorable components was the group coursework: build a digital pet simulator in MIPS assembly, then extend it with features of your own choosing.
+
+MIPS32 Digital Pet Simulator is our group project for COMP0068 Computer Architecture, and also my first MIPS Assembly Language project. It simulates a virtual pet that requires care, attention, and energy management.
 
 
 ## What we started with
