@@ -166,7 +166,7 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
-    margin-top: 0;
+    margin-top: 1rem;
     align-items: flex-end;
 }
 
