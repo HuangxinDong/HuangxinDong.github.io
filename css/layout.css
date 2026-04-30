@@ -10,8 +10,9 @@
 .sidebar {
     position: fixed;
     width: var(--sidebar-width);
-    padding: var(--sidebar-padding-y) var(--sidebar-padding-x);
-    border-right: 1px solid var(--border);
+    /*padding: var(--sidebar-padding-y) var(--sidebar-padding-x);*/
+    /*border-right: 1px solid var(--border);*/
+    padding: var(--sidebar-padding-y) 2rem var(--sidebar-padding-y) var(--sidebar-padding-x);
     top: 0;
     height: 100vh;
     flex-shrink: 0;
@@ -235,7 +236,7 @@ footer {
         z-index: 30;
         padding: 1rem 1.25rem;
         border-right: none;
-        border-bottom: 1px solid var(--border);
+        border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
         align-items: stretch;
         text-align: left;
     }

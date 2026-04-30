@@ -505,7 +505,6 @@ mark {
         color: #e8e8e4;
     }
 }
-
 /* ============================================
    Post list (Archive / Home)
    ============================================ */
@@ -516,24 +515,50 @@ mark {
     margin: 0;
 }
 
-.post-list li {
+.post-list-item {
     display: flex;
+    align-items: center;
+    padding: 0.55rem 0;
+    gap: 0;
+}
+
+.post-list-title {
     justify-content: space-between;
-    align-items: baseline;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid var(--border);
-    gap: 1rem;
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    color: var(--text);
+    text-decoration: none;
+    border: none;
+    transition: color 0.15s;
 }
 
-.post-list li:first-child {
-    border-top: 1px solid var(--border);
+.post-list-title:hover {
+    color: var(--accent);
 }
 
-.post-list .post-date {
+.post-list-leader {
+    flex: 1;
+    display: block;
+    height: 0;
+    border-top: 1.5px dashed var(--border);
+    margin: 0 0.8rem;           /* kyswtn 用 mx-5 ≈ 1.25rem，我们稍窄 */
+}
+
+.post-date {
     font-family: var(--font-sans);
     font-size: 0.8rem;
     color: var(--muted);
     white-space: nowrap;
+    flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+    .post-list-leader {
+        margin: 0 0.4rem;
+    }
+    .post-date {
+        font-size: 0.75rem;
+    }
 }
 
 .compiler-error {
