@@ -28,12 +28,14 @@ module Site.Utils
     , defaultDescription
     , defaultLang
     , postRoute
+    , projectRoute
     , seriesRoute
     , stripSpaces
     , siteCtx
     , pageCtx
     , itemCtx
     , postCtx
+    , projectCtx
     , seriesCtx
     , absolutizeUrls
     ) where
@@ -101,6 +103,11 @@ seriesRoute = customRoute $ \ident ->
 postRoute :: Routes
 postRoute = customRoute $ \ident ->
     "posts/" ++ slugify (takeBaseName (toFilePath ident)) ++ ".html"
+
+-- | Route project files to /projects/<slug>.html regardless of original filename.
+projectRoute :: Routes
+projectRoute = customRoute $ \ident ->
+    "projects/" ++ slugify (takeBaseName (toFilePath ident)) ++ ".html"
 
 -- | Try to parse a date string in common formats.
 parseDate :: String -> Maybe UTCTime
@@ -243,10 +250,11 @@ sectionFromRoute route
     | "posts/" `isPrefixOf` route = "posts"
     | "series/" `isPrefixOf` route = "posts"
     | "tags/" `isPrefixOf` route = "posts"
+    | route == "projects.html" = "projects"
+    | "projects/" `isPrefixOf` route = "projects"
     | route == "records.html" = "records"
     | "records/" `isPrefixOf` route = "records"
     | route == "about.html" = "about"
-    | route == "projects.html" = "projects"
     | otherwise = ""
 
 siteCtx :: Context String
@@ -281,6 +289,9 @@ itemCtx tags =
 
 postCtx :: Tags -> Context String
 postCtx = itemCtx
+
+projectCtx :: Tags -> Context String
+projectCtx = itemCtx
 
 seriesCtx :: Tags -> Context String
 seriesCtx = itemCtx

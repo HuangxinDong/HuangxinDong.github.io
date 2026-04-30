@@ -12,7 +12,8 @@ import           Hakyll
 import           Network.URI         (escapeURIString, isUnreserved)
 import           Site.Utils          (customPandocCompiler, isPublished,
                                       isPublishedId,
-                                      itemCtx, pageCtx, postRoute,
+                                      itemCtx, pageCtx, postCtx, postRoute,
+                                      projectCtx, projectRoute,
                                       parseDate,
                                       safeCompiler, seriesRoute,
                                       absolutizeUrls, siteUrl, smartRecentFirst)
@@ -39,7 +40,7 @@ main = hakyll $ do
     create ["css/site.css"] $ do
         route idRoute
         compile $ do
-            bodies <- mapM loadBody ["css/base.css", "css/layout.css", "css/components.css", "css/records.css", "css/post.css"]
+            bodies <- mapM loadBody ["css/base.css", "css/layout.css", "css/components.css", "css/records.css", "css/project.css", "css/post.css"]
             makeItem $ intercalate "\n" bodies
 
     match "js/*" $ do
@@ -55,7 +56,7 @@ main = hakyll $ do
             published <- isPublishedId ident
             if published then getTags ident else return []
 
-    tags <- buildTagsWith getPublishedTags ("posts/*" .||. "series/*") (fromCapture "tags/*.html")
+    tags <- buildTagsWith getPublishedTags ("posts/*" .||. "series/*" .||. "projects/*") (fromCapture "tags/*.html")
 
     -- Douban data loading helper
     let loadImportedDouban = do
@@ -80,8 +81,40 @@ main = hakyll $ do
     -- Douban Category Pages
     mapM_ (createRecordStatusPages loadImportedDouban) [Book, Movie, Music, Game]
 
+    -- /posts.html - full post listing
+    match "pages/posts.md" $ do
+        route $ setExtension "html" `composeRoutes` gsubRoute "pages/" (const "")
+        compile $ do
+            posts <- loadPublishedSorted ("posts/*.markdown" .||. "posts/*.md")
+            let postsPageCtx =
+                    listField "posts" (postCtx tags) (return posts) `mappend`
+                    constField "title" "Posts" `mappend`
+                    constField "description" "A list of posts on various topics." `mappend`
+                    pageCtx
+            customPandocCompiler
+                >>= loadAndApplyTemplate "templates/post-list-page.html" postsPageCtx
+                >>= loadAndApplyTemplate "templates/default.html" postsPageCtx
+                >>= relativizeUrls
+
+    -- /projects.html - full project listing
+    match "pages/projects.md" $ do
+        route $ setExtension "html" `composeRoutes` gsubRoute "pages/" (const "")
+        compile $ do
+            projects <- loadPublishedSorted "projects/*"
+            let projectsCtx =
+                    listField "projects" (projectCtx tags) (return projects) `mappend`
+                    constField "title" "Projects" `mappend`
+                    constField "description" "A growing list of projects, experiments, and things I am building." `mappend`
+                    pageCtx
+            customPandocCompiler
+                >>= loadAndApplyTemplate "templates/project-list-page.html" projectsCtx
+                >>= loadAndApplyTemplate "templates/default.html" projectsCtx
+                >>= relativizeUrls
+
     -- Static pages
-    match ("pages/*.markdown" .||. "pages/*.md" ) $ do
+    match ((("pages/*.markdown" .||. "pages/*.md")
+        .&&. complement "pages/posts.md")
+        .&&. complement "pages/projects.md") $ do
         route   $ setExtension "html" `composeRoutes` gsubRoute "pages/" (const "")
         compile $ do
             ident <- getUnderlying
@@ -102,8 +135,17 @@ main = hakyll $ do
         route postRoute
         compile $ safeCompiler $
             customPandocCompiler
-                >>= loadAndApplyTemplate "templates/post.html"    (itemCtx tags)
-                >>= loadAndApplyTemplate "templates/default.html" (itemCtx tags)
+                >>= loadAndApplyTemplate "templates/post.html"    (postCtx tags)
+                >>= loadAndApplyTemplate "templates/default.html" (postCtx tags)
+                >>= relativizeUrls
+
+    -- Projects
+    match ("projects/*.markdown" .||. "projects/*.md") $ do
+        route projectRoute
+        compile $ safeCompiler $
+            customPandocCompiler
+                >>= loadAndApplyTemplate "templates/project.html" (projectCtx tags)
+                >>= loadAndApplyTemplate "templates/default.html" (projectCtx tags)
                 >>= relativizeUrls
 
     -- Series
@@ -111,8 +153,8 @@ main = hakyll $ do
         route seriesRoute
         compile $ safeCompiler $
             customPandocCompiler
-                >>= loadAndApplyTemplate "templates/post.html"    (itemCtx tags)
-                >>= loadAndApplyTemplate "templates/default.html" (itemCtx tags)
+                >>= loadAndApplyTemplate "templates/post.html"    (postCtx tags)
+                >>= loadAndApplyTemplate "templates/default.html" (postCtx tags)
                 >>= relativizeUrls
 
     -- One page per tag
@@ -121,8 +163,8 @@ main = hakyll $ do
         compile $ do
             items <- smartRecentFirst =<< filterM isPublished =<< loadAll pat
             let tagCtx =
-                    constField "title" ("Posts tagged: " ++ tag) `mappend`
-                    constField "description" ("Browse posts tagged with " ++ tag ++ ".") `mappend`
+                    constField "title" ("Tagged: " ++ tag) `mappend`
+                    constField "description" ("Browse published entries tagged with " ++ tag ++ ".") `mappend`
                     listField "posts" (itemCtx tags) (return items) `mappend`
                     pageCtx
             makeItem ""
@@ -130,27 +172,16 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" tagCtx
                 >>= relativizeUrls
 
-    -- /posts.html — full post listing
-    create ["posts.html"] $ do
-        route idRoute
-        compile $ do
-            posts <- smartRecentFirst =<< filterM isPublished =<< loadAll ("posts/*.markdown" .||. "posts/*.md")
-            let postsCtx =
-                    listField "posts" (itemCtx tags) (return posts) `mappend`
-                    constField "title" "Posts" `mappend`
-                    constField "description" "Browse all posts on the blog." `mappend`
-                    pageCtx
-            makeItem ""
-                >>= loadAndApplyTemplate "templates/post-list-page.html" postsCtx
-                >>= loadAndApplyTemplate "templates/default.html"        postsCtx
-                >>= relativizeUrls
-
     -- Homepage
     match "pages/index.html" $ do
         route $ gsubRoute "pages/" (const "")
         compile $ do
             posts <- fmap (take 5) . smartRecentFirst =<< filterM isPublished =<< loadAll ("posts/*.markdown" .||. "posts/*.md")
-            let indexCtx = listField "posts" (itemCtx tags) (return posts) `mappend` pageCtx
+            projects <- fmap (take 3) $ filterM hasImage =<< loadPublishedSorted "projects/*"
+            let indexCtx =
+                    listField "posts" (itemCtx tags) (return posts) `mappend`
+                    listField "projects" (projectCtx tags) (return projects) `mappend`
+                    pageCtx
             getResourceBody
                 >>= applyAsTemplate indexCtx
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
@@ -161,13 +192,16 @@ main = hakyll $ do
         compile $ do
             pageIds <- getMatches ("pages/*.markdown" .||. "pages/*.md")
             postIds <- filterM isPublishedId =<< getMatches ("posts/*.markdown" .||. "posts/*.md")
+            projectIds <- filterM isPublishedId =<< getMatches "projects/*"
             seriesIds <- filterM isPublishedId =<< getMatches "series/*"
 
             pageRoutes <- catMaybes <$> mapM getRoute pageIds
             postRoutes <- catMaybes <$> mapM getRoute postIds
+            projectRoutes <- catMaybes <$> mapM getRoute projectIds
             seriesRoutes <- catMaybes <$> mapM getRoute seriesIds
 
             publishedPostItems <- filterM isPublished =<< (loadAll ("posts/*.markdown" .||. "posts/*.md") :: Compiler [Item String])
+            publishedProjectItems <- mapM load projectIds :: Compiler [Item String]
             publishedSeriesItems <- filterM isPublished =<< (loadAll "series/*" :: Compiler [Item String])
 
             let sitemapLastMod ident = do
@@ -213,12 +247,13 @@ main = hakyll $ do
                                          , let slug = categorySlug category
                                          ]
                 tagRoutes = [ "tags/" ++ tag ++ ".html" | (tag, _) <- tagsMap tags ]
-                fixedRoutes = ["/posts.html", "/records.html"]
+                fixedRoutes = ["/posts.html", "/projects.html", "/records.html"]
                 non404Routes = filter (/= "404.html") pageRoutes
                 allRoutes = nub . sort $
                     fixedRoutes
                     ++ map toSitemapPath non404Routes
                     ++ map toSitemapPath postRoutes
+                    ++ map toSitemapPath projectRoutes
                     ++ map toSitemapPath seriesRoutes
                     ++ map toSitemapPath categoryRoutes
                     ++ map toSitemapPath categoryWishlistRoutes
@@ -226,12 +261,13 @@ main = hakyll $ do
 
             routeEntries <- mapM toRouteEntry allRoutes
             postEntries <- mapM toItemEntry publishedPostItems
+            projectEntries <- mapM toItemEntry publishedProjectItems
             seriesEntries <- mapM toItemEntry publishedSeriesItems
 
             let dedupeByLoc items =
                     nubBy (\first second -> fst (itemBody first) == fst (itemBody second))
                         (filter (not . null . fst . itemBody) items)
-                entries = dedupeByLoc (postEntries ++ seriesEntries ++ routeEntries)
+                entries = dedupeByLoc (postEntries ++ projectEntries ++ seriesEntries ++ routeEntries)
                 entryCtx =
                     field "loc" (return . fst . itemBody) `mappend`
                     field "lastmod" (maybe empty return . snd . itemBody)
@@ -269,6 +305,16 @@ createRecordStatusPage importedCompiler category status =
                 >>= loadAndApplyTemplate "templates/page.html" ctx
                 >>= loadAndApplyTemplate "templates/default.html" ctx
                 >>= relativizeUrls
+
+loadPublishedSorted :: Pattern -> Compiler [Item String]
+loadPublishedSorted pat = do
+    ids <- filterM isPublishedId =<< getMatches pat
+    smartRecentFirst =<< mapM load ids
+
+hasImage :: Item a -> Compiler Bool
+hasImage item = do
+    meta <- getMetadata (itemIdentifier item)
+    return $ maybe False (not . null) (lookupString "image" meta)
 
 --------------------------------------------------------------------------------
 -- | Helper to generate a redirecting HTML page.
