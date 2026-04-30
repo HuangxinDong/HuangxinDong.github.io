@@ -4,6 +4,7 @@ created: 2025-01-20
 tags:
   - tool
 modified: 2026-04-13
+description: Plugins and settings I use for Obsidian.
 ---
 
 >[!question]
