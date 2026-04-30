@@ -85,7 +85,7 @@
     --border:      #d9d9d9;
     --bg:          #fcfcfc;
     --accent:      #2d5a27;
-    --code-bg:     #f0f0ee;
+    --code-bg:     #f0f0ee50;
     --max-width:   1050px;
     --sidenote-right-width: 260px;
     --sidenote-left-width: 120px;
