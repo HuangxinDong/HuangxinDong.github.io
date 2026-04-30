@@ -1,0 +1,29 @@
+<li class="project-list-item">
+    <article class="project-list-card">
+        $if(image)$
+        <a class="project-list-image-link" href="$url$">
+            <figure class="project-list-image">
+                <img src="$image$" alt="$title$">
+            </figure>
+        </a>
+        $endif$
+        <div class="project-list-content">
+            <div class="project-list-row">
+                <a class="post-list-title" href="$url$">$title$</a>
+                <span class="post-list-leader" aria-hidden="true"></span>
+                $if(date)$<time class="post-date" datetime="$dateIso$">$date$</time>$endif$
+            </div>
+            $if(description)$
+            <p class="project-list-desc">$description$</p>
+            $endif$
+            $if(tags)$
+            <div class="tags project-list-tags">$tags$</div>
+            $endif$
+            $if(source)$
+            <p class="project-list-source">
+                <a href="$source$" target="_blank" rel="noreferrer">Source code</a>
+            </p>
+            $endif$
+        </div>
+    </article>
+</li>
