@@ -3,11 +3,9 @@ title: Home
 description: Personal blog by Huangxin Dong.
 ---
 
-<style>
-	#toc { display: none !important; }
-	main > h1:first-child { display: none; }
-</style>
 
+
+<!--home page hero
 <section class="home-hero" aria-label="Homepage hero">
 	<div class="home-hero-media">
 		<img
@@ -19,12 +17,13 @@ description: Personal blog by Huangxin Dong.
 		/>
 	</div>
 </section>
+-->
 
 <div class="container-content">
 	<main id="main-content" tabindex="-1">
-		<h2>Welcome</h2>
+		<h1>Huangxin Dong</h1>
 
-		<p>Welcome to my blog!</p>
+		<p>CS student at UCL, writing about programming, video games, languages, and the things I'm slowly figuring out.</p>
 		<img
 			class="side-image"
 			width="300"
@@ -33,11 +32,30 @@ description: Personal blog by Huangxin Dong.
 			alt="Welcome: Hi! Thanks for stopping by. I'm still tring to write a bit more :)"
 		/>
 
-		<p>I've reproduced a list of recent posts here for your reading pleasure:</p>
-
-		<h2>Posts</h2>
+		<h2>Recent Posts</h2>
 		$partial("templates/post-list.html")$
 
 		<p>…or you can find all posts on the <a href="/posts.html">Posts</a> page.</p>
+		
+		<h2>Recent Projects</h2>
+		<p>Here are some of projects, experiments, and things I've been building.</p>
+		<aside class="sidenote">
+			<p>Many of these smaller projects are still quite immature, most were created for learning and experimentation. Still, I’ve decided to include them here, as they reflect how I learn.</p>
+		</aside>
+		<div class="project-home-grid" aria-label="Recent projects">
+			$for(projects)$
+				$partial("templates/project-home-card.html")$
+			$endfor$
+		</div>
+		<p>…or you can browse the full list on the <a href="/projects.html">Projects</a> page.</p>
+		
+		<h2>Links</h2>
+		<p>You can also find me elsewhere here:</p>
+		<ul>
+			<li><a href="https://github.com/huangxindong" target="_blank" rel="noreferrer">GitHub</a>: my codebases</li>
+			<li><a href="https://dhx.vercel.app" target="_blank" rel="noreferrer">Notebook</a>: my online notebooks</li>
+			<li><a href="https://www.douban.com/people/dddhx" target="_blank" rel="noreferrer">Douban</a>: my up-to-date book/movie/video game/music records (Or check <a href="/records.html">Records</a> for my archived lists)</li>
+		</ul>
+		<p>Or contact me through <a href="mailto: huangxin.dong@icloud.com">email</a>.</p>
 	</main>
 </div>

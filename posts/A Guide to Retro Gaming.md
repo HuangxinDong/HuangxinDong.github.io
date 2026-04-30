@@ -3,6 +3,7 @@ tags:
   - video_game
 title: A Guide to Retro Gaming
 created: 2026-04-13
+description: A guide to retro gaming, including where to find and play old games, and some of my personal favourites.
 ---
 
 When I talk about "retro games," I usually mean both modern games made in a retro style and genuinely old games (e.g. from the 90s or earlier). But in this post, it refers to the latter. However, this post isn't really about retro gaming history -- it's about a practical question: as a player, how do you actually get your hands on those good old games?

@@ -505,7 +505,6 @@ mark {
         color: #e8e8e4;
     }
 }
-
 /* ============================================
    Post list (Archive / Home)
    ============================================ */
@@ -516,24 +515,59 @@ mark {
     margin: 0;
 }
 
-.post-list li {
+.post-list-item {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid var(--border);
-    gap: 1rem;
+    align-items: center;
+    padding: 0.28rem 0;
+    gap: 0;
+    min-width: 0;
 }
 
-.post-list li:first-child {
-    border-top: 1px solid var(--border);
+.post-list-title {
+    min-width: 0;
+    flex: 0 1 auto;
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: rgba(45, 90, 39, 0.45);
+    text-underline-offset: 3px;
+    border: none;
+    transition: text-underline-offset 0.15s ease,
+                text-decoration-color 0.15s ease,
+                color 0.15s ease;
 }
 
-.post-list .post-date {
+.post-list-title:hover {
+    color: var(--accent);
+    text-decoration-color: var(--accent);
+    text-underline-offset: 2px;
+}
+
+.post-list-leader {
+    flex: 1;
+    display: block;
+    height: 0;
+    border-top: 1.5px dashed var(--border);
+    margin: 0 0.8rem;
+    min-width: 1.5rem;
+}
+
+.post-date {
     font-family: var(--font-sans);
     font-size: 0.8rem;
     color: var(--muted);
     white-space: nowrap;
+    flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+    .post-list-leader {
+        margin: 0 0.4rem;
+    }
+    .post-date {
+        font-size: 0.75rem;
+    }
 }
 
 .compiler-error {
