@@ -90,6 +90,9 @@
     overflow-wrap: break-word;
     word-break: break-word;
     max-width: 100%;
+    background: var(--bg);
+    position: relative;
+    z-index: 60;
 }
 
 .sidenote p {
@@ -121,29 +124,16 @@
         width: auto;
         margin: 1rem 0;
         padding: 0.9rem 1rem;
-        color: color-mix(in srgb, var(--muted) 92%, var(--text) 8%);
-        background: color-mix(in srgb, var(--code-bg) 72%, white 28%);
-        border: 1px solid color-mix(in srgb, var(--border) 84%, var(--accent) 16%);
-        border-radius: 10px;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+        font-size: 0.82rem;
+        border-left: 2px solid var(--border);
     }
 
     .sidenote-left {
         margin-left: 0;
         margin-right: 0;
         text-align: left;
-    }
-
-    .sidenote::before {
-        content: "Note";
-        display: block;
-        margin-bottom: 0.35rem;
-        font-size: 0.66rem;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--accent);
-        opacity: 0.8;
+        font-size: 0.82rem;
+        border-left: 2px solid var(--border);
     }
 }
 
