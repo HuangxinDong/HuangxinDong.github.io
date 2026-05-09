@@ -129,7 +129,7 @@ The upper-bound problem was subtler than it looked. A teammate found it by tryin
 
 We ended up with more features than the spec required: a levelling system with a scaling threshold (`5 + level × 2` positive actions to level up), random sickness events with a cure command, a dating command that unlocks at level 2 with randomised outcomes, and a game analytics report on exit. The group received full marks.
 
-More than the grade, though, the project gave me a concrete mental model for things I had read about but not fully believed: that the stack is just a region of memory and `$sp` is just a register we agree to treat carefully; that a "function call" is just `jal` and `jr $ra` with some conventions around it; that floating-point and integer representations are just different agreements about what the same bits mean.
+More than the grade, though, the project gave me a concrete mental model for things I had read about but not fully understand: that the stack is just a region of memory and `$sp` is just a register we agree to treat carefully; that a "function call" is just `jal` and `jr $ra` with some conventions around it; that floating-point and integer representations are just different agreements about what the same bits mean.
 
 Assembly felt alienating at first in a way that Python or C never had — closer to reading a circuit diagram than writing a program. By the end, it felt less like a different kind of programming and more like the same thing with fewer abstractions in the way. Which is, I think, the point.
 

@@ -14,11 +14,11 @@ tags:
 > [!sidenote]
 > Quick question: how would you use three 5s and one 1 to make 24?
 >
-> ... I still remember those moments in primary school, lying in bed with my parents on Sunday mornings, the three of us, as they challenged me with this problem.
+> ... I still remember those moments in primary school, lying in bed with my parents on Sunday mornings, the three of us, as they challenged me with this question.
 
 ## Origin
 
-I spent lot of time playing this game with my dad and friends during my childhood. We’d casually grab a deck of cards to start the game, where J, Q, and K count as 11, 12, and 13. We always liked to compete to see who could calculate faster, or who could come up with more solutions to a problem. But I had never played it as a video game.
+I spent lot of time playing this game with my dad and friends during my childhood. We’d casually grab a deck of cards to start the game, where *J*, *Q*, and *K* count as 11, 12, and 13. We always liked to compete to see who could calculate faster, or who could come up with more solutions to a problem. But I had never played it as a video game.
 
 However, the real starting point of this project (and my game development journey) wasn't Make 24. I'd been thinking about building a retro desktop mystery game — the kind where you explore folders and files to piece together some hidden answer — after playing video games like *[Hypnospace Outlaw](https://www.hypnospace.net/)*. If you open the Make24 game now, the title on the start menu still reads "The Forgotten Files."
 
@@ -61,13 +61,13 @@ The Macintosh System 7-inspired desktop isn't just decoration — it's the frame
 > [!sidenote]
 > yes, Praat, that phonetic analysis app.
 
-Additionally, the deal card sound effects and pause menu sound effects are downloaded from royalty free music websites and edited by me using Praat.
+Additionally, the deal card sound effects and pause menu sound effects are downloaded from royalty free music websites and edited by me using [Praat](https://praat.org).
 
 ## My Takeaways
 
 Looking back, most of what I learned from this project came from the points where the obvious approach didn't work.
 
-The window drag, for instance, ended up being four lines of logic: record the mouse offset on click, update `position` each physics frame, and track whether the mouse is inside the node. The final implementation is simple. Getting there wasn't.
+The window drag, for instance, ended up being four lines of logic: record the mouse offset on click, update `position` each physics frame, and track whether the mouse is inside the node. But getting there wasn't as simple.
 
 ```gdscript
 func _input(event):
