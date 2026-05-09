@@ -36,6 +36,39 @@
       tocList.appendChild(li);
     });
 
+    // Build inline TOC
+    const inlineToc = document.getElementById('toc-inline');
+    const inlineList = document.getElementById('toc-inline-list');
+    if (inlineToc && inlineList) {
+      inlineList.replaceChildren();
+      headings.forEach((h) => {
+        const level = parseInt(h.tagName[1], 10);
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = '#' + h.id;
+        a.dataset.level = level;
+        a.textContent = h.textContent;
+        li.appendChild(a);
+        inlineList.appendChild(li);
+      });
+
+      inlineToc.hidden = false;
+
+      inlineList.addEventListener('click', (e) => {
+        const a = e.target.closest('a');
+        if (!a) return;
+        e.preventDefault();
+        const hash = a.getAttribute('href');
+        const targetId = decodeURIComponent(hash.slice(1));
+        const target = document.getElementById(targetId);
+        if (!target) return;
+        const targetTop = window.scrollY + target.getBoundingClientRect().top - SCROLL_TOP_OFFSET;
+        const maxScrollTop = Math.max(document.documentElement.scrollHeight - window.innerHeight, 0);
+        window.scrollTo({ top: Math.min(Math.max(targetTop, 0), maxScrollTop), behavior: 'smooth' });
+        if (window.location.hash !== hash) history.replaceState(null, '', hash);
+      });
+    }
+
     const links = Array.from(tocList.querySelectorAll('a'));
     let activeId = null;
 
@@ -47,7 +80,6 @@
         window.clearTimeout(existingTimer);
       }
 
-      // Re-apply feedback class on next paint without forcing a layout read.
       target.classList.remove(className);
       window.requestAnimationFrame(() => {
         window.requestAnimationFrame(() => {

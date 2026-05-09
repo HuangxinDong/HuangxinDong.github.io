@@ -267,3 +267,80 @@ article h4.toc-feedback {
 @media (max-width: 1200px) {
     #toc { display: none; }
 }
+
+/* ============================================
+   Inline TOC (shown below post-meta on narrow screens)
+   ============================================ */
+
+#toc-inline {
+    display: none;
+}
+
+@media (max-width: 1200px) {
+    #toc-inline {
+        display: block;
+        margin-bottom: 2.5rem;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    #toc-inline-label {
+        font-family: var(--font-sans);
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0 0 0.6rem;
+    }
+
+    #toc-inline-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    #toc-inline-list li {
+        display: flex;
+        align-items: baseline;
+    }
+
+    #toc-inline-list a {
+        font-family: var(--font-sans);
+        font-size: 0.82rem;
+        color: var(--muted);
+        text-decoration: none;
+        border: none;
+        line-height: 1.8;
+        transition: color 0.15s ease;
+    }
+
+    #toc-inline-list a:hover {
+        color: var(--accent);
+    }
+
+    /* indent by heading level */
+    #toc-inline-list a[data-level="2"] { padding-left: 0; }
+    #toc-inline-list a[data-level="3"] { padding-left: 1.1em; font-size: 0.78rem; }
+    #toc-inline-list a[data-level="4"] { padding-left: 2.1em; font-size: 0.74rem; }
+
+    /* level indicator dot */
+    #toc-inline-list a::before {
+        content: '';
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: currentColor;
+        opacity: 0.4;
+        margin-right: 0.55em;
+        vertical-align: middle;
+        flex-shrink: 0;
+    }
+
+    #toc-inline-list a[data-level="3"]::before { width: 3px; height: 3px; }
+    #toc-inline-list a[data-level="4"]::before { width: 2px; height: 2px; opacity: 0.28; }
+}

@@ -31,6 +31,12 @@
                     </p>
                 $endif$
             </section>
+            $if(hasToc)$
+            <nav id="toc-inline" aria-label="Table of contents" hidden>
+                <p id="toc-inline-label" aria-hidden="true">Contents</p>
+                <ul id="toc-inline-list"></ul>
+            </nav>
+            $endif$
             <section>
                 $body$
             </section>
