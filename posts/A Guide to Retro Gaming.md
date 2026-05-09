@@ -6,7 +6,7 @@ created: 2026-04-13
 description: A guide to retro gaming, including where to find and play old games, and some of my personal favourites.
 ---
 
-When I talk about "retro games," I usually mean both modern games made in a retro style and genuinely old games (e.g. from the 90s or earlier). But in this post, it refers to the latter. However, this post isn't really about retro gaming history -- it's about a practical question: as a player, how do you actually get your hands on those good old games?
+When I talk about "retro games," I usually mean both modern games made in a retro style and genuinely old games (e.g. from the 90s or earlier). In this post, it mostly refers to the latter. However, this post isn't really about retro gaming history -- it's about a practical question: as a player, how do you actually get your hands on those good old games?
 
 There are pragmatic reasons to seek them out: most are small in size, run on low-spec hardware, and cost little or nothing (since many are only playable via emulator). But the more compelling reason is the craft itself: rich worlds and clever design that remain astonishing to this day, and the occasional pleasant jolt of recognising, in some game you love right now, exactly where it came from.
 
@@ -67,7 +67,7 @@ Early macOS had no such reputation for being "bad for gaming." In fact, we can s
 
 [Getting Started (WIP) – Macintosh Repository](https://www.macintoshrepository.org/articles/1-getting-started-wip-) is an excellent all-in-one introduction to the scene. My personal emulator of choice is [Mini vMac](https://www.gryphel.com/c/minivmac/index.html), simply because I adore the 2bit minimalism of Macintosh System 7. Once you're up and running, [Macintosh Garden](https://macintoshgarden.org/) is a nice place for classic Mac games and software.
 
-My current favourite is [Déjà Vu](https://en.wikipedia.org/wiki/D%C3%A9j%C3%A0_Vu_(video_game)), which cleverly uses the Mac's ==native Finder interface== as part of the game itself -- there's something wonderfully meta about it. Other standouts from the same era include Shufflepuck Café, SimCity, Glider, and Battle Chess, each remarkable in its own way.
+My current favourite is [Déjà Vu](https://en.wikipedia.org/wiki/D%C3%A9j%C3%A0_Vu_(video_game)), which cleverly uses the Mac's ==native Finder interface== as part of the game itself (there's something wonderfully meta about it!). Other standouts from the same era include Shufflepuck Café, SimCity, Glider, and Battle Chess, each remarkable in its own way.
 
 <div class="image-grid-2">
   <figure>
