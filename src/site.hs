@@ -1,8 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
 import           Control.Applicative ((<|>), empty)
-import           Control.Monad       (filterM)
+import           Control.Monad       (filterM, unless)
+import           System.Directory    (doesFileExist)
 import           Data.List           (intercalate, nub, nubBy, sort)
-import           Data.Maybe          (catMaybes)
+import           Data.Maybe          (catMaybes, fromMaybe)
 import           Data.Time           (defaultTimeLocale, formatTime)
 import           Douban.Records      (Category (..), ImportResult (..),
                                       RecordStatus (..), categorySlug,
@@ -16,8 +17,33 @@ import           Site.Utils          (customPandocCompiler, isPublished,
                                       projectCtx, projectRoute,
                                       parseDate,
                                       safeCompiler, seriesRoute,
-                                      absolutizeUrls, siteUrl, smartRecentFirst)
+                                      absolutizeUrls, defaultDescription,
+                                      escapeHtmlAttr,
+                                      siteUrl, slugify, smartRecentFirst,
+                                      stripPrefixCompat, stripSuffixCompat)
+import           System.FilePath     (dropExtension, takeBaseName,
+                                      takeExtension)
 import           System.IO           (hPutStrLn, stderr)
+
+postSourcePattern :: Pattern
+postSourcePattern = "posts/*.markdown" .||. "posts/*.md"
+
+bilingualPostEnPattern :: Pattern
+bilingualPostEnPattern = "posts/*.en.markdown" .||. "posts/*.en.md"
+
+bilingualPostZhPattern :: Pattern
+bilingualPostZhPattern = "posts/*.zh.markdown" .||. "posts/*.zh.md"
+
+bilingualPostPattern :: Pattern
+bilingualPostPattern = bilingualPostEnPattern .||. bilingualPostZhPattern
+
+singlePostPattern :: Pattern
+singlePostPattern =
+    (postSourcePattern .&&. complement bilingualPostEnPattern)
+        .&&. complement bilingualPostZhPattern
+
+publishedPostPattern :: Pattern
+publishedPostPattern = singlePostPattern .||. bilingualPostEnPattern
 
 main :: IO ()
 main = hakyll $ do
@@ -56,7 +82,7 @@ main = hakyll $ do
             published <- isPublishedId ident
             if published then getTags ident else return []
 
-    tags <- buildTagsWith getPublishedTags ("posts/*" .||. "series/*" .||. "projects/*") (fromCapture "tags/*.html")
+    tags <- buildTagsWith getPublishedTags (publishedPostPattern .||. "series/*" .||. "projects/*") (fromCapture "tags/*.html")
 
     -- Douban data loading helper
     let loadImportedDouban = do
@@ -85,7 +111,7 @@ main = hakyll $ do
     match "pages/posts.md" $ do
         route $ setExtension "html" `composeRoutes` gsubRoute "pages/" (const "")
         compile $ do
-            posts <- loadPublishedSorted ("posts/*.markdown" .||. "posts/*.md")
+            posts <- loadPublishedSorted publishedPostPattern
             let postsPageCtx =
                     listField "posts" (postCtx tags) (return posts) `mappend`
                     constField "title" "Posts" `mappend`
@@ -130,8 +156,39 @@ main = hakyll $ do
         route idRoute
         compile $ makeItem $ redirectHtml siteUrl
 
+    -- Bilingual post sources are compiled internally; only the English
+    -- source writes the combined public page at /posts/<slug>.html.
+    match bilingualPostZhPattern $ do
+        compile $ safeCompiler customPandocCompiler
+            >>= saveSnapshot "content"
+
+    match bilingualPostEnPattern $ do
+        route bilingualPostRoute
+        compile $ do
+            -- Fail early with a clear message rather than a cryptic
+            -- missing-snapshot error later.
+            ident <- getUnderlying
+            let zhIdent = bilingualPartnerIdentifier ident
+                zhPath  = toFilePath zhIdent
+            zhExists <- unsafeCompiler $ doesFileExist zhPath
+            unless zhExists $
+                fail $ "Bilingual partner not found: " ++ zhPath
+                    ++ "\n  Every .en.md must have a matching .zh.md alongside it."
+            safeCompiler $ do
+                en <- customPandocCompiler >>= saveSnapshot "content"
+                zh <- loadSnapshot zhIdent "content"
+                defaultLangValue <- bilingualDefaultLanguage (itemIdentifier en)
+                enMeta <- getMetadata (itemIdentifier en)
+                zhMeta <- getMetadata zhIdent
+                let combined = withBilingualPanels defaultLangValue (itemBody en) (itemBody zh)
+                    ctx = bilingualPostCtx tags defaultLangValue enMeta zhMeta
+                makeItem combined
+                    >>= loadAndApplyTemplate "templates/post.html"    ctx
+                    >>= loadAndApplyTemplate "templates/default.html" ctx
+                    >>= relativizeUrls
+
     -- Posts
-    match ("posts/*.markdown" .||. "posts/*.md") $ do
+    match singlePostPattern $ do
         route postRoute
         compile $ safeCompiler $
             customPandocCompiler
@@ -176,7 +233,7 @@ main = hakyll $ do
     match "pages/index.html" $ do
         route $ gsubRoute "pages/" (const "")
         compile $ do
-            posts <- fmap (take 5) . smartRecentFirst =<< filterM isPublished =<< loadAll ("posts/*.markdown" .||. "posts/*.md")
+            posts <- fmap (take 5) . smartRecentFirst =<< filterM isPublished =<< loadAll publishedPostPattern
             projects <- fmap (take 3) $ filterM hasImage =<< loadPublishedSorted "projects/*"
             let indexCtx =
                     listField "posts" (itemCtx tags) (return posts) `mappend`
@@ -191,7 +248,7 @@ main = hakyll $ do
         route idRoute
         compile $ do
             pageIds <- getMatches ("pages/*.markdown" .||. "pages/*.md")
-            postIds <- filterM isPublishedId =<< getMatches ("posts/*.markdown" .||. "posts/*.md")
+            postIds <- filterM isPublishedId =<< getMatches publishedPostPattern
             projectIds <- filterM isPublishedId =<< getMatches "projects/*"
             seriesIds <- filterM isPublishedId =<< getMatches "series/*"
 
@@ -200,7 +257,7 @@ main = hakyll $ do
             projectRoutes <- catMaybes <$> mapM getRoute projectIds
             seriesRoutes <- catMaybes <$> mapM getRoute seriesIds
 
-            publishedPostItems <- filterM isPublished =<< (loadAll ("posts/*.markdown" .||. "posts/*.md") :: Compiler [Item String])
+            publishedPostItems <- filterM isPublished =<< (loadAll publishedPostPattern :: Compiler [Item String])
             publishedProjectItems <- mapM load projectIds :: Compiler [Item String]
             publishedSeriesItems <- filterM isPublished =<< (loadAll "series/*" :: Compiler [Item String])
 
@@ -315,6 +372,101 @@ hasImage :: Item a -> Compiler Bool
 hasImage item = do
     meta <- getMetadata (itemIdentifier item)
     return $ maybe False (not . null) (lookupString "image" meta)
+
+bilingualPostCtx :: Tags -> String -> Metadata -> Metadata -> Context String
+bilingualPostCtx tags defaultLangValue enMeta zhMeta =
+    constField "hasTranslations" "true"             `mappend`
+    constField "defaultLanguage" defaultLangValue   `mappend`
+    constField "lang" defaultLangValue              `mappend`
+    constField "title" defaultTitle                 `mappend`
+    constField "titleEn" titleEn                    `mappend`
+    constField "titleZh" titleZh                    `mappend`
+    constField "description" defaultDescriptionText `mappend`
+    constField "descriptionEn" descriptionEn        `mappend`
+    constField "descriptionZh" descriptionZh        `mappend`
+    postCtx tags
+  where
+    titleEn = metadataText "title" "Untitled" enMeta
+    titleZh = metadataText "title" titleEn zhMeta
+    descriptionEn = metadataDescription enMeta
+    descriptionZh = metadataDescription zhMeta
+    defaultTitle = if defaultLangValue == "zh" then titleZh else titleEn
+    defaultDescriptionText =
+        if defaultLangValue == "zh" then descriptionZh else descriptionEn
+
+metadataDescription :: Metadata -> String
+metadataDescription meta =
+    escapeHtmlAttr $
+        fromMaybe defaultDescription (lookupString "description" meta <|> lookupString "summary" meta)
+
+metadataText :: String -> String -> Metadata -> String
+metadataText key fallback meta = fromMaybe fallback (lookupString key meta)
+
+-- | Route posts/foo.en.md and posts/foo.en.markdown to /posts/foo.html.
+bilingualPostRoute :: Routes
+bilingualPostRoute = customRoute $ \ident ->
+    let path = toFilePath ident
+        base = takeBaseName path
+        slug = fromMaybe base (stripSuffixCompat ".en" base)
+    in  "posts/" ++ slugify slug ++ ".html"
+
+bilingualPartnerIdentifier :: Identifier -> Identifier
+bilingualPartnerIdentifier ident =
+    fromFilePath $
+        let path = toFilePath ident
+            ext = takeExtension path
+            base = dropExtension path
+        in  maybe path (\root -> root ++ ".zh" ++ ext) (stripSuffixCompat ".en" base)
+
+bilingualDefaultLanguage :: Identifier -> Compiler String
+bilingualDefaultLanguage ident = do
+    meta <- getMetadata ident
+    let requested = lookupString "defaultLang" meta <|> lookupString "lang" meta
+    return $ case requested of
+        Just "zh" -> "zh"
+        _         -> "en"
+
+withBilingualPanels :: String -> String -> String -> String
+withBilingualPanels defaultLangValue enBody zhBody =
+    unlines
+        [ "<div class=\"lang-panels\" data-lang-root data-default-lang=\"" ++ defaultLangValue ++ "\">"
+        , langPanel "en" (defaultLangValue /= "en") enBody
+        , langPanel "zh" (defaultLangValue /= "zh") zhBody
+        , "</div>"
+        ]
+
+langPanel :: String -> Bool -> String -> String
+langPanel langCode hiddenByDefault body =
+    let hiddenAttr = if hiddenByDefault then " hidden" else ""
+    in  "<section class=\"lang-panel\" data-lang-panel=\"" ++ langCode ++ "\" lang=\"" ++ langCode ++ "\"" ++ hiddenAttr ++ ">\n"
+        ++ prefixPanelIds langCode body
+        ++ "\n</section>"
+
+-- | Prefix all @id@ attributes and internal @href="#..."@ anchors in a
+-- rendered HTML fragment with a language code.
+--
+-- When two language panels share a page, Pandoc can generate identical @id@s
+-- for headings (or footnotes) with the same text.  The browser's
+-- @getElementById@ always returns the first DOM match, so TOC links pointing
+-- at the hidden panel's heading would scroll to the wrong place.  Scoping
+-- every id to its panel eliminates the conflict: TOC.js already filters to
+-- visible headings via @visibleHeading@, so it builds @href="#en-…"@ or
+-- @href="#zh-…"@ links that unambiguously target the active panel.
+prefixPanelIds :: String -> String -> String
+prefixPanelIds lang = go
+  where
+    pref = lang ++ "-"
+    go [] = []
+    go s@(c:cs)
+        | Just rest <- stripPrefixCompat " id=\"" s
+            = " id=\"" ++ pref ++ goAttr rest
+        | Just rest <- stripPrefixCompat " href=\"#" s
+            = " href=\"#" ++ pref ++ goAttr rest
+        | otherwise
+            = c : go cs
+    goAttr []        = []
+    goAttr ('"':rest) = '"' : go rest
+    goAttr (c:cs)    = c : goAttr cs
 
 --------------------------------------------------------------------------------
 -- | Helper to generate a redirecting HTML page.
