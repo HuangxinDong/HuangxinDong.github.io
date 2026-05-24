@@ -6,7 +6,14 @@
                     <img src="$image$" alt="$title$">
                 </figure>
             $endif$
-            <h1>$title$</h1>
+            <h1$if(hasTranslations)$ class="lang-title"$endif$>
+                $if(hasTranslations)$
+                    <span data-lang-text="en">$titleEn$</span>
+                    <span data-lang-text="zh">$titleZh$</span>
+                $else$
+                    $title$
+                $endif$
+            </h1>
             <section class="post-meta" aria-label="Project metadata">
                 <p class="post-meta-main">
                     $if(date)$
@@ -30,6 +37,12 @@
                         <a class="project-source-link" href="$source$" target="_blank" rel="noreferrer">Source code</a>
                     </p>
                 $endif$
+                $if(hasTranslations)$
+                    <div class="lang-switcher" role="group" aria-label="Language">
+                        <button class="lang-switcher-button" type="button" data-lang-button="en">EN</button>
+                        <button class="lang-switcher-button" type="button" data-lang-button="zh">中文</button>
+                    </div>
+                $endif$
             </section>
             $if(hasToc)$
             <nav id="toc-inline" aria-label="Table of contents" hidden>
@@ -37,7 +50,7 @@
                 <ul id="toc-inline-list"></ul>
             </nav>
             $endif$
-            <section>
+            <section class="post-body"$if(hasTranslations)$ data-lang-page data-description-en="$descriptionEn$" data-description-zh="$descriptionZh$"$endif$>
                 $body$
             </section>
             <section class="comments" aria-label="Comments">

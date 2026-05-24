@@ -38,6 +38,8 @@ module Site.Utils
     , projectCtx
     , seriesCtx
     , absolutizeUrls
+    , stripPrefixCompat
+    , stripSuffixCompat
     ) where
 
 import           Control.Applicative (empty, (<|>))
@@ -45,7 +47,8 @@ import           Control.Monad       (filterM, msum)
 import           Control.Monad.Except (catchError)
 import           Data.Char           (isAlphaNum, isAsciiLower, isNumber,
                                       isSpace, ord, toLower)
-import           Data.List           (intercalate, isInfixOf, isPrefixOf, sortBy)
+import           Data.List           (intercalate, isInfixOf, isPrefixOf,
+                                      sortBy)
 import           Data.Maybe          (fromMaybe)
 import           Data.Monoid         (mappend)
 import           Data.Ord            (Down (..), comparing)
@@ -57,7 +60,8 @@ import           Hakyll.Web.Pandoc   (defaultHakyllReaderOptions,
                                       readPandocWith, writePandocWith)
 import           Site.Pandoc.Callouts (transformObsidianCallouts)
 import           System.Directory    (doesFileExist, getModificationTime)
-import           System.FilePath     (takeBaseName)
+import           System.FilePath     (dropExtension, takeBaseName,
+                                      takeExtension)
 import           Text.Pandoc.Options (Extension (Ext_mark,
                                                  Ext_wikilinks_title_after_pipe,
                                                  Ext_yaml_metadata_block),
@@ -89,6 +93,99 @@ isPublishedId :: MonadMetadata m => Identifier -> m Bool
 isPublishedId ident = do
     meta <- getMetadata ident
     return $ not (metadataFlag False "draft" meta)
+
+sourceLanguageFromPath :: FilePath -> Maybe String
+sourceLanguageFromPath path =
+    let base = dropExtension path
+    in  if ".en" `isSuffixOfCompat` base then Just "en"
+        else if ".zh" `isSuffixOfCompat` base then Just "zh"
+        else Nothing
+
+isSuffixOfCompat :: String -> String -> Bool
+isSuffixOfCompat suffix text =
+    case stripSuffixCompat suffix text of
+        Just _  -> True
+        Nothing -> False
+
+stripSuffixCompat :: String -> String -> Maybe String
+stripSuffixCompat suffix text =
+    let reversedSuffix = reverse suffix
+        reversedText = reverse text
+    in  case stripPrefixCompat reversedSuffix reversedText of
+            Just rest -> Just (reverse rest)
+            Nothing   -> Nothing
+
+stripPrefixCompat :: String -> String -> Maybe String
+stripPrefixCompat [] text = Just text
+stripPrefixCompat _ [] = Nothing
+stripPrefixCompat (p:ps) (x:xs)
+    | p == x    = stripPrefixCompat ps xs
+    | otherwise = Nothing
+
+swapLanguageSuffix :: String -> String -> FilePath -> Maybe FilePath
+swapLanguageSuffix fromLang toLang path =
+    let ext = takeExtension path
+        base = dropExtension path
+        suffix = '.' : fromLang
+    in  case stripSuffixCompat suffix base of
+            Just root -> Just $ root ++ "." ++ toLang ++ ext
+            Nothing   -> Nothing
+
+localizedMetadata :: Identifier -> Metadata -> String -> Compiler Metadata
+localizedMetadata ident meta targetLang = do
+    let sourcePath = toFilePath ident
+        sourceLang = fromMaybe (fromMaybe defaultLang (lookupString "lang" meta))
+                     (sourceLanguageFromPath sourcePath)
+    if sourceLang == targetLang
+        then return meta
+        else case swapLanguageSuffix sourceLang targetLang sourcePath of
+            Nothing -> return meta
+            Just partnerPath -> getMetadata (fromFilePath partnerPath)
+
+defaultLanguageFor :: Identifier -> Metadata -> String
+defaultLanguageFor ident meta =
+    let requested = fromMaybe (fromMaybe defaultLang (lookupString "lang" meta))
+                    (lookupString "defaultLang" meta)
+        available = case sourceLanguageFromPath (toFilePath ident) of
+            Just "en" -> ["en", "zh"]
+            Just "zh" -> ["zh", "en"]
+            _         -> [requested]
+    in  if requested `elem` available then requested else defaultLang
+
+localizedMetadataCtx :: String -> [String] -> Context String
+localizedMetadataCtx fieldName keys = field fieldName $ \item -> do
+    meta <- getMetadata (itemIdentifier item)
+    let targetLang = defaultLanguageFor (itemIdentifier item) meta
+    localized <- localizedMetadata (itemIdentifier item) meta targetLang
+    maybe empty return $ msum [ lookupString key localized | key <- keys ]
+
+translationTitleCtx :: String -> String -> Context String
+translationTitleCtx fieldName langCode = field fieldName $ \item -> do
+    meta <- getMetadata (itemIdentifier item)
+    localized <- localizedMetadata (itemIdentifier item) meta langCode
+    maybe empty return (lookupString "title" localized)
+
+translationDescriptionCtx :: String -> String -> Context String
+translationDescriptionCtx fieldName langCode = field fieldName $ \item -> do
+    meta <- getMetadata (itemIdentifier item)
+    localized <- localizedMetadata (itemIdentifier item) meta langCode
+    return $ escapeHtmlAttr $ fromMaybe defaultDescription $
+        msum [ lookupString key localized | key <- ["description", "summary"] ]
+
+defaultLanguageCtx :: Context String
+defaultLanguageCtx = field "defaultLanguage" $ \item -> do
+    meta <- getMetadata (itemIdentifier item)
+    return $ defaultLanguageFor (itemIdentifier item) meta
+
+hasTranslationsCtx :: Context String
+hasTranslationsCtx = field "hasTranslations" $ \item -> do
+    let path = toFilePath (itemIdentifier item)
+    case sourceLanguageFromPath path of
+        Just "en" -> do
+            let partner = fromMaybe "" (swapLanguageSuffix "en" "zh" path)
+            exists <- unsafeCompiler $ doesFileExist partner
+            if exists then return "true" else empty
+        _ -> empty
 
 -- | Convert a filename to a URL-safe slug.
 slugify :: String -> String
@@ -214,7 +311,7 @@ hasNavCtx = field "hasNav" $ \item -> do
 langCtx :: Context String
 langCtx = field "lang" $ \item -> do
     meta <- getMetadata (itemIdentifier item)
-    return $ fromMaybe defaultLang (lookupString "lang" meta)
+    return $ defaultLanguageFor (itemIdentifier item) meta
 
 canonicalUrlCtx :: Context String
 canonicalUrlCtx = field "canonicalUrl" $ \item -> do
@@ -227,8 +324,10 @@ canonicalUrlCtx = field "canonicalUrl" $ \item -> do
 descriptionCtx :: Context String
 descriptionCtx = field "description" $ \item -> do
     meta <- getMetadata (itemIdentifier item)
+    let targetLang = defaultLanguageFor (itemIdentifier item) meta
+    localized <- localizedMetadata (itemIdentifier item) meta targetLang
     return $ escapeHtmlAttr $ fromMaybe defaultDescription $
-        msum [ lookupString key meta | key <- ["description", "summary"] ]
+        msum [ lookupString key localized | key <- ["description", "summary"] ]
 
 navStateCtx :: Context String
 navStateCtx = Context $ \key _ item -> do
@@ -265,6 +364,8 @@ siteCtx =
     hasCopyCodeCtx                                   `mappend`
     hasRecordsCtx                                    `mappend`
     hasNavCtx                                        `mappend`
+    hasTranslationsCtx                               `mappend`
+    defaultLanguageCtx                               `mappend`
     langCtx                                          `mappend`
     descriptionCtx                                   `mappend`
     canonicalUrlCtx                                  `mappend`
@@ -277,6 +378,11 @@ pageCtx = mathJaxCtx `mappend` siteCtx `mappend` defaultContext
 -- | Universal context for all items (posts and series).
 itemCtx :: Tags -> Context String
 itemCtx tags =
+    localizedMetadataCtx "title" ["title"]                          `mappend`
+    translationTitleCtx "titleEn" "en"                              `mappend`
+    translationTitleCtx "titleZh" "zh"                              `mappend`
+    translationDescriptionCtx "descriptionEn" "en"                  `mappend`
+    translationDescriptionCtx "descriptionZh" "zh"                  `mappend`
     tagsField "tags" tags                                           `mappend`
     smartDateCtx    "date"        "%B %e, %Y" ["date", "created"]  `mappend`
     smartDateCtx    "dateIso"     "%Y-%m-%d" ["date", "created"]   `mappend`
@@ -403,7 +509,21 @@ readingTimeCtx =
     field "readTime" (return . show . readingMinutes . stats) `mappend`
     field "wordCount" (return . show . readingUnits . stats)
   where
-    stats item = readingStats (stripHtmlTags (itemBody item))
+    stats item = readingStats (stripHtmlTags (bodyForReadingStats (itemBody item)))
+
+-- | For bilingual posts the rendered body contains two language panels.
+-- Counting both would roughly double the reading time estimate, so we extract
+-- only the first panel (always the EN panel in DOM order).  Single-language
+-- posts pass through unchanged.
+bodyForReadingStats :: String -> String
+bodyForReadingStats html
+    | "data-lang-root" `isInfixOf` html = upToFirstClose html
+    | otherwise                          = html
+  where
+    upToFirstClose []     = []
+    upToFirstClose s@(c:cs)
+        | "</section>" `isPrefixOf` s = []
+        | otherwise                   = c : upToFirstClose cs
 
 data ReadingStats = ReadingStats { readingUnits :: Int, readingMinutes :: Int }
 

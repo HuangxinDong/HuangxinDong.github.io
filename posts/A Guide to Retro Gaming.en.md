@@ -28,12 +28,22 @@ That said, most players who are slightly more serious will prefer playing locall
 - [Mac Source Ports: Games for Apple Silicon and Intel Macs](https://www.macsourceports.com/)
 - [bobeff/open-source-games: A list of open source games](https://github.com/bobeff/open-source-games)
 
+## GOG
+
+For players who want to download and play locally, [GOG.com](https://www.gog.com/en/) is, without question, the **best** platform today for the preservation and purchase of good old games (they even run a dedicated [GOG Preservation Program](https://www.gog.com/en/gog-preservation-program)). It carries many titles that never made it to Steam, and its greatest strength is that all games sold there are ==DRM-free==: you can play offline without having to log in every time, unlike Steam. 
+
+That said, the same game can vary in subtle ways between the two platforms: GOG versions tend to have less achievement systems, for instance, so it's worth comparing prices, platform support, and review sections before buying. Tools like [GOG Database](https://www.gogdb.org/) and [SteamDB](https://steamdb.info/) are handy for this.
+
+Compared to the Steam client, [GOG GALAXY](https://www.gog.com/galaxy) is more flexible in that it lets you browse and download your library across other platforms too. I actually find the open-source, free [Heroic Games Launcher](https://heroicgameslauncher.com/) more capable and easier to use. GOG Galaxy, for what it's worth, had a persistent bug on macOS where the app would refuse to quit properly. They only fixed in the relatively recent 2.0 update, which is rather hard to believe...
+
+
+### Emulators (that I've used)
+
 For games that no longer have any official purchase channel and no pre-compiled port available, you'll need to download ROMs and use emulators. Here are some useful links:
 
 - Download game ROMs: [Emulator Games](https://www.emulatorgamesx.net/)
 - Starter guides for many devices: [Retro Game Corps](https://retrogamecorps.com/)
 
-### Emulators (that I've used)
 
 | Emulator | Platform | Notes |
 | --- | --- | --- |
@@ -45,29 +55,19 @@ For games that no longer have any official purchase channel and no pre-compiled 
 
 #### A Note on macOS and Windows
 
-I've long had a quiet grievance with the idea that Macs are "not for gaming." The display quality, the speakers, the performance, the battery life -- all of it should, at minimum, serve anyone whose tastes run to modern video games on it. But the unfortunate reality is that many games simply haven't been ported to macOS. For retro games, though, macOS fares reasonably well: quite a few of the emulators above support Mac, and there are dedicated resources like [Mac Source Ports](https://www.macsourceports.com/), plus tools like [Porting Kit](https://www.portingkit.com/) for converting certain GOG and Steam games into macOS-compatible formats.
+I've long had a grievance with the idea that Macs are "not for gaming." The display quality, the speakers, the performance, the battery life of macs -- all of it should, at minimum, serve anyone whose tastes run to modern video games on it. But the unfortunate reality is that many games simply haven't been ported to macOS. For retro games, though, macOS fares reasonably fine: quite a few of the emulators above support Mac, and there are dedicated resources like [Mac Source Ports](https://www.macsourceports.com/), plus tools like [Porting Kit](https://www.portingkit.com/) for converting certain GOG and Steam games into macOS-compatible formats. However, since macOS no longer supports 32-bit software a long time ago, there are still a number of (not necessarily old) games that cannot be played.
 
 On Windows, most retro games can be played directly or easily found in versions that other players have already converted. For anything else, [RetroArch](https://www.retroarch.com/) remains an excellent catch-all.
-
-
-## GOG
-
-[GOG.com](https://www.gog.com/en/) is, without question, the **best** platform today for the preservation and purchase of good old games (they even run a dedicated [GOG Preservation Program](https://www.gog.com/en/gog-preservation-program)). It carries many titles that never made it to Steam, and its greatest strength is that all games sold there are ==DRM-free==: you can play offline without having to log in every time, unlike Steam. 
-
-That said, the same game can vary in subtle ways between the two platforms: GOG versions tend to have less achievement systems, for instance, so it's worth comparing prices, platform support, and review sections before buying. Tools like [GOG Database](https://www.gogdb.org/) and [SteamDB](https://steamdb.info/) are handy for this.
-
-Compared to the Steam client, [GOG GALAXY](https://www.gog.com/galaxy) is more flexible in that it lets you browse and download your library across other platforms too. I actually find the open-source, free [Heroic Games Launcher](https://heroicgameslauncher.com/) more capable and easier to use. GOG Galaxy, for what it's worth, had a persistent bug on macOS where the app would refuse to quit properly. They only fixed in the relatively recent 2.0 update, which is rather hard to believe...
-
 
 ## Classic Macintosh Games
 
 ![Do you have any history of mental illness in your family?<br> I have an uncle bought Macbook for gaming.](../assets/images/uncle-play-games-on-mac.png.webp){width=60%}
 
-Early macOS had no such reputation for being "bad for gaming." In fact, we can still experience many of those cool old Mac games today through Macintosh emulators (or real old Macs if you have one).
+Early macOS had no such reputation for being "bad for gaming." In fact, we can still experience many of those cool old Mac games today through Macintosh emulators (or real old Macs, if you have one).
 
 [Getting Started (WIP) – Macintosh Repository](https://www.macintoshrepository.org/articles/1-getting-started-wip-) is an excellent all-in-one introduction to the scene. My personal emulator of choice is [Mini vMac](https://www.gryphel.com/c/minivmac/index.html), simply because I adore the 2bit minimalism of Macintosh System 7. Once you're up and running, [Macintosh Garden](https://macintoshgarden.org/) is a nice place for classic Mac games and software.
 
-My current favourite is [Déjà Vu](https://en.wikipedia.org/wiki/D%C3%A9j%C3%A0_Vu_(video_game)), which cleverly uses the Mac's ==native Finder interface== as part of the game itself (there's something wonderfully meta about it!). Other standouts from the same era include Shufflepuck Café, SimCity, Glider, and Battle Chess, each remarkable in its own way.
+One of my current favourite games is [Déjà Vu](https://en.wikipedia.org/wiki/D%C3%A9j%C3%A0_Vu_(video_game)), which cleverly uses the Mac's native Finder interface as part of the game itself (there's something wonderfully meta about it!). Other standouts from the same era include Shufflepuck Café, SimCity, Glider, and Battle Chess, each remarkable in its own way.
 
 <div class="image-grid-2">
   <figure>
@@ -94,14 +94,16 @@ My current favourite is [Déjà Vu](https://en.wikipedia.org/wiki/D%C3%A9j%C3%A0
 
 ![Gameboy timeline](../assets/images/gameboy-timeline.png)
 
-As one of the defining forces in the games industry, Nintendo was producing design strokes of near-genius very early on -- *Super Mario Bros.*, the *Legend of Zelda* series, and a series of inventive hardware. The best place to explore Nintendo's history is the [Nintendo Museum](https://museum.nintendo.com/en/index.html), and Nintendo's own website also has a overview at [Nintendo History | Hardware](https://www.nintendo.com/en-gb/Hardware/Nintendo-History/Nintendo-History-625945.html).
+As one of the defining forces in the games industry, Nintendo was producing design strokes of near-genius very early on -- *Super Mario Bros.*, the *Legend of Zelda* series, and a series of inventive hardware. 
 
 ![Me and Zoe at Nintendo Museum](../assets/images/at-Nintendo-Museum.png)
+
+The best place to explore Nintendo's history is the [Nintendo Museum](https://museum.nintendo.com/en/index.html), and Nintendo's own website also has a overview at [Nintendo History | Hardware](https://www.nintendo.com/en-gb/Hardware/Nintendo-History/Nintendo-History-625945.html). I’m pretty sure there are lots of YouTubers who have made videos about this too.
 
 
 ### Nintendo Switch
 
-The simplest way to experience GBA and Famicom games in their most authentic form is through [Classic games – Nintendo Switch Online](https://www.nintendo.com/en-gb/Nintendo-Switch-Online/Classic-games/Classic-games-Nintendo-Switch-Online-2719182.html). With a Switch Online membership, you get access to a curated selection of games -- mostly in Japanese and English, but even just playing them leaves you in quiet admiration of the design. There's also an Expansion Pack for the more dedicated. 
+Since iOS loosened its restrictions on emulator apps, you can now download a lot of GBA emulators directly from the App Store. But probably the simplest and best way to experience GBA and Famicom games in their most authentic form is through [Classic games – Nintendo Switch Online](https://www.nintendo.com/en-gb/Nintendo-Switch-Online/Classic-games/Classic-games-Nintendo-Switch-Online-2719182.html), if you don't own any old consoles. With a Switch Online membership, you get access to a curated selection of games -- mostly in Japanese and English, but even just playing them leaves you in quiet admiration of the design. There's also an Expansion Pack for the more dedicated. 
 
 For me, there's one particularly welcome feature: these games all support save states and rewind, so less experienced players can still experience as much of the game as possible.
 

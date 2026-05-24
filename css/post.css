@@ -39,6 +39,39 @@
     color: color-mix(in srgb, var(--muted) 70%, transparent);
 }
 
+.lang-title [data-lang-text][hidden],
+.lang-panel[hidden] {
+    display: none;
+}
+
+.lang-switcher {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.25rem;
+    padding: 0.18rem;
+}
+
+.lang-switcher-button {
+    border: 0;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    color: var(--muted);
+    background: transparent;
+    cursor: pointer;
+}
+
+.lang-switcher-button[aria-pressed="true"] {
+    color: var(--bg);
+    background: var(--accent);
+}
+
+.lang-switcher-button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
 /* ============================================
    Tags
    ============================================ */
