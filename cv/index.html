@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huangxin Dong — CV</title>
+<meta name="description" content="Huangxin Dong — MSc Computer Science, UCL. Online CV.">
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.cdnfonts.com/css/latin-modern-roman" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1a1a; --muted:#555; --faint:#888; --rule:#1a1a1a;
+  --link:#00427a; --paper:#fdfdfb; --side:#f4f3ef; --accent:#8b0000;
+  --tag-bg:#eceae4; --tag-on:#2b4a6f;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:#e9e7e1; color:var(--ink);
+  font-family:'Latin Modern Roman','LM Roman 10','Computer Modern',Georgia,'Times New Roman',serif;
+  font-size:15.5px; line-height:1.42;
+}
+a{color:var(--link); text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ── Layout ─────────────────────────── */
+.wrap{display:flex; min-height:100vh}
+.sidebar{
+  width:250px; flex-shrink:0; background:var(--side);
+  border-right:1px solid #d8d5cc; padding:28px 22px;
+  position:sticky; top:0; height:100vh; overflow-y:auto;
+}
+.page{
+  flex:1; display:flex; justify-content:center; padding:40px 24px;
+}
+.sheet{
+  background:var(--paper); max-width:820px; width:100%;
+  padding:56px 64px; box-shadow:0 2px 14px rgba(0,0,0,.12);
+}
+
+/* ── Sidebar ────────────────────────── */
+.sidebar h2{font-size:17px; margin:0 0 2px; font-variant:small-caps; letter-spacing:.5px}
+.sidebar .sub{font-size:12.5px; color:var(--muted); margin-bottom:18px}
+.snav{list-style:none; margin:0 0 20px; padding:0}
+.snav li{margin:5px 0}
+.snav a{color:var(--ink); font-size:14px}
+.snav a:hover{color:var(--accent)}
+.side-label{font-size:11px; letter-spacing:1.2px; text-transform:uppercase; color:var(--faint); margin:18px 0 7px}
+.toggle{display:flex; border:1px solid #bbb; border-radius:4px; overflow:hidden; font-size:12.5px}
+.toggle button{
+  flex:1; border:0; padding:6px 0; background:transparent; cursor:pointer;
+  font-family:inherit; color:var(--muted);
+}
+.toggle button.on{background:var(--ink); color:#fff}
+.tags{display:flex; flex-wrap:wrap; gap:5px}
+.tagchip{
+  font-size:11.5px; padding:2px 8px; border-radius:10px; background:var(--tag-bg);
+  cursor:pointer; border:1px solid transparent; user-select:none; font-family:inherit;
+}
+.tagchip.on{background:var(--tag-on); color:#fff}
+.sidebtn{
+  display:block; width:100%; margin-top:8px; padding:6px 0; font-size:12.5px;
+  font-family:inherit; background:transparent; border:1px solid #bbb; border-radius:4px;
+  cursor:pointer; color:var(--muted);
+}
+.sidebtn:hover{border-color:var(--ink); color:var(--ink)}
+
+/* ── CV typography (LaTeX-like) ─────── */
+header.cvhead{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px}
+.name{font-size:27px; font-weight:bold; margin:0}
+.contact{font-size:13.5px; text-align:right; color:var(--ink); line-height:1.5}
+section{margin-top:14px}
+h3.sec{
+  font-variant:small-caps; font-weight:normal; font-size:18px; letter-spacing:.5px;
+  margin:0 0 2px; padding-bottom:1px; border-bottom:.8px solid var(--rule);
+}
+.entry{margin:10px 0 0 14px}
+.erow{display:flex; justify-content:space-between; align-items:baseline}
+.etitle{font-weight:bold}
+.etitle .tech{font-weight:normal; font-style:italic; font-size:13.5px; color:var(--muted)}
+.eright{font-size:13.5px; white-space:nowrap; margin-left:12px}
+.esub{display:flex; justify-content:space-between; font-style:italic; font-size:13.8px; color:var(--ink)}
+.entry ul{margin:3px 0 0; padding-left:20px}
+.entry li{margin:2.5px 0; font-size:14.3px}
+.entry li::marker{color:var(--faint)}
+.elinks{font-size:13px; margin-top:2px}
+.elinks a{margin-right:12px}
+.etags{margin-top:3px}
+.etags span{
+  font-size:10.5px; background:var(--tag-bg); border-radius:8px; padding:1px 7px;
+  margin-right:4px; color:var(--muted);
+}
+.skills p{margin:5px 0 0 14px; font-size:14.3px}
+.skills b{font-weight:bold}
+
+/* extras hidden in compact view */
+body.compact .extra{display:none}
+body.compact .li-extra{display:none}
+/* tag filtering */
+.entry.dim{opacity:.25}
+/* mode note */
+.viewnote{font-size:12px; color:var(--faint); font-style:italic; text-align:right; margin:0 0 4px}
+
+/* ── Print ──────────────────────────── */
+@media print{
+  body{background:#fff}
+  .sidebar{display:none}
+  .page{padding:0}
+  .sheet{box-shadow:none; padding:24px 30px; max-width:none}
+  .etags,.viewnote{display:none}
+  a{color:var(--ink)}
+}
+@media (max-width:760px){
+  .wrap{flex-direction:column}
+  .sidebar{position:static; width:100%; height:auto}
+  .sheet{padding:28px 22px}
+}
+</style>
+</head>
+<body class="full">
+<div class="wrap">
+
+<nav class="sidebar">
+  <h2>Huangxin Dong</h2>
+  <div class="sub">MSc Computer Science, UCL</div>
+
+  <div class="side-label">View</div>
+  <div class="toggle">
+    <button id="btn-compact" onclick="setView('compact')">Compact</button>
+    <button id="btn-full" class="on" onclick="setView('full')">Full</button>
+  </div>
+
+  <div class="side-label">Sections</div>
+  <ul class="snav">
+    <li><a href="#education">Education</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li class="extra"><a href="#research">Research</a></li>
+    <li><a href="#awards">Awards</a></li>
+    <li><a href="#skills">Skills</a></li>
+  </ul>
+
+  <div class="side-label">Elsewhere</div>
+  <ul class="snav">
+    <li><a href="https://huangxindong.github.io" target="_blank">Personal blog ↗</a></li>
+    <li><a href="https://github.com/HuangxinDong" target="_blank">GitHub ↗</a></li>
+  </ul>
+
+  <div class="side-label">Filter by tag</div>
+  <div class="tags" id="tagbar"></div>
+  <button class="sidebtn" onclick="clearTags()">Clear filter</button>
+
+  <div class="side-label">Export</div>
+  <button class="sidebtn" onclick="window.print()">Print / Save as PDF</button>
+</nav>
+
+<main class="page"><div class="sheet">
+
+<header class="cvhead">
+  <h1 class="name">Huangxin Dong</h1>
+  <div class="contact">
+    <a href="mailto:hx.dong@outlook.com">hx.dong@outlook.com</a> · (+44) 07444 630026<br>
+    <a href="https://huangxindong.github.io" target="_blank">huangxindong.github.io</a> ·
+    <a href="https://github.com/HuangxinDong" target="_blank">github.com/HuangxinDong</a><br>
+    <a href="https://www.linkedin.com/in/huangxin-dong/" target="_blank">LinkedIn</a> · London, UK
+  </div>
+</header>
+
+<section id="education">
+  <h3 class="sec">Education</h3>
+  <div class="entry">
+    <div class="erow"><span class="etitle">University College London (UCL)</span><span class="eright">London, UK</span></div>
+    <div class="esub"><span>MSc Computer Science — Distinction (expected)</span><span>Sep 2025 – Sep 2026</span></div>
+    <ul><li>Modules: App Engineering, Software Engineering, Database Fundamentals, Algorithmics, Functional Programming, Machine Learning with Big Data, Computer Architecture &amp; Operating Systems, Introductory Programming</li></ul>
+  </div>
+  <div class="entry">
+    <div class="erow"><span class="etitle">Nankai University</span><span class="eright">Tianjin, China</span></div>
+    <div class="esub"><span>B.Lit. Chinese Language and Literature (Linguistics) — GPA 88.36/100, Gong Neng Scholarship (top 5%)</span><span>Sep 2020 – Jun 2024</span></div>
+    <ul class="extra"><li class="li-extra">Relevant: Natural Language Processing, Experimental Linguistics, Database Technology, Big Data Analysis with R</li></ul>
+  </div>
+</section>
+
+<section id="experience">
+  <h3 class="sec">Experience</h3>
+
+  <div class="entry" data-tags="SWE Full-Stack Front-End">
+    <div class="erow"><span class="etitle">Web App Engineer (Intern) — Strategic Alliances Team, UCL Computer Science</span><span class="eright">London, UK</span></div>
+    <div class="esub"><span>Full-time summer internship</span><span>Jun – Jul 2026</span></div>
+    <ul>
+      <li>Selected as one of two interns to bring the UCL CS Alliances platform — four services including the IXN Workflow Manager, Membership Dashboard, Talent Discovery Centre and Event Management System — to production readiness through feature development, systematic testing and bug fixing.</li>
+      <li>Integrating the services into a unified platform with single sign-on and interoperability, deployed on UCL CS infrastructure for the v1.0 launch of the 2026/27 academic year.</li>
+    </ul>
+    <div class="etags"><span>SWE</span><span>Full-Stack</span></div>
+  </div>
+
+  <div class="entry" data-tags="Research ML-AI Algorithms">
+    <div class="erow"><span class="etitle">LLM-Steered Quality-Diversity Level Generation <span class="tech">| Python, CMA-MAE, local LLMs</span></span><span class="eright">London, UK</span></div>
+    <div class="esub"><span>MSc Thesis, in collaboration with MotionInput, IBM, Intel and Sega</span><span>Jun – Sep 2026</span></div>
+    <ul>
+      <li>Building an offline mixed-initiative PCG system helping children, including those with motor impairments, create on-rails shooter levels; runs fully locally on a commercial laptop with no cloud dependency.</li>
+      <li>Orchestrating a tripartite neurosymbolic pipeline: a two-pass generative grammar guaranteeing playability by construction, Quality-Diversity search (CMA-MAE) illuminating a reusable archive of level scenes, and a local LLM constrained to descriptor selection from a predefined function library.</li>
+      <li class="li-extra">Designing quantitative evaluation of expressive range vs. a grammar baseline, agent-based trajectory analysis mapping structural to experiential diversity, and reliability testing of constrained LLM selection.</li>
+    </ul>
+    <div class="etags"><span>Research</span><span>ML/AI</span><span>Algorithms</span></div>
+  </div>
+
+  <div class="entry" data-tags="SWE Full-Stack Front-End Database">
+    <div class="erow"><span class="etitle">UCL IXN Workflow Manager <span class="tech">| Next.js, React, TypeScript, Prisma, MUI</span></span><span class="eright">London, UK</span></div>
+    <div class="esub"><span>Term project with UCL Strategic Alliances Team (COMP0067)</span><span>Jan – Jun 2026</span></div>
+    <ul>
+      <li>Front-end lead on a five-person team building a multi-role enterprise workflow platform; reviewed 44 pull requests and coordinated development priorities and partner communication.</li>
+      <li>Built the shared <i>DataTable</i> infrastructure (TanStack Table v8, typed API) adopted by every list view in the app; introduced typed UCL design tokens and achieved WCAG 2.2 Level AA accessibility.</li>
+      <li class="li-extra">Delivered end-to-end features across Prisma schema migrations, server actions, API routes and role-based routing; led two codebase-wide directory refactors and responsive/browser-compatibility testing.</li>
+    </ul>
+    <div class="etags"><span>SWE</span><span>Front-End</span><span>Full-Stack</span></div>
+  </div>
+
+  <div class="entry extra" data-tags="Data ML-AI">
+    <div class="erow"><span class="etitle">Data Analyst Intern — Drilling Technology Research Institute, Sinopec</span><span class="eright">Shandong, China</span></div>
+    <div class="esub"><span>Shengli Oilfield</span><span>Jun – Aug 2023</span></div>
+    <ul><li>Data collection, preprocessing and analysis with Python, SQL and machine learning; translated insights into technical solutions with engineers and visualised results for stakeholders.</li></ul>
+    <div class="etags"><span>Data</span><span>ML/AI</span></div>
+  </div>
+</section>
+
+<section id="projects">
+  <h3 class="sec">Projects</h3>
+
+  <div class="entry" data-tags="SWE Full-Stack Database">
+    <div class="erow"><span class="etitle">LaBidbu — Online Auction Platform <span class="tech">| PHP, MySQL, Docker, Apache, GitHub Actions</span></span><span class="eright">Nov – Dec 2025</span></div>
+    <ul>
+      <li>Core developer (127 commits, 87 files) of a full-featured auction platform: authentication, real-time bidding with reserve price, watchlist, recommendation engine and role-based user profiles.</li>
+      <li>Implemented the complete auction lifecycle — listing CRUD, bid validation, winner determination with email notification, seller/buyer access control — and led Docker containerisation and CI workflow.</li>
+    </ul>
+    <div class="elinks"><a href="https://github.com/HuangxinDong/LaBidbu" target="_blank">GitHub ↗</a></div>
+    <div class="etags"><span>SWE</span><span>Database</span><span>Full-Stack</span></div>
+  </div>
+
+  <div class="entry" data-tags="Hardware SWE">
+    <div class="erow"><span class="etitle">UniBuddy — Pocket Study Companion <span class="tech">| Arduino (STM32), C++, e-paper</span></span><span class="eright">Feb 2026</span></div>
+    <ul>
+      <li>Led software for a hackathon-winning desk device combining a virtual pet, Pomodoro timer and session analytics: state-machine firmware, EEPROM persistence with graceful fallbacks, and partial-refresh e-paper rendering.</li>
+    </ul>
+    <div class="elinks"><a href="https://github.com/LightestDark/Unibuddy" target="_blank">GitHub ↗</a></div>
+    <div class="etags"><span>Hardware</span><span>SWE</span></div>
+  </div>
+
+  <div class="entry extra" data-tags="SWE Database Python">
+    <div class="erow"><span class="etitle">CampTrack — Scout Camp Management System <span class="tech">| Python, SQLite</span></span><span class="eright">2025</span></div>
+    <ul>
+      <li>Layered service–repository CLI system with role-based auth; owned the administrator module (system health overview, JSON backup/restore, audit log), architecture adjustments and cross-module debugging.</li>
+      <li class="li-extra">Team features include schedule-conflict detection, bulk CSV import, terminal analytics charts and live weather via Open-Meteo API.</li>
+    </ul>
+    <div class="elinks"><a href="https://github.com/HuangxinDong/CampTrack" target="_blank">GitHub ↗</a></div>
+    <div class="etags"><span>SWE</span><span>Database</span></div>
+  </div>
+
+  <div class="entry extra" data-tags="Algorithms Low-Level">
+    <div class="erow"><span class="etitle">MIPS32 Digital Pet Simulator <span class="tech">| MIPS32 Assembly</span></span><span class="eright">2025</span></div>
+    <ul>
+      <li>Implemented the save/load system with a 3-part encrypted save code, the game analytics report (survival time, level, score and behaviour analysis), core commands and the base time loop — entirely in assembly.</li>
+    </ul>
+    <div class="elinks"><a href="https://github.com/HuangxinDong/mips32-digital-pet" target="_blank">GitHub ↗</a></div>
+    <div class="etags"><span>Algorithms</span><span>Low-Level</span></div>
+  </div>
+
+  <div class="entry extra" data-tags="Haskell Front-End">
+    <div class="erow"><span class="etitle">Personal Blog &amp; Site Generator <span class="tech">| Haskell, Hakyll, Pandoc</span></span><span class="eright">2025 – present</span></div>
+    <ul>
+      <li>Built and deployed a static site with Hakyll, using Pandoc as a library with a custom AST transform for Obsidian-style callouts and sidenotes, plus a companion formatter executable.</li>
+    </ul>
+    <div class="elinks"><a href="https://huangxindong.github.io" target="_blank">Live site ↗</a></div>
+    <div class="etags"><span>Haskell</span><span>Front-End</span></div>
+  </div>
+
+  <div class="entry extra" data-tags="SWE Games">
+    <div class="erow"><span class="etitle">Make 24 <span class="tech">| Godot, GDScript, Aseprite</span></span><span class="eright">2024</span></div>
+    <ul>
+      <li>Retro-style arithmetic card game with a customised desktop-like UI.</li>
+    </ul>
+    <div class="etags"><span>Games</span></div>
+  </div>
+</section>
+
+<section id="research" class="extra">
+  <h3 class="sec">Earlier Research (Linguistics, Nankai)</h3>
+  <div class="entry" data-tags="Research Data">
+    <div class="erow"><span class="etitle">Cross-Linguistic Pitch Variation across 53 Languages</span><span class="eright">2022 – 2023</span></div>
+    <ul><li>Praat scripting for batch annotation and acoustic extraction over a 53-language corpus; GAMM fitting and statistical analysis in R/SPSS.</li></ul>
+    <div class="etags"><span>Research</span><span>Data</span></div>
+  </div>
+  <div class="entry" data-tags="Research ML-AI">
+    <div class="erow"><span class="etitle">Speech Cloning Comparison via Pitch Analysis (BA Thesis)</span><span class="eright">2023 – 2024</span></div>
+    <ul><li>Compared speech-cloning techniques with ANOVA on pitch features; evaluated similarity quantitatively and via listener surveys.</li></ul>
+    <div class="etags"><span>Research</span><span>ML/AI</span></div>
+  </div>
+</section>
+
+<section id="awards">
+  <h3 class="sec">Awards</h3>
+  <div class="entry">
+    <div class="erow"><span class="etitle">Winner, “Hackiest Hack” (Hackathons UK) — HackLondon 2026</span><span class="eright">Feb 2026</span></div>
+    <ul><li>Won with <i>UniBuddy</i> (see Projects) as software lead of the team.</li></ul>
+  </div>
+  <div class="entry extra">
+    <div class="erow"><span class="etitle">Gong Neng Scholarship (top 5%), Nankai University</span><span class="eright">2023</span></div>
+  </div>
+</section>
+
+<section id="skills" class="skills">
+  <h3 class="sec">Skills</h3>
+  <p><b>Languages:</b> TypeScript, Python, Haskell, C/C++, PHP, SQL, HTML/CSS, MIPS32 Assembly, R, LaTeX</p>
+  <p><b>Frameworks &amp; Libraries:</b> React, Next.js, Prisma, MUI, TanStack Table, TensorFlow, NumPy, Flask, Hakyll, Pandoc</p>
+  <p><b>Tools &amp; Platforms:</b> Git, Docker, PostgreSQL, MySQL, SQLite, GitHub Actions, Figma, Arduino, Godot, Unity, Praat</p>
+</section>
+
+</div></main>
+</div>
+
+<script>
+function setView(v){
+  document.body.className = v;
+  document.getElementById('btn-compact').classList.toggle('on', v==='compact');
+  document.getElementById('btn-full').classList.toggle('on', v==='full');
+}
+
+/* Build tag bar from data-tags */
+const entries = [...document.querySelectorAll('.entry[data-tags]')];
+const allTags = [...new Set(entries.flatMap(e => e.dataset.tags.split(' ')))].sort();
+const active = new Set();
+const bar = document.getElementById('tagbar');
+allTags.forEach(t => {
+  const b = document.createElement('button');
+  b.className = 'tagchip'; b.textContent = t.replace('ML-AI','ML/AI');
+  b.onclick = () => { active.has(t) ? active.delete(t) : active.add(t);
+    b.classList.toggle('on'); applyFilter(); };
+  bar.appendChild(b);
+});
+function applyFilter(){
+  entries.forEach(e => {
+    const tags = e.dataset.tags.split(' ');
+    const hit = active.size === 0 || tags.some(t => active.has(t));
+    e.classList.toggle('dim', !hit);
+  });
+}
+function clearTags(){
+  active.clear();
+  bar.querySelectorAll('.tagchip').forEach(b => b.classList.remove('on'));
+  applyFilter();
+}
+</script>
+</body>
+</html>
