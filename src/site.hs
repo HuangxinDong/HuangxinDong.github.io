@@ -51,6 +51,12 @@ main = hakyll $ do
         route   idRoute
         compile copyFileCompiler
 
+    -- Unlisted online CV: copied verbatim, kept out of sitemap and
+    -- site navigation; the page itself carries a noindex meta tag.
+    match "cv/index.html" $ do
+        route   idRoute
+        compile copyFileCompiler
+
     match "favicon/*" $ do
         route   idRoute
         compile copyFileCompiler
