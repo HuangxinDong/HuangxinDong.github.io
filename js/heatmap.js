@@ -44,16 +44,29 @@
       list.replaceChildren();
       const lines = cell.dataset.items.split('\n');
       lines.slice(0, 4).forEach((line) => {
+        // kind|rating|original title|Chinese title (titles may contain "|")
         const first = line.indexOf('|');
         const second = line.indexOf('|', first + 1);
+        const third = line.indexOf('|', second + 1);
         const kind = line.slice(0, first);
         const rating = Number(line.slice(first + 1, second)) || 0;
-        const title = line.slice(second + 1);
+        let original = line.slice(second + 1, third);
+        let zh = line.slice(third + 1);
+        // Douban music lists the original first; keep the Han side as "zh".
+        const han = (str) => /[\u4e00-\u9fff]/.test(str);
+        if (han(original) && !han(zh)) [original, zh] = [zh, original];
 
         const li = document.createElement('li');
         const t = document.createElement('span');
         t.className = 'hm-info-title';
-        t.textContent = title;
+        t.textContent = original || zh;
+        if (original && zh) {
+          const z = document.createElement('span');
+          z.className = 'hm-info-zh';
+          z.lang = 'zh';
+          z.textContent = zh;
+          t.append(' ', z);
+        }
         const k = document.createElement('span');
         k.className = 'hm-info-kind';
         k.dataset.kind = kind;

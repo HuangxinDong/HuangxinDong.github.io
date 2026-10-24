@@ -745,3 +745,9 @@
     border-radius: 2px;
     vertical-align: 1px;
 }
+
+.hm-info-zh {
+    margin-left: 0.2rem;
+    font-size: 0.8em;
+    color: var(--muted);
+}

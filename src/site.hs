@@ -268,6 +268,7 @@ main = hakyll $ do
                 =<< mapM (`loadSnapshot` "content") publishedIds
             now <- unsafeCompiler getCurrentTime
             let entryCtx =
+                    constField "root" siteUrl `mappend`
                     smartDateCtx "published" "%Y-%m-%dT00:00:00Z" ["date", "created"] `mappend`
                     smartDateCtx "updated" "%Y-%m-%dT00:00:00Z" ["modified", "date", "created"] `mappend`
                     field "content" (return . absolutizeUrls siteUrl . itemBody) `mappend`

@@ -461,11 +461,26 @@ footer {
     stroke: none;
 }
 
-.sidebar-elsewhere-glyph {
-    font-family: 'Noto Serif SC', var(--font-serif);
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1;
+/* Brand marks from assets/icons, drawn as masks so they take the text colour. */
+.icon-mask {
+    display: block;
+    width: 18px;
+    height: 18px;
+    background-color: currentColor;
+    -webkit-mask: var(--icon) center / contain no-repeat;
+    mask: var(--icon) center / contain no-repeat;
+}
+
+.icon-github {
+    --icon: url("/assets/icons/GitHub_Invertocat_Black_Clearspace.svg");
+    width: 22px;
+    height: 22px;
+}
+
+.icon-douban {
+    --icon: url("/assets/icons/douban-dou.svg");
+    width: 16px;
+    height: 16px;
 }
 
 @media (max-width: 850px) {
