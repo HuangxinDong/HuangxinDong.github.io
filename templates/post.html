@@ -20,13 +20,11 @@
                         <time class="date" datetime="$dateIso$">$metaDate$</time>
                     $endif$
                     $if(modified)$
-                        <span class="post-meta-separator" aria-hidden="true">&middot;</span>
                         <span class="post-meta-inline">
                             <span class="post-meta-prefix">updated</span>
                             <time class="modified" datetime="$modifiedIso$">$metaModified$</time>
                         </span>
                     $endif$
-                    <span class="post-meta-separator" aria-hidden="true">&middot;</span>
                     <span>$readTime$ min read ($wordCount$ words)</span>
                 </p>
                 $if(tags)$
@@ -53,6 +51,13 @@
             <section class="post-body"$if(hasTranslations)$ data-lang-page data-description-en="$descriptionEn$" data-description-zh="$descriptionZh$"$endif$>
                 $body$
             </section>
+            <section class="post-seal" aria-label="Seal">
+                <button class="post-seal-mark" type="button" aria-label="Collage another line from this post" title="A line collaged from this post. Click for another.">
+                    <canvas width="96" height="48" aria-hidden="true"></canvas>
+                </button>
+                <p class="post-seal-text">$if(seal)$$seal$$else$<span data-seal-collage></span>$endif$</p>
+            </section>
+            <script src="/js/seal.js" defer></script>
             <section class="comments" aria-label="Comments">
                 <script src="https://giscus.app/client.js"
                         data-repo="HuangxinDong/HuangxinDong.github.io"

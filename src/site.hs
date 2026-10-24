@@ -4,10 +4,12 @@ import           Control.Monad       (filterM, unless)
 import           System.Directory    (doesFileExist)
 import           Data.List           (intercalate, nub, nubBy, sort)
 import           Data.Maybe          (catMaybes, fromMaybe)
-import           Data.Time           (defaultTimeLocale, formatTime)
+import           Data.Time           (defaultTimeLocale, formatTime,
+                                      getCurrentTime)
 import           Douban.Records      (Category (..), ImportResult (..),
                                       RecordStatus (..), categorySlug,
                                       formatImportWarning, loadDoubanDirectory)
+import           Douban.Heatmap      (recentHeatmapHtml, recentHeatmapTotal)
 import           Douban.UI           (doubanIndexCtx, doubanStatusPageCtx)
 import           Hakyll
 import           Network.URI         (escapeURIString, isUnreserved)
@@ -19,7 +21,8 @@ import           Site.Utils          (customPandocCompiler, isPublished,
                                       safeCompiler, seriesRoute,
                                       absolutizeUrls, defaultDescription,
                                       escapeHtmlAttr,
-                                      siteUrl, slugify, smartRecentFirst,
+                                      siteUrl, slugify, smartDateCtx,
+                                      smartRecentFirst,
                                       stripPrefixCompat, stripSuffixCompat)
 import           System.FilePath     (dropExtension, takeBaseName,
                                       takeExtension)
@@ -198,6 +201,7 @@ main = hakyll $ do
         route postRoute
         compile $ safeCompiler $
             customPandocCompiler
+                >>= saveSnapshot "content"
                 >>= loadAndApplyTemplate "templates/post.html"    (postCtx tags)
                 >>= loadAndApplyTemplate "templates/default.html" (postCtx tags)
                 >>= relativizeUrls
@@ -241,14 +245,41 @@ main = hakyll $ do
         compile $ do
             posts <- fmap (take 5) . smartRecentFirst =<< filterM isPublished =<< loadAll publishedPostPattern
             projects <- fmap (take 3) $ filterM hasImage =<< loadPublishedSorted "projects/*"
-            let indexCtx =
+            imported <- loadImportedDouban
+            let doubanRecords = importRecords imported
+                indexCtx =
                     listField "posts" (itemCtx tags) (return posts) `mappend`
                     listField "projects" (projectCtx tags) (return projects) `mappend`
+                    constField "heatmap" (recentHeatmapHtml doubanRecords) `mappend`
+                    constField "heatmapTotal" (recentHeatmapTotal doubanRecords) `mappend`
                     pageCtx
             getResourceBody
                 >>= applyAsTemplate indexCtx
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
                 >>= relativizeUrls
+
+    -- Full-text Atom feed of the twenty most recent posts.
+    -- Bilingual posts contribute their English body.
+    create ["atom.xml"] $ do
+        route idRoute
+        compile $ do
+            publishedIds <- filterM isPublishedId =<< getMatches publishedPostPattern
+            entries <- fmap (take 20) . smartRecentFirst
+                =<< mapM (`loadSnapshot` "content") publishedIds
+            now <- unsafeCompiler getCurrentTime
+            let entryCtx =
+                    constField "root" siteUrl `mappend`
+                    smartDateCtx "published" "%Y-%m-%dT00:00:00Z" ["date", "created"] `mappend`
+                    smartDateCtx "updated" "%Y-%m-%dT00:00:00Z" ["modified", "date", "created"] `mappend`
+                    field "content" (return . absolutizeUrls siteUrl . itemBody) `mappend`
+                    postCtx tags
+                atomCtx =
+                    constField "root" siteUrl `mappend`
+                    constField "feedUpdated" (formatTime defaultTimeLocale "%Y-%m-%dT%H:%M:%SZ" now) `mappend`
+                    listField "entries" entryCtx (return entries) `mappend`
+                    defaultContext
+            makeItem ""
+                >>= loadAndApplyTemplate "templates/atom.xml" atomCtx
 
     create ["sitemap.xml"] $ do
         route idRoute

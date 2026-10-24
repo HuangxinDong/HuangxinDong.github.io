@@ -282,7 +282,7 @@ hasTocCtx = field "hasToc" $ \item -> do
     meta <- getMetadata (itemIdentifier item)
     route <- getRoute (itemIdentifier item)
     let allowToc = case route of
-            Just r -> any (`isInfixOf` r) ["posts", "series", "about", "projects", "records"]
+            Just r -> any (`isInfixOf` r) ["posts", "series", "about", "projects"]
             _      -> False
     if allowToc && metadataFlagDefaultTrue "toc" meta
         then return "true"

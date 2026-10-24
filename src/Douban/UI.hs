@@ -10,7 +10,10 @@ module Douban.UI
 
 import           Control.Applicative (empty)
 import           Data.Char        (isNumber, toLower)
+import           Data.List        (intercalate, isPrefixOf, sortBy)
 import           Data.Maybe       (fromMaybe, isJust)
+import           Data.Ord         (Down (..), comparing)
+import           Douban.Heatmap   (yearHeatmapsHtml)
 import           Douban.Records   (Category (..), DoubanRecord (..),
                                    ImportResult (..), RecordStatus (..),
                                    categoryDescription, categoryLabel,
@@ -73,14 +76,19 @@ doubanStatusPageCtx imported category status baseCtx =
 doubanIndexCtx :: ImportResult -> Context String -> Context String
 doubanIndexCtx imported baseCtx =
     constField "title" "Records" `mappend`
+    constField "titleAside" "书影音游" `mappend`
     constField "description" "A lightweight archive of books, films, music, and games imported from Douban." `mappend`
     constField "archiveDate" (extractArchiveDate sources) `mappend`
+    constField "yearHeatmaps" (yearHeatmapsHtml (importRecords imported)) `mappend`
+    constField "recordsJson" (recordsJson (importRecords imported)) `mappend`
+    constField "totalDone" (show (length [ r | r <- importRecords imported, recordStatus r == Done ])) `mappend`
     listField "categories" categoryCtx (mapM makeItem [Book, Movie, Music, Game]) `mappend`
     baseCtx
   where
     sources = [ path | (_, _, path) <- importSources imported ]
     categoryCtx =
         field "name" (return . categoryLabel . itemBody) `mappend`
+        field "hmKey" (return . heatmapKey . itemBody) `mappend`
         field "slug" (return . categorySlug . itemBody) `mappend`
         field "description" (return . categoryDescription . itemBody) `mappend`
         field "doneCount" (\item -> return $ show $ length [ r | r <- importRecords imported, recordCategory r == itemBody item, recordStatus r == Done ]) `mappend`
@@ -88,6 +96,65 @@ doubanIndexCtx imported baseCtx =
         field "doneLabel" (return . doneLabel . itemBody) `mappend`
         field "doneUrl" (return . (\s -> "/records/" ++ s ++ ".html") . categorySlug . itemBody) `mappend`
         field "wishlistUrl" (return . (\s -> "/records/" ++ s ++ "/wishlist.html") . categorySlug . itemBody)
+
+-- | Douban titles often read "中文名 / Original Title".
+splitTitle :: String -> (String, String)
+splitTitle = go ""
+  where
+    go :: String -> String -> (String, String)
+    go acc rest
+        | " / " `isPrefixOf` rest = (reverse acc, drop 3 rest)
+    go acc (c:cs) = go (c : acc) cs
+    go acc [] = (reverse acc, "")
+
+-- | Every record (done and wishlist) as a compact JSON array, newest first,
+-- for the list on the records page (js/records-wall.js). Each entry is
+-- [kind, status, title, original title, rating, logged, review, creator,
+--  subject date, link], with status "done" or "wish".
+recordsJson :: [DoubanRecord] -> String
+recordsJson records = "[" ++ intercalate "," (map entry sorted) ++ "]"
+  where
+    sorted = sortBy (comparing (Down . recordRecordedAt)) records
+    entry :: DoubanRecord -> String
+    entry r =
+        let (mainTitle, altTitle) = splitTitle (recordTitle r)
+        in  "[" ++ intercalate ","
+                [ jsonString (heatmapKey (recordCategory r))
+                , jsonString (if recordStatus r == Done then "done" else "wish")
+                , jsonString mainTitle
+                , jsonString altTitle
+                , maybe "0" show (recordRating r)
+                , jsonString (fromMaybe "" (recordRecordedAt r))
+                , jsonString (fromMaybe "" (recordComment r))
+                , jsonString (fromMaybe "" (recordCreator r))
+                , jsonString (fromMaybe "" (recordSubjectDate r))
+                , jsonString (fromMaybe "" (recordLink r))
+                ] ++ "]"
+
+-- | A JSON string literal that is also safe inside an HTML script element.
+jsonString :: String -> String
+jsonString str = "\"" ++ concatMap escapeChar str ++ "\""
+  where
+    escapeChar :: Char -> String
+    escapeChar c = case c of
+        '"'  -> "\\\""
+        '\\' -> "\\\\"
+        '\n' -> "\\n"
+        '\r' -> "\\r"
+        '\t' -> "\\t"
+        '<'  -> "\\u003c"
+        '>'  -> "\\u003e"
+        '&'  -> "\\u0026"
+        _ | c < ' '   -> " "
+          | otherwise -> [c]
+
+-- | Key used by the heatmap cells' data attributes (see Douban.Heatmap).
+heatmapKey :: Category -> String
+heatmapKey category = case category of
+    Book  -> "book"
+    Movie -> "film"
+    Music -> "music"
+    Game  -> "game"
 
 doneLabel :: Category -> String
 doneLabel category = case category of

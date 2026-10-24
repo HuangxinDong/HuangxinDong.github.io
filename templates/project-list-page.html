@@ -1,13 +1,16 @@
 <div class="container-content">
-    <main id="main-content" tabindex="-1">
+    <main id="main-content" class="main-wide" tabindex="-1">
         <h1>$title$</h1>
         <div class="page-intro">
             $body$
         </div>
-        <ul class="project-list" aria-label="Project list">
+        <div class="works-timeline" data-works-timeline hidden></div>
+        <ul class="works-grid" aria-label="Project list">
             $for(projects)$
-                $partial("templates/project-list-item.html")$
+                $partial("templates/project-card.html")$
             $endfor$
         </ul>
+        <script src="/js/works.js" defer></script>
+        <script src="/js/seal.js" defer></script>
     </main>
 </div>

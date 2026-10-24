@@ -6,7 +6,8 @@ cabal-version:      >= 1.10
 executable site
   main-is:          site.hs
   hs-source-dirs:   src
-  other-modules:    Douban.Records
+  other-modules:    Douban.Heatmap
+                  , Douban.Records
                   , Douban.UI
                   , Site.Pandoc.Callouts
                   , Site.Utils

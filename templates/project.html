@@ -20,13 +20,11 @@
                         <time class="date" datetime="$dateIso$">$metaDate$</time>
                     $endif$
                     $if(modified)$
-                        <span class="post-meta-separator" aria-hidden="true">&middot;</span>
                         <span class="post-meta-inline">
                             <span class="post-meta-prefix">updated</span>
                             <time class="modified" datetime="$modifiedIso$">$metaModified$</time>
                         </span>
                     $endif$
-                    <span class="post-meta-separator" aria-hidden="true">&middot;</span>
                     <span>$readTime$ min read ($wordCount$ words)</span>
                 </p>
                 $if(tags)$
