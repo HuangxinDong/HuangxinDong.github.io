@@ -1,0 +1,20 @@
+<li class="work-card" data-date="$dateIso$">
+    <a class="work-image" href="$url$" tabindex="-1" aria-hidden="true">
+        $if(image)$
+        <img src="$image$" alt="" loading="lazy">
+        $else$
+        <span class="work-image-empty"></span>
+        $endif$
+    </a>
+    <div class="work-body">
+        <h2 class="work-title"><a href="$url$">$title$</a></h2>
+        $if(description)$
+        <p class="work-desc">$description$</p>
+        $endif$
+        <div class="work-meta">
+            <p>$if(tags)$<span class="work-tags">$tags$</span>$endif$<time datetime="$dateIso$">$metaDate$</time></p>
+            <canvas class="work-seal" data-seal width="48" height="24" aria-hidden="true"></canvas>
+        </div>
+        <p class="work-links"><a href="$url$">Read</a>$if(source)$<a href="$source$" target="_blank" rel="noreferrer">Source</a>$endif$</p>
+    </div>
+</li>

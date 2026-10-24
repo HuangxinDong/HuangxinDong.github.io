@@ -216,3 +216,166 @@
         max-width: none;
     }
 }
+
+/* ============================================
+   Works index (projects page)
+   ============================================ */
+
+@media (min-width: 1101px) {
+    main.main-wide {
+        padding-right: 0;
+    }
+}
+
+.works-timeline {
+    position: relative;
+    height: 64px;
+    margin: 1.75rem 0 2.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.works-timeline[hidden] {
+    display: none;
+}
+
+.wt-year {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    padding-left: 5px;
+    border-left: 1px solid var(--border);
+    font-family: var(--font-sans);
+    font-size: 0.62rem;
+    line-height: 1;
+    color: var(--muted);
+}
+
+.wt-mark {
+    position: absolute;
+    width: 14px;
+    height: 4px;
+    margin-left: -7px;
+    border-radius: 999px;
+    background: var(--text);
+    opacity: 0.4;
+    transition: opacity 0.15s ease, background-color 0.15s ease, transform 0.15s ease;
+}
+
+.wt-mark:hover,
+.wt-mark.is-lit {
+    opacity: 1;
+    background: var(--accent);
+    transform: scaleX(1.4);
+}
+
+.works-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2.75rem 1.75rem;
+}
+
+.work-card {
+    min-width: 0;
+    scroll-margin-top: 2rem;
+}
+
+.work-image {
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--code-bg);
+    transition: outline-color 0.15s ease;
+    outline: 2px solid transparent;
+    outline-offset: 3px;
+}
+
+.work-card.is-lit .work-image {
+    outline-color: var(--accent);
+}
+
+.work-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.3s ease;
+}
+
+.work-image:hover img {
+    transform: scale(1.02);
+}
+
+.work-image-empty {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(135deg, var(--code-bg) 0 6px, transparent 6px 12px);
+}
+
+.work-title {
+    margin: 0.85rem 0 0;
+    font-size: 1.08rem;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.work-title a {
+    color: var(--text);
+    transition: color 0.15s ease;
+}
+
+.work-title a:hover {
+    color: var(--accent);
+}
+
+.work-desc {
+    margin: 0.3rem 0 0;
+    font-size: 0.88rem;
+    font-style: italic;
+    line-height: 1.55;
+    color: color-mix(in srgb, var(--text) 78%, var(--bg));
+    text-align: left;
+}
+
+.work-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    margin-top: 0.7rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--border);
+}
+
+.work-meta p {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 0.9rem;
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-align: left;
+}
+
+.work-seal {
+    flex: none;
+    width: 48px;
+    height: 24px;
+    color: var(--text);
+    opacity: 0.75;
+    image-rendering: pixelated;
+}
+
+.work-links {
+    display: flex;
+    gap: 1rem;
+    margin: 0.45rem 0 0;
+    font-family: var(--font-sans);
+    font-size: 0.76rem;
+}

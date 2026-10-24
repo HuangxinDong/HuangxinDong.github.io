@@ -1,7 +1,7 @@
 ---
 date: 2025-12-20
 title: MIPS32 Digital Pet Simulator
-description: A simple digital pet simulator written in MIPS32 Assembly Language. It features energy management, leveling, sickness, dating, and a save/load system.
+description: A simple digital pet simulator written in MIPS32 Assembly Language.
 image: /assets/images/mips-pet.png
 source: https://github.com/HuangxinDong/mips32-digital-pet
 tags:
