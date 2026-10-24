@@ -10,7 +10,8 @@ module Douban.Heatmap
     , yearHeatmapsHtml
     ) where
 
-import           Data.Char       (isDigit, isSpace)
+import           Data.Char       (isAsciiLower, isAsciiUpper, isDigit,
+                                  isSpace)
 import           Data.List       (intercalate, isPrefixOf, nub, sortBy)
 import           Data.Maybe      (fromMaybe, mapMaybe)
 import           Data.Ord        (Down (..), comparing)
@@ -22,10 +23,11 @@ import           Douban.Records  (Category (..), DoubanRecord (..),
 import           Site.Utils      (escapeHtmlAttr, escapeHtmlText)
 
 data Entry = Entry
-    { entryDay    :: Day
-    , entryCat    :: Category
-    , entryTitle  :: String
-    , entryRating :: Maybe Int
+    { entryDay      :: Day
+    , entryCat      :: Category
+    , entryTitle    :: String   -- ^ Chinese title as listed on Douban
+    , entryOriginal :: String   -- ^ original title, empty when none is given
+    , entryRating   :: Maybe Int
     }
 
 --------------------------------------------------------------------------------
@@ -128,13 +130,15 @@ cellHtml inRange dayEntries d
             , " data-date=\"", showGregorian d, "\""
             , concat [ " data-" ++ catKey c ++ "=\"" ++ show k ++ "\"" | (c, k) <- counts, k > 0 ]
             , " data-items=\"", escapeHtmlAttr (intercalate "\n" (map itemLine es)), "\""
-            , " title=\"", escapeHtmlAttr (showGregorian d ++ ": " ++ intercalate ", " (map entryTitle es)), "\""
+            , " title=\"", escapeHtmlAttr (showGregorian d ++ ": " ++ intercalate ", " (map displayTitle es)), "\""
             , "></span>"
             ]
   where
     es = dayEntries d
     counts = [ (c, length [ e | e <- es, entryCat e == c ]) | c <- stripeOrder ]
-    itemLine e = catKey (entryCat e) ++ "|" ++ maybe "" show (entryRating e) ++ "|" ++ entryTitle e
+    itemLine e = catKey (entryCat e) ++ "|" ++ maybe "" show (entryRating e)
+        ++ "|" ++ entryOriginal e ++ "|" ++ entryTitle e
+    displayTitle e = if null (entryOriginal e) then entryTitle e else entryOriginal e
 
 -- | Order of the stripes when one day holds several categories.
 stripeOrder :: [Category]
@@ -208,10 +212,12 @@ entries = mapMaybe toEntry
         | recordStatus r /= Done = Nothing
         | otherwise = do
             d <- recordRecordedAt r >>= parseDay
+            let (zh, original) = splitTitles (recordTitle r)
             return Entry
                 { entryDay = d
                 , entryCat = recordCategory r
-                , entryTitle = primaryTitle (recordTitle r)
+                , entryTitle = zh
+                , entryOriginal = original
                 , entryRating = recordRating r
                 }
 
@@ -229,15 +235,43 @@ parseDay raw =
   where
     sep c = if c == '/' || c == '-' then ' ' else c
 
--- | "局外人 / L'Étranger" becomes "局外人".
-primaryTitle :: String -> String
-primaryTitle = trimEnd . go
+-- | Split a Douban title into (Chinese title, original title).
+--
+-- Films and books read "局外人 / L'Étranger". Games put the original after a
+-- space, as in "镇民纪 Townsfolk" or "超级马力欧世界 スーパーマリオワールド":
+-- the original starts at the first word that begins with a Latin letter or
+-- holds kana, right after a word containing a Han character. Titles with no
+-- separate original come back with an empty second part.
+splitTitles :: String -> (String, String)
+splitTitles raw =
+    case breakOn " / " raw of
+        Just (a, b)
+            -- Music lists the original first: keep the Han side as the
+            -- Chinese title whichever side it is on.
+            | not (any isHan a) && any isHan b -> (trimBoth b, trimBoth a)
+            | otherwise                        -> (trimBoth a, trimBoth b)
+        Nothing ->
+            let ws = words raw
+                splits = [ i | i <- [1 .. length ws - 1]
+                             , foreignStart (ws !! i)
+                             , any isHan (ws !! (i - 1)) ]
+            in  case splits of
+                    (i : _) -> (unwords (take i ws), unwords (drop i ws))
+                    []      -> (trimBoth raw, "")
   where
-    go [] = []
-    go s@(c:cs)
-        | " / " `isPrefixOf` s = []
-        | otherwise = c : go cs
-    trimEnd = reverse . dropWhile isSpace . reverse
+    breakOn sep = go ""
+      where
+        go acc rest
+            | sep `isPrefixOf` rest = Just (reverse acc, drop (length sep) rest)
+        go acc (c:cs) = go (c : acc) cs
+        go _ [] = Nothing
+    trimBoth = dropWhile isSpace . reverse . dropWhile isSpace . reverse
+    isHan c = c >= '\x4e00' && c <= '\x9fff'
+    isKana c = c >= '\x3040' && c <= '\x30ff'
+    isLatin c = isAsciiUpper c || isAsciiLower c
+    foreignStart w = case w of
+        (c:_) | isLatin c -> True
+        _                 -> any isKana w
 
 mondayOnOrBefore :: Day -> Day
 mondayOnOrBefore d = addDays (negate (weekdayIndex d)) d
