@@ -54,14 +54,15 @@
     const last = keys.length - 1;
     // Reject patterns that settle into a period of one or two generations.
     if (keys[last] === keys[last - 1] || keys[last] === keys[last - 2]) return false;
-    // Reject rules that only slide the starting row sideways (plain diagonals).
-    const shifted = (row, k) => row.map((_, x) => row[(x - k + SIZE) % SIZE]).join('');
+    // Reject rules that only slide the starting row sideways
+    const shifted = (row, k, flip) => row.map((_, x) => row[(x - k + SIZE) % SIZE] ^ flip).join('');
+    const SHIFTS = [0, 1, -1, 2, -2, 3, -3];
     let slides = 0;
-    for (let y = SIZE - 6; y < SIZE; y++) {
+    for (let y = SIZE - 8; y < SIZE; y++) {
       const prev = rows[y - 1];
-      if ([1, -1, 2, -2].some((k) => shifted(prev, k) === keys[y])) slides += 1;
+      if (SHIFTS.some((k) => shifted(prev, k, 0) === keys[y] || shifted(prev, k, 1) === keys[y])) slides += 1;
     }
-    if (slides >= 4) return false;
+    if (slides >= 5) return false;
     return true;
   }
 

@@ -169,7 +169,7 @@ monthLabelsRolling firstMonday weeks = go 0 Nothing
                     else go (col + 1) prev
 
 --------------------------------------------------------------------------------
--- Summaries ("In 2022 I marked 618 things: ...")
+-- Summaries
 
 summaryAll :: Integer -> Int -> [(Category, Int)] -> Bool -> Day -> String
 summaryAll year total parts partial endDay =
