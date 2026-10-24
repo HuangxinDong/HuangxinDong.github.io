@@ -156,8 +156,8 @@ cellStyle counts =
         parts   ->
             let n = length parts
                 stop i = show ((i * 100) `div` n) ++ "%"
-                segment (i, (c, k)) = swatch c k ++ " " ++ stop i ++ " " ++ stop (i + 1)
-            in  " style=\"background: linear-gradient(" ++ intercalate ", " (map segment (zip [0 :: Int ..] parts)) ++ ")\""
+                segment i (c, k) = swatch c k ++ " " ++ stop i ++ " " ++ stop (i + 1)
+            in  " style=\"background: linear-gradient(" ++ intercalate ", " (zipWith segment [0 :: Int ..] parts) ++ ")\""
   where
     swatch c k = "var(--hm-" ++ catKey c ++ "-" ++ show (min 3 k) ++ ")"
 
