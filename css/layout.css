@@ -315,6 +315,96 @@ footer {
 
 @media (min-width: 851px) {
     .sidebar-header {
-        display: none;
+        display: flex;
+    }
+}
+
+/* ============================================
+   Site mark (cellular automaton, js/mark.js)
+   ============================================ */
+
+.site-mark {
+    appearance: none;
+    border: 0;
+    background: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    color: var(--accent);
+    line-height: 0;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.site-mark[hidden] {
+    display: none;
+}
+
+.site-mark canvas {
+    display: block;
+    width: 72px;
+    height: 72px;
+    image-rendering: pixelated;
+}
+
+@media (max-width: 850px) {
+    .site-mark {
+        margin: 0;
+    }
+
+    .site-mark canvas {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* ============================================
+   Home intro (text + MacPaint portrait)
+   ============================================ */
+
+.home-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 340px);
+    column-gap: 2rem;
+    align-items: start;
+    margin-top: 1.2rem;
+}
+
+.home-intro-text > p:first-child {
+    margin-top: 0;
+}
+
+.home-portrait {
+    margin: 0.35rem 0 0;
+}
+
+.home-portrait img {
+    width: 100%;
+    height: auto;
+    image-rendering: pixelated;
+}
+
+.home-portrait figcaption {
+    text-align: left;
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    margin-top: 0.5rem;
+}
+
+/* On wide screens the portrait reaches into the sidenote column. */
+@media (min-width: 1101px) {
+    .home-intro {
+        margin-right: calc(-1 * (var(--sidenote-right-width) + var(--sidenote-gap)));
+        grid-template-columns: minmax(0, 1fr) 360px;
+    }
+}
+
+@media (max-width: 700px) {
+    .home-intro {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .home-portrait {
+        max-width: 360px;
+        margin: 0 0 1rem;
     }
 }
