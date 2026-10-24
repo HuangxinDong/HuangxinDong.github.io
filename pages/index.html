@@ -3,44 +3,29 @@ title: Home
 description: Personal blog by Huangxin Dong.
 ---
 
-
-
-<!--home page hero
-<section class="home-hero" aria-label="Homepage hero">
-	<div class="home-hero-media">
-		<img
-			src="/assets/images/hero-home.jpg"
-			width="2400"
-			height="1598"
-			fetchpriority="high"
-			alt="Kyoto, June 2025 — shot on Nikon FE, 28mm f/3.5"
-		/>
-	</div>
-</section>
--->
-
 <div class="container-content">
 	<main id="main-content" tabindex="-1">
 		<h1>Huangxin Dong</h1>
 
-		<p>CS student at UCL, writing about programming, video games, languages, and the things I'm slowly figuring out.</p>
-		<img
-			class="side-image"
-			width="300"
-			height="116"
-			src="/assets/images/Welcome.png"
-			alt="Welcome: Hi! Thanks for stopping by. I'm still tring to write a bit more :)"
-		/>
-		<p>In an age of growing homogenization, I want to try to construct a context of my own.</p>
-		
+		<div class="home-intro">
+			<div class="home-intro-text">
+				<p>My name is Huangxin, pronounced [xwɑŋ35 ɕɪn55] in IPA. I studied Computer Science at UCL, with a background in Linguistics and Literature. I am interested in pattern matching in a broad sense: finding the structures underneath surface variation, whether in syntax, narrative, or the logic of a conversation, and not only in programming languages, but also in video games, natural languages, daily life, and in the way we perceive and understand the world.</p>
+				<p><em>In an age of growing homogenization, I want to try to construct a context of my own.</em></p>
+			</div>
+			<figure class="home-portrait">
+				<img src="/assets/images/aboutme.png" width="1024" height="686" alt="Self-portrait in MacPaint, dithered with Floyd–Steinberg">
+				<figcaption>Me, MacPaint and Floyd–Steinberg</figcaption>
+			</figure>
+		</div>
 
 		<h2>Recent Posts</h2>
+		<aside class="sidenote">
+			<p>Here I write about programming, games and language, and the things I'm slowly figuring out.</p>
+		</aside>
 		$partial("templates/post-list.html")$
-
 		<p>…or you can find all posts on the <a href="/posts.html">Posts</a> page.</p>
-		
+
 		<h2>Recent Projects</h2>
-		<p>Here are some of projects, experiments, and things I've been building.</p>
 		<aside class="sidenote">
 			<p>Many of these smaller projects are still quite immature, most were created for learning and experimentation. Still, I’ve decided to include them here, as they reflect how I learn.</p>
 		</aside>
@@ -50,14 +35,22 @@ description: Personal blog by Huangxin Dong.
 			$endfor$
 		</div>
 		<p>…or you can browse the full list on the <a href="/projects.html">Projects</a> page.</p>
-		
-		<h2>Links</h2>
-		<p>You can also find me elsewhere here:</p>
-		<ul>
-			<li><a href="https://github.com/huangxindong" target="_blank" rel="noreferrer">GitHub</a>: my codebases</li>
-			<li><a href="https://dhx.vercel.app" target="_blank" rel="noreferrer">Notebook</a>: my online notebooks</li>
-			<li><a href="https://www.douban.com/people/dddhx" target="_blank" rel="noreferrer">Douban</a>: my up-to-date book/movie/video game/music records (Or check <a href="/records.html">Records</a> for my archived lists)</li>
-		</ul>
-		<p>Or contact me through <a href="mailto: huangxin.dong@icloud.com">email</a>.</p>
+
+		<h2>What I Watched, Read, Heard and Played</h2>
+		<aside class="sidenote">
+			<p>From my Douban archive, where I’ve kept a note of films, books, music, and games I finish since 2020.</p>
+		</aside>
+		<div class="home-heatmap" data-heatmap>
+			$heatmap$
+			<div class="hm-foot">
+				<div class="hm-info" aria-live="polite">
+					<p class="hm-info-date">Hover over a day</p>
+					<ul class="hm-info-list"></ul>
+				</div>
+				<p class="hm-legend" aria-hidden="true"><span><i style="background: var(--hm-film-2)"></i>film</span><span><i style="background: var(--hm-book-2)"></i>book</span><span><i style="background: var(--hm-music-2)"></i>music</span><span><i style="background: var(--hm-game-2)"></i>game</span></p>
+			</div>
+			<p class="hm-note">$heatmapTotal$ entries in the year before my last Douban archive. The rest is in <a href="/records.html">Records</a>.</p>
+		</div>
+		<script src="/js/heatmap.js" defer></script>
 	</main>
 </div>
