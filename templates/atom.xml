@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Huangxin Dong</title>
+    <subtitle>Writing about programming, video games, and languages.</subtitle>
+    <link href="$root$/atom.xml" rel="self" />
+    <link href="$root$/" />
+    <id>$root$/</id>
+    <author>
+        <name>Huangxin Dong</name>
+    </author>
+    <updated>$feedUpdated$</updated>
+$for(entries)$
+    <entry>
+        <title type="html"><![CDATA[$title$]]></title>
+        <link href="$root$$url$" />
+        <id>$root$$url$</id>
+        <published>$published$</published>
+        <updated>$updated$</updated>
+        <content type="html"><![CDATA[$content$]]></content>
+    </entry>
+$endfor$
+</feed>

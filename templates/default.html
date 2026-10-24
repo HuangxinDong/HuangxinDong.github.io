@@ -11,13 +11,15 @@
         <link rel="icon" href="/favicon/favicon-96x96.png" type="image/png" sizes="96x96">
         <link rel="icon" href="/favicon.ico" sizes="any">
         <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" sizes="180x180">
-        <meta name="theme-color" content="#d2d9cb">
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+        <meta name="theme-color" content="#101010" media="(prefers-color-scheme: dark)">
         <meta name="google-site-verification" content="B953BWFC5WrHH3Y7yXG5hwKms5B6uf19BXWa3Ce2dt4" />
         <meta name="msvalidate.01" content="459E2C027F6549C749E4AE1E662CA7A1" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&display=swap">
         <link rel="stylesheet" href="/css/site.css" />
+        <link rel="alternate" type="application/atom+xml" title="Huangxin Dong" href="/atom.xml">
         <script defer src="https://cloud.umami.is/script.js" data-website-id="45dfbced-36d0-4f62-baad-7c2422264583"></script>
         $if(hasMathJax)$
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
@@ -56,6 +58,21 @@
                         <a href="/projects.html" $projectsCurrent$>Projects</a>
                         <a href="/records.html" $recordsCurrent$>Records</a>
                     </nav>
+                    <nav class="sidebar-elsewhere" aria-label="Elsewhere">
+                        <a href="https://github.com/huangxindong" title="GitHub" aria-label="GitHub" rel="noreferrer">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="7" r="2"/><path d="M6 7v10"/><path d="M18 9c0 5-12 3-12 8"/></svg>
+                        </a>
+                        <a href="https://dhx.vercel.app" title="Notebook" aria-label="Notebook" rel="noreferrer">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h11a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6z"/><path d="M6 3v18"/><path d="M4 7h4M4 12h4M4 17h4"/><path d="M10 8h5"/></svg>
+                        </a>
+                        <a class="sidebar-elsewhere-glyph" href="https://www.douban.com/people/dddhx" title="Douban" aria-label="Douban" rel="noreferrer" lang="zh">豆</a>
+                        <a href="mailto:huangxin.dong@icloud.com" title="Email" aria-label="Email">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="m4 6.5 8 6.5 8-6.5"/></svg>
+                        </a>
+                        <a href="/atom.xml" title="RSS feed" aria-label="RSS feed">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8"/><path d="M5 4a15 15 0 0 1 15 15"/><circle cx="6" cy="18" r="1.4" class="fill"/></svg>
+                        </a>
+                    </nav>
                 </div>
             </aside>
 
@@ -64,9 +81,8 @@
 
                 <footer class="container-content">
                     <div class="footer-inner">
-                        Created with <a href="http://jaspervdj.be/hakyll">Hakyll</a> &amp; <a href="https://obsidian.md/">Obsidian</a>
-                        &nbsp;|&nbsp;
-                        © 2026 Huangxin Dong
+                        <span>Created with <a href="http://jaspervdj.be/hakyll">Hakyll</a> &amp; <a href="https://obsidian.md/">Obsidian</a></span>
+                        <span>© 2026 Huangxin Dong</span>
                     </div>
                 </footer>
             </div>
@@ -85,6 +101,7 @@
         <script src="/js/copy-code.js" defer></script>
         $endif$
         $if(hasRecords)$
+        <script src="/js/records-shared.js" defer></script>
         <script src="/js/records.js" defer></script>
         $endif$
     </body>
