@@ -1,5 +1,5 @@
 ---
-title: "Ludum Dare 中的生成式 AI"
+title: "Ludum Dare 中的生成式 AI情况分析"
 created: 2026-10-29
 tags:
   - video_game

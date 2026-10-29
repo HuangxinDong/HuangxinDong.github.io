@@ -1,5 +1,5 @@
 ---
-title: "Generative AI at Ludum Dare"
+title: "An Analysis of Generative AI in Ludum Dare "
 created: 2026-10-29
 tags:
   - video_game
