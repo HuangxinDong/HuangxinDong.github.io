@@ -1,5 +1,5 @@
 ---
-title: "Thoughts on Making Games in the Age of AI: Generative AI at Ludum Dare"
+title: "An Analysis of Generative AI in Ludum Dare "
 created: 2026-10-29
 tags:
   - video_game
@@ -7,6 +7,9 @@ tags:
   - data_analysis
 description: Scraping game comments, forum posts and ratings from LD50 to LD60 to see how the Ludum Dare community's attitudes towards generative AI in game-making have changed.
 ---
+
+>[!note]
+> All the interactive figures in this post, plus more that did not make it into the text, are collected [here](/posts/ludum-dare-and-generative-ai-data.html). Data sources: game pages, game comments, ratings and forum posts come from the public [ldjam.com](https://ldjam.com) API; itch.io AI declarations for LD59 and LD60 come from [ludum-dare.foon.uk](https://ludum-dare.foon.uk); the rules poll comes from [@Jezzamon](https://ldjam.com/users/jezzamon)'s [ld-votes](https://jezzamon.com/ld-votes/).
 
 ## Preface
 

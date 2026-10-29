@@ -1,0 +1,114 @@
+.ldf, .ldf-tip, .ldf-page {
+    --ldf-bg: var(--bg, #ffffff);
+    --ldf-ink: #1a1a1a; --ldf-ink2: #6a6a6a; --ldf-rule: #d9d9d9; --ldf-faint: #f4f4f4;
+    --ldf-link: #1f5fa8; --ldf-hl: #fff3b0; --ldf-on: var(--accent, #2d5a27); --ldf-on-ink: var(--bg, #ffffff);
+    --ldf-serif: Georgia, "Times New Roman", Times, "Songti SC", "STSong", "Noto Serif SC", serif;
+    --ldf-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Noto Sans SC", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+    .ldf, .ldf-tip, .ldf-page {
+        --ldf-ink: #e8e8e8; --ldf-ink2: #9a9a9a; --ldf-rule: #3a3a3a; --ldf-faint: #1d1d1d;
+        --ldf-link: #8ab4f8; --ldf-hl: #4a4220; --ldf-on: var(--accent, #6aaa5f); --ldf-on-ink: var(--bg, #101010);
+    }
+}
+
+/* headings of this post sit below the sticky shared filter when jumped to */
+.lang-panel:has(.ldf-shared) h2, .lang-panel:has(.ldf-shared) h3 { scroll-margin-top: 9rem; }
+
+/* ---------- the opening numbers ---------- */
+.ldf-page .ldf-stats { display: flex; flex-wrap: wrap; gap: 4px 22px; font-family: var(--ldf-serif); font-size: 15px; color: var(--ldf-ink2); margin: 1rem 0 1.4rem; }
+.ldf-page .ldf-stats b { color: var(--ldf-ink); font-weight: normal; font-size: 22px; font-variant-numeric: tabular-nums; margin-right: 0.25em; }
+
+/* ---------- method explainer (17) ---------- */
+.ldf-expl { display: grid; gap: 14px; margin: 1.2rem 0 2rem; }
+.ldf-expl > div { display: grid; gap: 5px; padding-left: 14px; border-left: 3px solid var(--ldf-rule, #d9d9d9); }
+.ldf-expl > div > p { margin: 0; font-size: 0.95em; }
+
+/* ---------- the interactive block ---------- */
+.ldf { font-family: var(--ldf-serif); font-size: 16px; line-height: 1.55; color: var(--ldf-ink); display: grid; gap: 11px; min-width: 0; }
+.ldf * { box-sizing: border-box; }
+.ldf:not(.ready) { min-height: 96px; border: 1px dashed var(--ldf-rule); border-radius: 4px; padding: 16px; color: var(--ldf-ink2); }
+.ldf [hidden], .ldf-bin { display: none !important; }
+.ldf p { margin: 0; text-align: left; hyphens: manual; }
+.ldf a { color: var(--ldf-link); text-decoration: none; border: 0; }
+.ldf a:hover { text-decoration: underline; }
+.ldf .sub-h { color: var(--ldf-ink2); font-size: 15px; margin-top: 8px; }
+.ldf .ctl { display: grid; gap: 7px; }
+.ldf .row { display: flex; flex-wrap: wrap; align-items: center; gap: 5.6px 6.4px; }
+.ldf .row .lab { color: var(--ldf-ink2); min-width: 6.5em; font-size: 15px; }
+.ldf .bt { font: 13px/1 var(--ldf-ui); color: var(--ldf-ink); background: var(--ldf-bg); border: 1px solid var(--ldf-rule); border-radius: 4px; padding: 6px 11px; cursor: pointer; margin: 0; }
+.ldf .bt:hover { border-color: var(--ldf-ink2); }
+.ldf .bt[aria-pressed="true"] { background: var(--ldf-on); border-color: var(--ldf-on); color: var(--ldf-on-ink); }
+.ldf .bt:disabled { opacity: 0.35; cursor: default; }
+.ldf .ck { display: inline-flex; align-items: center; gap: 5.6px; cursor: pointer; font-size: 15px; margin-right: 16px; }
+.ldf .ck input[type=checkbox] { accent-color: var(--ldf-on); width: 15px; height: 15px; margin: 0; }
+.ldf select, .ldf input[type=search] { font: 13px var(--ldf-ui); color: var(--ldf-ink); background: var(--ldf-bg); border: 1px solid var(--ldf-rule); border-radius: 4px; padding: 4.8px 6.4px; margin: 0; max-width: 100%; }
+.ldf input[type=range] { accent-color: var(--ldf-on); width: 160px; margin: 0; }
+.ldf :focus-visible { outline: 2px solid var(--ldf-link); outline-offset: 2px; }
+.ldf .flag { font-size: 14.4px; color: var(--ldf-ink2); }
+.ldf .flag button { font: inherit; border: 0; background: none; color: var(--ldf-link); cursor: pointer; padding: 0; }
+
+.ldf .fig { width: 100%; min-width: 0; }
+.ldf .fig svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ldf svg text { font-family: var(--ldf-serif); fill: var(--ldf-ink); font-size: 13px; }
+.ldf svg .t2 { fill: var(--ldf-ink2); }
+.ldf svg .grid { stroke: var(--ldf-rule); stroke-width: 1; }
+
+.ldf .legend { display: flex; flex-wrap: wrap; gap: 4px 17.6px; font-size: 14.4px; }
+.ldf .legend:empty { display: none; }
+.ldf .legend span { display: inline-flex; align-items: center; gap: 5.6px; }
+.ldf .legend i { display: inline-block; width: 11px; height: 11px; border: 1px solid rgba(0, 0, 0, 0.15); }
+.ldf .legend .off { opacity: 0.35; }
+.ldf .legend .tg { cursor: pointer; }
+
+/* ---------- tables (reset the blog's booktabs defaults) ---------- */
+.ldf .tw { overflow-x: auto; min-width: 0; }
+.ldf table { border-collapse: collapse; border: 0; margin: 0; width: auto; max-width: none; counter-increment: none; font-size: 14.4px; font-variant-numeric: tabular-nums; }
+.ldf thead tr > th { border-bottom: 0; font-family: inherit; font-size: inherit; font-weight: normal; letter-spacing: 0; }
+.ldf th { font-weight: normal; color: var(--ldf-ink2); text-align: left; padding: 3px 8px; white-space: nowrap; line-height: 1.55; }
+.ldf th.sort { cursor: pointer; }
+.ldf th.sort:hover { color: var(--ldf-ink); }
+.ldf td { padding: 3px 8px; white-space: nowrap; vertical-align: middle; line-height: 1.55; text-align: left; }
+.ldf tbody tr:first-child > td { padding-top: 3px; }
+.ldf td.r, .ldf th.r { text-align: right; }
+.ldf tbody tr + tr td { border-top: 1px solid var(--ldf-faint); }
+.ldf tfoot td { border-top: 0; padding-top: 6px; }
+.ldf td.wrap { white-space: normal; min-width: 16em; }
+.ldf td.dim, .ldf .dim { color: var(--ldf-ink2); }
+.ldf .barbox { display: inline-block; width: 90px; height: 10px; background: var(--ldf-faint); vertical-align: middle; margin-right: 0.45em; }
+.ldf .barbox > i { display: block; height: 100%; }
+.ldf table.heat td.c { text-align: center; min-width: 4.4em; font-size: 13.6px; line-height: 1.35; }
+.ldf tr.click { cursor: pointer; }
+.ldf tr.click:hover td { outline: 1px solid var(--ldf-rule); }
+.ldf tr.on td:first-child { font-weight: bold; }
+
+/* ---------- detail panel, comment search ---------- */
+.ldf .panel { border: 1px solid var(--ldf-rule); border-radius: 4px; padding: 11px 14px; font-size: 14.7px; display: grid; gap: 6px; }
+.ldf .panel .q { font-style: italic; overflow-wrap: anywhere; }
+.ldf .kw { background: var(--ldf-hl); padding: 0 0.1em; }
+.ldf .conc td { font-size: 13.8px; }
+.ldf .conc td.L { text-align: right; color: var(--ldf-ink2); }
+.ldf .conc td.R { color: var(--ldf-ink2); }
+.ldf .pager { display: flex; gap: 11px; align-items: center; font-size: 14.4px; }
+.ldf .chip { display: inline-block; width: 10px; height: 10px; margin-right: 5.6px; vertical-align: -1px; }
+
+/* ---------- the shared filter bar (sticks while 04 to 06 and 20 are on screen) ---------- */
+.ldf.ldf-shared { position: sticky; top: 0; z-index: 5; background: var(--ldf-bg); margin: 2.4rem 0 0.6rem; padding: 10px 0; border-top: 1px solid var(--ldf-rule); border-bottom: 1px solid var(--ldf-rule); gap: 6px; }
+.ldf.ldf-shared .ctl { gap: 5.6px; }
+@media (max-width: 850px) { .ldf.ldf-shared { position: static; } }
+
+/* ---------- tooltip (one per page, attached to <body>) ---------- */
+.ldf-tip { position: fixed; z-index: 200; pointer-events: none; background: var(--ldf-bg); color: var(--ldf-ink); border: 1px solid var(--ldf-ink2); border-radius: 4px; padding: 5.6px 8.8px; font: 12.5px/1.45 var(--ldf-ui); max-width: 340px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); }
+.ldf-tip[hidden] { display: none; }
+
+/* ---------- comments listed under a figure after a click ---------- */
+.ldf .panel .phead { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.ldf .panel .clist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.ldf .panel .clist li { display: grid; gap: 2px; padding: 8px 0 0; margin: 0; border-top: 1px solid var(--ldf-faint); }
+.ldf .panel .clist li:first-child { border-top: 0; padding-top: 0; }
+.ldf .panel .meta { color: var(--ldf-ink2); font-size: 13.6px; display: flex; align-items: center; gap: 6px; }
+.ldf .panel .meta .chip { margin: 0 0 0 4px; }
+.ldf .panel mark { background: var(--ldf-hl); color: inherit; padding: 0 0.1em; font-style: normal; }
+.ldf .panel a { font-size: 13.6px; width: fit-content; }
+.ldf table.heat tr.click td.c { cursor: pointer; }
+.ldf table.heat td.sel { outline: 2px solid var(--ldf-ink); outline-offset: -2px; }

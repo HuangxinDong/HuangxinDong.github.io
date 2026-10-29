@@ -1,5 +1,5 @@
 ---
-title: "浅谈AI时代的游戏创作：Ludum Dare 里的生成式 AI"
+title: "Ludum Dare 中的生成式 AI情况分析"
 created: 2026-10-29
 tags:
   - video_game
@@ -10,6 +10,9 @@ lang: zh
 ---
 
 <link rel="stylesheet" href="/assets/ld-ai/ldai.css?v=4">
+
+>[!note]
+> 本文的全部交互图（以及更多没有放进正文的图）位于[《数据分析：Ludum Dare 里的生成式 AI》](/posts/ludum-dare-and-generative-ai-data.html)里。数据来源：游戏页面、游戏评论、评分和论坛帖子来自 [ldjam.com](https://ldjam.com) 的公开 API；LD59 和 LD60 各游戏的 itch.io AI 声明来自 [ludum-dare.foon.uk](https://ludum-dare.foon.uk)；规则投票来自 [@Jezzamon](https://ldjam.com/users/jezzamon) 的 [ld-votes](https://jezzamon.com/ld-votes/)。
 
 ## 前言
 
