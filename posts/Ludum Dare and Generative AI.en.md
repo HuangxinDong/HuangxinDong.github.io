@@ -1,5 +1,5 @@
 ---
-title: "Thoughts on Making Games in the Age of AI: Generative AI at Ludum Dare"
+title: "Generative AI at Ludum Dare"
 created: 2026-10-29
 tags:
   - video_game
