@@ -19,4 +19,4 @@ On your last day at the world's last pneumatic post office, you discover the tub
 Made in 72 hours for the Ludum Dare 60 Jam (theme: *Old Tech*) with space_yoga (design, writing), Spring (design, art) and The Tourist (music). I did the programming and shared the design and writing.
 
 > [!sidenote]
-> A devlog is on the way.
+> Read the devlog: [Is it a Pipe Dream?](/posts/is-it-a-pipe-dream.html)
