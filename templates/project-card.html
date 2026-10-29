@@ -1,5 +1,5 @@
 <li class="work-card" data-date="$dateIso$">
-    <a class="work-image" href="$url$" tabindex="-1" aria-hidden="true">
+    <a class="work-image" href="$if(external)$$external$$else$$url$$endif$" tabindex="-1" aria-hidden="true">
         $if(image)$
         <img src="$image$" alt="" loading="lazy">
         $else$
@@ -7,7 +7,7 @@
         $endif$
     </a>
     <div class="work-body">
-        <h2 class="work-title"><a href="$url$">$title$</a></h2>
+        <h2 class="work-title"><a href="$if(external)$$external$$else$$url$$endif$">$title$</a></h2>
         $if(description)$
         <p class="work-desc">$description$</p>
         $endif$
@@ -15,6 +15,6 @@
             <p>$if(tags)$<span class="work-tags">$tags$</span>$endif$<time datetime="$dateIso$">$metaDate$</time></p>
             <canvas class="work-seal" data-seal width="48" height="24" aria-hidden="true"></canvas>
         </div>
-        <p class="work-links"><a href="$url$">Read</a>$if(source)$<a href="$source$" target="_blank" rel="noreferrer">Source</a>$endif$</p>
+        <p class="work-links">$if(external)$<a href="$external$" target="_blank" rel="noreferrer">Play</a>$else$<a href="$url$">Read</a>$endif$$if(source)$<a href="$source$" target="_blank" rel="noreferrer">Source</a>$endif$</p>
     </div>
 </li>

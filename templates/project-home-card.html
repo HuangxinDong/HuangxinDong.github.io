@@ -1,10 +1,10 @@
 <article class="project-home-card">
-    <a class="project-home-card-image-link" href="$url$">
+    <a class="project-home-card-image-link" href="$if(external)$$external$$else$$url$$endif$">
         <figure class="project-home-card-image">
             <img src="$image$" alt="$title$">
         </figure>
     </a>
     <h3 class="project-home-card-title">
-        <a class="post-list-title" href="$url$">$title$</a>
+        <a class="post-list-title" href="$if(external)$$external$$else$$url$$endif$">$title$</a>
     </h3>
 </article>

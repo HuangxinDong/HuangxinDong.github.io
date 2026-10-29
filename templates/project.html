@@ -1,10 +1,16 @@
 <div class="container-content">
     <main id="main-content" tabindex="-1">
         <article>
+            $if(video)$
+                <figure class="post-hero video-embed">
+                    <iframe src="$video$" title="$title$ video" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+                </figure>
+            $else$
             $if(image)$
                 <figure class="post-hero">
                     <img src="$image$" alt="$title$">
                 </figure>
+            $endif$
             $endif$
             <h1$if(hasTranslations)$ class="lang-title"$endif$>
                 $if(hasTranslations)$

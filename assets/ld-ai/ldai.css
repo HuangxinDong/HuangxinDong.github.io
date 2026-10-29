@@ -1,0 +1,114 @@
+/* Ludum Dare and generative AI: figure styles for the blog post.
+   Loaded only by the posts that embed the figures (not part of /css/site.css).
+   Visual style follows the standalone figure page (analysis/page3/ldai3.src.html):
+   Georgia for text and charts, system UI font for buttons, tab10 / RdBu / viridis.
+   Sizes are in px because the blog's root font size (18px) differs from the
+   original page (16px). Everything is scoped under .ldai-figure / .ldai-tip,
+   and the blog's own element styles (p, table, th) are reset inside it. */
+
+.ldai-figure, .ldai-tip {
+    --ldai-bg: var(--bg, #ffffff);
+    --ldai-ink: #1a1a1a; --ldai-ink2: #6a6a6a; --ldai-rule: #d9d9d9; --ldai-faint: #f4f4f4;
+    --ldai-link: #1f5fa8; --ldai-hl: #fff3b0; --ldai-on: var(--accent, #2d5a27); --ldai-on-ink: var(--bg, #ffffff);
+    --ldai-serif: Georgia, "Times New Roman", Times, "Songti SC", "STSong", "Noto Serif SC", serif;
+    --ldai-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Noto Sans SC", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+    .ldai-figure, .ldai-tip {
+        --ldai-ink: #e8e8e8; --ldai-ink2: #9a9a9a; --ldai-rule: #3a3a3a; --ldai-faint: #1d1d1d;
+        --ldai-link: #8ab4f8; --ldai-hl: #4a4220; --ldai-on: var(--accent, #6aaa5f); --ldai-on-ink: var(--bg, #101010);
+    }
+}
+
+.ldai-figure { margin: 2.6rem 0 2.8rem; scroll-margin-top: 1.5rem; }
+
+/* ---------- caption and notes under each figure ---------- */
+.ldai-figure .ldai-caption { font-family: var(--ldai-serif); font-size: 15px; line-height: 1.55; color: var(--ldai-ink); margin: 14px 0 0; }
+.ldai-figure .ldai-caption p { margin: 0; text-align: left; }
+.ldai-figure .ldai-caption .ldai-no { margin-right: 0.4em; }
+.ldai-figure .ldai-note { font-family: var(--ldai-serif); font-size: 14px; line-height: 1.55; color: var(--ldai-ink2); display: grid; gap: 4.8px; margin-top: 6px; }
+.ldai-figure .ldai-note p { margin: 0; text-align: left; }
+.ldai-figure .ldai-note strong { color: var(--ldai-ink); font-weight: normal; }
+.ldai-figure .ldai-note a, .ldai-figure .ldai-caption a { color: var(--ldai-link); }
+.ldai-figure details.ldai-more { margin-top: 10px; font-family: var(--ldai-serif); font-size: 14px; line-height: 1.55; color: var(--ldai-ink2); }
+.ldai-figure details.ldai-more summary { cursor: pointer; color: var(--ldai-link); width: fit-content; }
+.ldai-figure details.ldai-more p, .ldai-figure details.ldai-more li { text-align: left; margin: 4.8px 0; }
+.ldai-figure details.ldai-more code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; background: var(--ldai-faint); padding: 0 0.25em; overflow-wrap: anywhere; }
+
+/* ---------- the interactive block ---------- */
+.ldai { font-family: var(--ldai-serif); font-size: 16px; line-height: 1.55; color: var(--ldai-ink); display: grid; gap: 11.2px; min-width: 0; }
+.ldai * { box-sizing: border-box; }
+.ldai:not(.ready) { min-height: 96px; border: 1px dashed var(--ldai-rule); border-radius: 4px; padding: 16px; color: var(--ldai-ink2); }
+.ldai [hidden] { display: none !important; }
+.ldai p { margin: 0; text-align: left; hyphens: manual; }
+.ldai a { color: var(--ldai-link); text-decoration: none; border: 0; }
+.ldai a:hover { text-decoration: underline; }
+.ldai .ctl { display: grid; gap: 7.2px; }
+.ldai .row { display: flex; flex-wrap: wrap; align-items: center; gap: 5.6px 6.4px; }
+.ldai .row .lab { color: var(--ldai-ink2); min-width: 6.5em; font-size: 15.2px; }
+.ldai .bt { font: 13px/1 var(--ldai-ui); color: var(--ldai-ink); background: var(--ldai-bg); border: 1px solid var(--ldai-rule); border-radius: 4px; padding: 6px 11.2px; cursor: pointer; margin: 0; }
+.ldai .bt:hover { border-color: var(--ldai-ink2); }
+.ldai .bt[aria-pressed="true"] { background: var(--ldai-on); border-color: var(--ldai-on); color: var(--ldai-on-ink); }
+.ldai .bt:disabled { opacity: 0.35; cursor: default; }
+.ldai .ck { display: inline-flex; align-items: center; gap: 5.6px; cursor: pointer; font-size: 15.2px; margin-right: 16px; }
+.ldai .ck input[type=checkbox] { accent-color: var(--ldai-on); width: 15px; height: 15px; margin: 0; }
+.ldai :focus-visible { outline: 2px solid var(--ldai-link); outline-offset: 2px; }
+.ldai .flag { font-size: 14.4px; color: var(--ldai-ink2); }
+
+.ldai .fig { width: 100%; min-width: 0; overflow: hidden; }
+.ldai .fig svg { display: block; max-width: 100%; height: auto; overflow: visible; }
+.ldai svg text { font-family: var(--ldai-serif); fill: var(--ldai-ink); font-size: 13px; }
+.ldai svg .t2 { fill: var(--ldai-ink2); }
+.ldai svg .grid { stroke: var(--ldai-rule); stroke-width: 1; }
+.ldai svg .axis { stroke: var(--ldai-ink2); stroke-width: 1; }
+.ldai svg .ink { stroke: var(--ldai-ink); }
+.ldai svg .band { fill: var(--ldai-faint); }
+.ldai svg .evc { fill: var(--ldai-bg); stroke: var(--ldai-ink2); }
+.ldai svg .evt { cursor: default; }
+
+.ldai .legend { display: flex; flex-wrap: wrap; gap: 4px 17.6px; font-size: 14.4px; }
+.ldai .legend span { display: inline-flex; align-items: center; gap: 5.6px; }
+.ldai .legend i { display: inline-block; width: 11px; height: 11px; border: 1px solid rgba(0, 0, 0, 0.15); }
+
+/* ---------- tables (reset the blog's booktabs defaults) ---------- */
+.ldai .tw { overflow-x: auto; min-width: 0; }
+.ldai table { border-collapse: collapse; border: 0; margin: 0; width: auto; max-width: none; counter-increment: none; font-size: 14.4px; font-variant-numeric: tabular-nums; }
+.ldai thead tr > th { border-bottom: 0; font-family: inherit; font-size: inherit; font-weight: normal; letter-spacing: 0; }
+.ldai th { font-weight: normal; color: var(--ldai-ink2); text-align: left; padding: 3px 8px; white-space: nowrap; line-height: 1.55; }
+.ldai td { padding: 3px 8px; white-space: nowrap; vertical-align: middle; line-height: 1.55; text-align: left; }
+.ldai tbody tr:first-child > td, .ldai tbody tr:first-child > th { padding-top: 3px; }
+.ldai tbody th { color: var(--ldai-ink); }
+.ldai td.r, .ldai th.r { text-align: right; }
+.ldai tbody tr + tr td, .ldai tbody tr + tr th { border-top: 1px solid var(--ldai-faint); }
+.ldai .sub { font-size: 0.8em; }
+.ldai table.heat th.c { text-align: center; padding: 3px 4px; }
+.ldai table.heat { table-layout: fixed; width: 100%; min-width: 640px; }
+.ldai table.heat col.lc { width: 13.5em; }
+.ldai table.heat tbody th.rl { white-space: normal; line-height: 1.3; overflow-wrap: break-word; }
+.ldai table.heat td.c { text-align: center; padding: 3px 2px; font-size: 13.6px; line-height: 1.35; overflow: hidden; }
+.ldai table.heat.tall tbody td.c, .ldai table.heat.tall tbody th.rl { height: 3.1em; }
+.ldai td.dim, .ldai .dim { color: var(--ldai-ink2); }
+.ldai table.heat .click { cursor: pointer; }
+.ldai table.heat td.click:hover, .ldai table.heat th.click:hover { outline: 1px solid var(--ldai-rule); }
+.ldai table.heat tr.on th.rl { font-weight: bold; }
+.ldai table.heat td.sel { outline: 2px solid var(--ldai-ink); outline-offset: -2px; }
+.ldai table.plain tr.sep td { border-top: 2px solid var(--ldai-rule); }
+.ldai .barbox { display: inline-block; width: 70px; height: 10px; background: var(--ldai-faint); vertical-align: middle; margin-right: 0.45em; }
+.ldai .barbox > i { display: block; height: 100%; }
+
+/* ---------- comment panel under "What comments do" ---------- */
+.ldai .panel { border: 1px solid var(--ldai-rule); border-radius: 4px; padding: 11.2px 14.4px; font-size: 14.7px; display: grid; gap: 6.4px; }
+.ldai .panel .phead { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.ldai .panel .clist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.ldai .panel .clist li { display: grid; gap: 2px; padding: 8px 0 0; margin: 0; border-top: 1px solid var(--ldai-faint); }
+.ldai .panel .clist li:first-child { border-top: 0; padding-top: 0; }
+.ldai .panel .meta { color: var(--ldai-ink2); font-size: 13.6px; display: flex; align-items: center; gap: 6px; }
+.ldai .panel .chip { display: inline-block; width: 10px; height: 10px; margin-left: 4px; }
+.ldai .panel .q { font-style: italic; overflow-wrap: anywhere; }
+.ldai .panel mark { background: var(--ldai-hl); color: inherit; padding: 0 0.1em; font-style: normal; }
+.ldai .panel a { font-size: 13.6px; width: fit-content; }
+.ldai .pager { display: flex; gap: 11.2px; align-items: center; font-size: 14.4px; }
+
+/* ---------- tooltip (one per page, attached to <body>) ---------- */
+.ldai-tip { position: fixed; z-index: 200; pointer-events: none; background: var(--ldai-bg); color: var(--ldai-ink); border: 1px solid var(--ldai-ink2); border-radius: 4px; padding: 5.6px 8.8px; font: 12.5px/1.45 var(--ldai-ui); max-width: 340px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); }
+.ldai-tip .dim { color: var(--ldai-ink2); }
