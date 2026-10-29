@@ -379,3 +379,11 @@
     font-family: var(--font-sans);
     font-size: 0.76rem;
 }
+
+/* Video hero: fills the 16:9 .post-hero box (set via `video:` in project frontmatter) */
+.video-embed iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
