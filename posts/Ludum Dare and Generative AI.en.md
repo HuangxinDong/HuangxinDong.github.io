@@ -8,6 +8,9 @@ tags:
 description: Scraping game comments, forum posts and ratings from LD50 to LD60 to see how the Ludum Dare community's attitudes towards generative AI in game-making have changed.
 ---
 
+>[!note]
+> All the interactive figures in this post, plus more that did not make it into the text, are collected [here](/posts/ludum-dare-and-generative-ai-data.html). Data sources: game pages, game comments, ratings and forum posts come from the public [ldjam.com](https://ldjam.com) API; itch.io AI declarations for LD59 and LD60 come from [ludum-dare.foon.uk](https://ludum-dare.foon.uk); the rules poll comes from [@Jezzamon](https://ldjam.com/users/jezzamon)'s [ld-votes](https://jezzamon.com/ld-votes/).
+
 ## Preface
 
 This October I took part for the first time in the Ludum Dare game jam (ldjam from here on). My teammates and I started making things with almost no plan at all. Most of the design came from sudden flashes of inspiration or something close to daydreaming, and luckily we managed to submit a reasonably complete game at the very last minute. But what I want to talk about here is what came after the jam. Once the 18 days peer-rating period began (a game needs more than 20 ratings to get a final ranking), I noticed a huge amount of discussion about gen AI in game-making: in the comment sections of our own game and other people's, in posts on the ldjam forum, and on ldjam Discord. This discussion has taken center stage across several events and touches almost every game ([Figure 1](#fig-1)). By now, almost everyone who joins a game jam has to face two questions: should I use AI to make my game? And how should I rate games made with AI?

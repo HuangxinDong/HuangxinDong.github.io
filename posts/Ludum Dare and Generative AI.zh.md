@@ -11,6 +11,9 @@ lang: zh
 
 <link rel="stylesheet" href="/assets/ld-ai/ldai.css?v=4">
 
+>[!note]
+> 本文的全部交互图（以及更多没有放进正文的图）位于[《数据分析：Ludum Dare 里的生成式 AI》](/posts/ludum-dare-and-generative-ai-data.html)里。数据来源：游戏页面、游戏评论、评分和论坛帖子来自 [ldjam.com](https://ldjam.com) 的公开 API；LD59 和 LD60 各游戏的 itch.io AI 声明来自 [ludum-dare.foon.uk](https://ludum-dare.foon.uk)；规则投票来自 [@Jezzamon](https://ldjam.com/users/jezzamon) 的 [ld-votes](https://jezzamon.com/ld-votes/)。
+
 ## 前言
 
 今年十月，我第一次参与了久仰大名的Ludum Dare Game Jam（下文简称ldjam）。和几个队员几乎是毫无规划地就开始了制作，多数设计全靠灵光乍现或者梦游天姥，幸好在最后一刻提交上去了一份还算完整的作品。不过这次我想重点讨论的是游戏创作结束后的部分：作者们进入为期18天的互相评分环节（只有收到超过20个评分才能进入最终的排名）后，我注意到在我们自己和其他游戏的评论区、ldjam论坛的posts、Discord论坛，产生了大量关于游戏创作中的生成式AI的讨论，而且这类讨论是核心的、持续了好几届的、横跨几乎所有游戏的（如[图1](#fig-1)）。如今，参与gamejam的所有创作者几乎都必须要面对这个问题：我要使用AI创作游戏吗？我要如何给使用AI创作的游戏打分？
