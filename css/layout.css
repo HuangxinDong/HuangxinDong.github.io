@@ -477,6 +477,12 @@ footer {
     height: 22px;
 }
 
+.icon-linkedin {
+    --icon: url("/assets/icons/linkedin.svg");
+    width: 16px;
+    height: 16px;
+}
+
 .icon-douban {
     --icon: url("/assets/icons/douban-dou.svg");
     width: 16px;
