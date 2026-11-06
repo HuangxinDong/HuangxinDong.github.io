@@ -106,7 +106,7 @@ gridHtml extraClass es firstMonday weeks inRange labels =
         , "<div class=\"hm-scroll\">"
         , "<div class=\"hm-months\" aria-hidden=\"true\">"
         , concat [ "<span style=\"grid-column: " ++ show col ++ " / span 4\">" ++ name ++ "</span>"
-                 | (col, name) <- labels, col >= 1, col <= weeks - 2 ]
+                 | (col, name) <- spaced [ l | l@(col, _) <- labels, col >= 1, col <= weeks - 2 ] ]
         , "</div>"
         , "<div class=\"hm-grid\">"
         , concatMap (cellHtml inRange dayEntries) days
@@ -116,6 +116,12 @@ gridHtml extraClass es firstMonday weeks inRange labels =
         ]
   where
     days = [ addDays i firstMonday | i <- [0 .. toInteger (weeks * 7) - 1] ]
+    -- Drop a label when the next one starts too close for it to fit
+    -- (e.g. a partial first month), so labels never overlap.
+    spaced (a@(c1, _) : rest@((c2, _) : _))
+        | c2 - c1 < 3 = spaced rest
+        | otherwise = a : spaced rest
+    spaced xs = xs
     windowEntries = [ e | e <- es, inRange (entryDay e) ]
     dayEntries d = [ e | e <- windowEntries, entryDay e == d ]
 
