@@ -11,6 +11,8 @@ tags:
 
 *Make 24* is a digital version of the classic card game: given four cards, use addition, subtraction, multiplication, and division to reach exactly 24. It runs on a Macintosh System 7-inspired desktop, with draggable windows, two play modes, and a high score tracker.
 
+[Download or play it online (itch.io)](https://dracco-0n.itch.io/make-24)
+
 > [!sidenote]
 > Quick question: how would you use three 5s and one 1 to make 24?
 >

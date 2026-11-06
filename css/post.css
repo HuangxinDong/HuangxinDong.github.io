@@ -17,7 +17,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 0.25rem 0.45rem;
+    gap: 0.25rem 1.1rem;
     line-height: 1.7;
 }
 
@@ -376,4 +376,86 @@ article h4.toc-feedback {
 
     #toc-inline-list a[data-level="3"]::before { width: 3px; height: 3px; }
     #toc-inline-list a[data-level="4"]::before { width: 2px; height: 2px; opacity: 0.28; }
+}
+
+/* ============================================
+   Post seal (js/seal.js)
+   ============================================ */
+
+.post-seal {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin: 3.5rem 0 0;
+    color: var(--text);
+}
+
+.post-seal canvas {
+    flex: none;
+    width: 96px;
+    height: 48px;
+    image-rendering: pixelated;
+}
+
+.post-seal-text {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--muted);
+    text-align: left;
+}
+
+.post-seal-mark {
+    appearance: none;
+    flex: none;
+    border: 0;
+    padding: 0;
+    background: none;
+    color: var(--text);
+    line-height: 0;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.post-seal-mark:disabled {
+    cursor: default;
+}
+
+.post-seal-mark canvas {
+    transition: opacity 0.15s ease;
+}
+
+.post-seal-mark:not(:disabled):hover canvas {
+    opacity: 0.7;
+}
+
+.post-seal-text span {
+    font-style: italic;
+}
+
+/* ============================================
+   Chinese typesetting (after W3C clreq)
+   ============================================ */
+
+.post-body:lang(zh) > p,
+.lang-panel:lang(zh) > p {
+    text-indent: 2em;
+    line-height: 1.9;
+}
+
+/* Paragraphs that only hold an image or a figure keep no indent. */
+.post-body:lang(zh) > p:has(> img:only-child),
+.lang-panel:lang(zh) > p:has(> img:only-child) {
+    text-indent: 0;
+}
+
+.post-body:lang(zh) {
+    /* Space between Han characters and Latin letters or digits, where
+       supported; posts that already type the space are unaffected. */
+    text-autospace: normal;
+    /* Trim doubled blank space between adjacent full-width punctuation. */
+    text-spacing-trim: normal;
+    /* Let closing punctuation hang into the margin (Safari for now). */
+    hanging-punctuation: allow-end;
+    line-break: strict;
 }

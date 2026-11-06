@@ -287,17 +287,23 @@ selectLatestSources files =
             [] -> Nothing
             _  -> Just (category, status, maximum matches)
 
+-- | Newer Douban exports also contain "in progress" lists
+-- (db-book-doing-*.csv and so on). Those are not imported yet; without this
+-- check they were classified as Done and, sorting after db-book-2026...,
+-- replaced the real finished list.
 classifyCsvFile :: FilePath -> Maybe (Category, RecordStatus)
-classifyCsvFile path =
-    let name = map toLower (takeFileName path)
-        status = if "wishlist" `isInfixOf` name then Wishlist else Done
-        category
-            | "db-book" `isInfixOf` name = Just Book
-            | "db-movie" `isInfixOf` name = Just Movie
-            | "db-music" `isInfixOf` name = Just Music
-            | "db-game" `isInfixOf` name = Just Game
-            | otherwise = Nothing
-    in fmap (, status) category
+classifyCsvFile path
+    | "-doing" `isInfixOf` name = Nothing
+    | otherwise = fmap (, status) category
+  where
+    name = map toLower (takeFileName path)
+    status = if "wishlist" `isInfixOf` name then Wishlist else Done
+    category
+        | "db-book" `isInfixOf` name = Just Book
+        | "db-movie" `isInfixOf` name = Just Movie
+        | "db-music" `isInfixOf` name = Just Music
+        | "db-game" `isInfixOf` name = Just Game
+        | otherwise = Nothing
 
 
 stripBom :: String -> String

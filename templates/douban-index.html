@@ -2,10 +2,45 @@
     <p>An archive of books, films, music, and games exported from Douban.</p>
 </div>
 
-<div class="records-overview-grid">
-    $for(categories)$
-        $partial("templates/douban-overview-card.html")$
-    $endfor$
-</div>
+<section class="records-heatmaps" data-heatmap aria-label="Records by day">
+    <div class="hm-cats" role="group" aria-label="Category" hidden>
+        <button type="button" data-hm-cat="all" aria-pressed="true">All <span class="hm-cat-n">$totalDone$</span></button>
+        $for(categories)$<button type="button" data-hm-cat="$hmKey$" aria-pressed="false"><i class="hm-dot" style="background: var(--hm-$hmKey$-2)"></i>$name$ <span class="hm-cat-n">$doneCount$</span></button>
+        $endfor$
+    </div>
+    <div class="hm-yearview">
+        <div class="hm-years">
+            $yearHeatmaps$
+        </div>
+        <nav class="hm-yearnav" aria-label="Year" hidden></nav>
+    </div>
+</section>
+<script src="/js/heatmap.js" defer></script>
+
+<section class="rl" data-records-list aria-label="Records list" hidden>
+    <div class="rl-status" role="group" aria-label="Status">
+        <button type="button" data-rl-status="done" aria-pressed="true"><span class="rl-status-label">Marked</span> <span class="hm-cat-n rl-n-done"></span></button>
+        <button type="button" data-rl-status="wish" aria-pressed="false">Wishlist <span class="hm-cat-n rl-n-wish"></span></button>
+    </div>
+    <div class="rw-tools">
+        <label class="rw-search-label">
+            <span>Search</span>
+            <input class="rw-search" type="search" placeholder="Titles, people, my words">
+        </label>
+        <div class="rw-chips" role="group" aria-label="Filter">
+            <button type="button" data-rw-filter="all" aria-pressed="true">Everything</button>
+            <button type="button" data-rw-filter="5" aria-pressed="false">★★★★★</button>
+            <button type="button" data-rw-filter="4" aria-pressed="false">★★★★ and up</button>
+            <button type="button" data-rw-filter="note" aria-pressed="false">With a review</button>
+        </div>
+    </div>
+    <p class="rw-count" aria-live="polite"></p>
+    <ol class="records-list rl-list"></ol>
+    <p class="rw-empty" hidden>Nothing matches. Try a name, a place, or something I might have written.</p>
+    <button class="rw-more" type="button" hidden>Show more</button>
+</section>
 
 <p class="records-footnote">Archived on $archiveDate$</p>
+
+<script type="application/json" id="records-data">$recordsJson$</script>
+<script src="/js/records-wall.js" defer></script>

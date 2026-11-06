@@ -1,7 +1,7 @@
 <li class="project-list-item">
     <article class="project-list-card">
         $if(image)$
-        <a class="project-list-image-link" href="$url$">
+        <a class="project-list-image-link" href="$if(external)$$external$$else$$url$$endif$">
             <figure class="project-list-image">
                 <img src="$image$" alt="$title$">
             </figure>
@@ -9,7 +9,7 @@
         $endif$
         <div class="project-list-content">
             <div class="project-list-row">
-                <a class="post-list-title" href="$url$">$title$</a>
+                <a class="post-list-title" href="$if(external)$$external$$else$$url$$endif$">$title$</a>
                 <span class="post-list-leader" aria-hidden="true"></span>
                 $if(date)$<time class="post-date" datetime="$dateIso$">$date$</time>$endif$
             </div>
