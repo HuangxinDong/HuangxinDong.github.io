@@ -41,11 +41,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Haskell
+        id: setup
         uses: haskell-actions/setup@v2
         with:
           ghc-version: '9.6.7'
           cabal-version: '3.12.1.0'
           cabal-update: false
+
+      # Must run before the index cache step, which uses it in its key.
+      - name: Get week number (for index cache key)
+        id: date
+        run: echo "week=$(date +%Y-%U)" >> $GITHUB_OUTPUT
 
       - name: Cache Cabal package index
         uses: actions/cache@v4
@@ -56,21 +62,9 @@ jobs:
             ${{ runner.os }}-cabal-index-
         id: cache-index
 
-      - name: Get week number (for index cache key)
-        id: date
-        run: echo "week=$(date +%Y-%U)" >> $GITHUB_OUTPUT
-
       - name: Update Cabal index if needed
         if: steps.cache-index.outputs.cache-hit != 'true' || (github.event_name == 'workflow_dispatch' && inputs.run_cabal_update)
         run: cabal update
-
-      - name: Cache Cabal store
-        uses: actions/cache@v4
-        with:
-          path: ~/.cabal/store
-          key: ${{ runner.os }}-ghc-9.6.7-store-${{ hashFiles('hakyll-blog.cabal') }}
-          restore-keys: |
-            ${{ runner.os }}-ghc-9.6.7-store-
 
       - name: Cache dist-newstyle
         uses: actions/cache@v4
@@ -80,6 +74,32 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-ghc-9.6.7-dist-${{ hashFiles('hakyll-blog.cabal') }}-
             ${{ runner.os }}-ghc-9.6.7-dist-
+
+      # Key the store on the resolved build plan, not the .cabal file: the plan
+      # changes whenever the index brings new dependency versions, and an
+      # unchanged key would never re-save the store, rebuilding pandoc & co.
+      # from scratch on every run.
+      - name: Resolve build plan
+        run: cabal build site --dry-run
+
+      - name: Restore Cabal store
+        id: cache-store
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ steps.setup.outputs.cabal-store }}
+          key: ${{ runner.os }}-ghc-9.6.7-store-${{ hashFiles('dist-newstyle/cache/plan.json') }}
+          restore-keys: |
+            ${{ runner.os }}-ghc-9.6.7-store-
+
+      - name: Build dependencies
+        run: cabal build site --only-dependencies
+
+      - name: Save Cabal store
+        if: steps.cache-store.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.setup.outputs.cabal-store }}
+          key: ${{ steps.cache-store.outputs.cache-primary-key }}
 
       - name: Cache Hakyll incremental data
         uses: actions/cache@v4
