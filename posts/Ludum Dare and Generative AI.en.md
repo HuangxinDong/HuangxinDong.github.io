@@ -80,7 +80,7 @@ Note: a comment can mention several uses, so a column can add up to more than 10
 
 ::::
 
-## How do I rate AI games?
+## How do people rate AI games?
 
 The posts that got me thinking the most were [I don't know how to rate "AI-assisted" games](https://ldjam.com/events/ludum-dare/60/old-specs/i-dont-know-how-to-rate-ai-assisted-games) and [How do you rate Claude games?](https://ldjam.com/events/ludum-dare/60/granny-tech-support/how-do-you-rate-claude-games). Both sparked a lot of discussion, because the topic reflects more than just widespread confusion over the mechanics of rating. Each reply subtly introduces a complex web of underlying issues and stances."
 
@@ -171,7 +171,7 @@ Observational data: declarations may be untrue, and teams that used AI for asset
 
 ::::
 
-## What should we do?
+## How do I rate AI games?
 
 From the data above, we now have a rough overview of how AI is used in game development, what the comments and ratings look like, and how the community feels overall. Broadly speaking, the share of games made with AI's help has grown with every event, and it has spread from art, music and text at first to code and overall design. AI as an NPC or as a subject of discussion appeared more in the early events; as people got used to AI, it stopped being such a frequent topic. People have started using AI to spam comments in bulk. Spam comments have always existed, previously as copy-pasted, generic text, but it is only in LD60 that they became mainly AI-driven. Over these ten events the discussion about AI never stopped, and its specific topics kept changing. In terms of attitude, the comments clearly show a growing dislike of generative AI in game development, but the ratings do not seem to show this tendency very clearly.
 

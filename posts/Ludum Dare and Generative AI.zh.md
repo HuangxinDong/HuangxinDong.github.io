@@ -85,7 +85,7 @@ AI本身就是一个复杂的概念，从最早的符号推理与专家系统到
 
 ::::
 
-## How do I rate AI games?
+## How do people rate AI games?
 
 我个人认为最给我启发的帖文是[I don't know how to rate "AI-assisted" games](https://ldjam.com/events/ludum-dare/60/old-specs/i-dont-know-how-to-rate-ai-assisted-games) 和 [How do you rate Claude games?](https://ldjam.com/events/ludum-dare/60/granny-tech-support/how-do-you-rate-claude-games). 这两篇帖文都激起了不小的讨论，因为这个话题不仅反映了一种普遍的、对于具体的“评分”这个行为的困惑，每个参与者的评论也都潜在地引出不少与之相关而交错的议题与立场。
 
@@ -172,7 +172,7 @@ LD59 的数字是评分期结束后的；LD60 抓取时（2026 年 10 月 29 日
 
 ::::
 
-## What should we do?
+## How do I rate AI games?
 
 通过以上的数据，我们已经可以对游戏开发中的AI的使用情况、评论与评分的情况、社区整体的态度有一个大致的概览。大略地来说，AI参与到游戏的制作中的比例逐届都在增加，并且从最初的美术、音乐、文本扩展到了代码和整体设计；AI作为NPC或者讨论的对象更多出现在早期，随着人们对AI的习以为常反而不再那么高频地作为讨论的题材了；人们用AI来批量spam评论的现象开始出现，spam评论一直都有，以前可能更多是复制粘贴一些同质化的general的评论，但是直到LD60才主要以AI驱动。人们在这10届对AI的讨论从未停止，而且具体的话题也不断在变化。在态度上，我们很明显地可以看到评论中对游戏开发中的生成式AI越来越讨厌，但是在评分上似乎看不到很明显的这个倾向。
 
